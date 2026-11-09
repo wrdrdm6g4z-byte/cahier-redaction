@@ -75,13 +75,17 @@
 
   function corps(src, termes) {
     return src.trim().split(/\n\s*\n/).map((bloc, i) => {
-      const net = bloc.replace(/\n?(\$\$[\s\S]+?\$\$)\n?/g, '$1');
+      let net = bloc.replace(/\n?(\$\$[\s\S]+?\$\$)\n?/g, '$1');
       const rang = `style="--c:${Math.min(i, 10)}"`;
-      if (net.startsWith('!!')) return `<p class="enonce" ${rang}>${enLigne(net.slice(2).trim(), termes)}</p>`;
+      // ||x|| en tête de bloc : annotation dans la marge.
+      const annotation = net.match(/^\|\|(.+?)\|\|\s*/);
+      const note = annotation ? `<span class="note">${enLigne(annotation[1])}</span>` : '';
+      if (annotation) net = net.slice(annotation[0].length);
+      if (net.startsWith('!!')) return `<p class="enonce" ${rang}>${note}${enLigne(net.slice(2).trim(), termes)}</p>`;
       if (/^>\s?/.test(net)) {
-        return `<p class="retrait" ${rang}>${enLigne(net.replace(/^>\s?/gm, ''), termes)}</p>`;
+        return `<p class="retrait" ${rang}>${note}${enLigne(net.replace(/^>\s?/gm, ''), termes)}</p>`;
       }
-      return `<p ${rang}>${enLigne(net, termes)}</p>`;
+      return `<p ${rang}>${note}${enLigne(net, termes)}</p>`;
     }).join('');
   }
 

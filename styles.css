@@ -402,7 +402,8 @@ h1 {
 .m.open .m-clip { visibility: visible; transition-delay: 0s; }
 
 .m-corps {
-  padding: 6px 28px 34px calc(var(--marge) + 18px);
+  --g: 18px;
+  padding: 6px 28px 34px calc(var(--marge) + var(--g));
   font-size: 19px;
   line-height: 1.68;
   opacity: 0;
@@ -418,6 +419,16 @@ h1 {
 
 .m-corps p + p, .m-corps p + .retrait, .m-corps .retrait + p, .retrait + .retrait { margin-top: .8em; }
 .retrait { padding-left: 1.6em; }
+.m-corps p { position: relative; }
+
+.note {
+  position: absolute;
+  top: 50%;
+  left: calc(-1 * (var(--marge) + var(--g)));
+  width: var(--marge);
+  text-align: center;
+  transform: translateY(-50%);
+}
 .source { display: block; margin-top: 16px; color: var(--muted); font-size: 15px; }
 
 u { text-decoration-color: var(--red); text-decoration-thickness: 1px; text-underline-offset: 3px; }
@@ -550,7 +561,7 @@ mark {
   .liste { margin-inline: -6px; }
   .t { padding-left: 14px; }
   .m-tete { grid-template-columns: var(--marge) minmax(0, 1fr) 38px; }
-  .m-corps { padding-left: calc(var(--marge) + 14px); padding-right: 10px; }
+  .m-corps { --g: 14px; padding-right: 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

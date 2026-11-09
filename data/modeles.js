@@ -3,7 +3,7 @@ window.CAHIER = {
   chapitres: {
     algebre: ['Espaces vectoriels', 'Matrices', 'Réduction'],
     analyse: [],
-    probabilites: [],
+    probabilites: ['Espaces probabilisés', 'Dénombrement'],
   },
 
   modeles: [
@@ -287,6 +287,86 @@ Soit $X=\begin{pmatrix}x\\y\\z\end{pmatrix}\in M_{3,1}(\R)$
 Alors :
 $$\begin{aligned}X\in E_0(J)&\Longleftrightarrow JX=0X\\&\underset{(1)}{\Longleftrightarrow}\begin{cases}x+(1-0)y+z=0\\0y-0z=0\\0(3-0)z=0\end{cases}\\&\Longleftrightarrow X=y\begin{pmatrix}-1\\1\\0\end{pmatrix}+z\begin{pmatrix}-1\\0\\1\end{pmatrix}\end{aligned}$$
 Donc, $E_0(J)=\Vect\left(\begin{pmatrix}-1\\1\\0\end{pmatrix},\begin{pmatrix}-1\\0\\1\end{pmatrix}\right)$`,
+    },
+
+    // Probabilités, photos 1 et 2
+    {
+      id: 'construire-espace-probabilise-fini',
+      domaine: 'probabilites',
+      chapitre: 'Espaces probabilisés',
+      titre: String.raw`Construire un espace probabilisé fini $(\Omega,\mathcal{P}(\Omega),\P)$`,
+      motsCles: ['modélisation', 'univers', 'équiprobabilité', 'probabilité uniforme', 'coefficients binomiaux', 'tirage simultané'],
+      corps: String.raw`!! Construisons un espace probabilisé $(\Omega,\mathcal{P}(\Omega),\P)$ modélisant la présente expérience aléatoire.
+
+||$\Omega$||> $\odot$ L'expérience aléatoire consistant à tirer simultanément 4 boules différenciées par leur numéro d'une urne comportant 6 boules différentes, une issue peut être modélisée par un 4-uplet de $\llbracket1;6\rrbracket$, modélisant l'ensemble des boules présentes dans l'urne.
+Donc, l'ensemble des issues peut être modélisé par l'ensemble des 4-uplets de $\llbracket1;6\rrbracket$
+
+> $\odot$ D'après le $\odot$ précédent, par définition même des coefficients binomiaux, $\Omega$ est un ensemble fini de cardinal $\binom{6}{4}$.
+Donc, $\Omega$ est au plus dénombrable
+Donc, toute partie de $\Omega$ a droit au statut d'événement.
+
+> Nous pouvons envisager l'espace probabilisable $(\Omega,\mathcal{P}(\Omega))$
+
+||$\P$||> $\odot$ Le tirage s'effectuant « au hasard » dans une urne « opaque » contenant des boules « indiscernables au toucher », nous pouvons alors supposer que nous nous trouvons dans une situation d'équiprobabilité.
+Nous pouvons alors munir l'espace probabilisable $(\Omega,\mathcal{P}(\Omega))$ de la probabilité uniforme notée $\P$.
+
+Donc, [[l'espace probabilisé $(\Omega,\mathcal{P}(\Omega),\P)$ ainsi construit modélise la présente expérience aléatoire.]]`,
+    },
+
+    // Probabilités, photo 3
+    {
+      id: 'modeliser-un-evenement',
+      domaine: 'probabilites',
+      chapitre: 'Espaces probabilisés',
+      titre: 'Modéliser un événement',
+      motsCles: ['événement', 'intersection', 'réalisé', 'Pile'],
+      corps: String.raw`!! • Modélisons l'événement $A$ : « N'obtenir que des Pile »
+
+$$\begin{aligned}A\text{ est réalisé}\quad&\text{ssi}\quad\text{« On obtient que des Pile » est réalisé}\\&\text{ssi}\quad\text{pour tout }i\in\N^*,\ P_i\text{ est réalisé}\\&\text{ssi}\quad\bigcap_{i=1}^{+\infty}P_i\text{ est réalisé}\end{aligned}$$
+
+Donc, [[$A=\displaystyle\bigcap_{i=1}^{+\infty}P_i$]]`,
+    },
+
+    // Probabilités, photo 4
+    {
+      id: 'principe-multiplicatif',
+      domaine: 'probabilites',
+      chapitre: 'Dénombrement',
+      titre: 'Utiliser le principe multiplicatif',
+      motsCles: ['cardinal', 'produit cartésien', 'dé'],
+      corps: String.raw`L'expérience aléatoire consistant à lancer simultanément un dé cubique et un dé tétraédrique, l'ensemble des issues peut être modélisé par l'ensemble $\llbracket1;6\rrbracket\times\llbracket1;4\rrbracket$.
+Or, les ensembles $\llbracket1;6\rrbracket$ et $\llbracket1;4\rrbracket$ sont finis, de cardinal respectif 6 et 4.
+Donc, par théorème (__principe multiplicatif__), $\llbracket1;6\rrbracket\times\llbracket1;4\rrbracket$ est fini et :
+$$\begin{aligned}\operatorname{Card}(\llbracket1;6\rrbracket\times\llbracket1;4\rrbracket)&=\operatorname{Card}(\llbracket1;6\rrbracket)\operatorname{Card}(\llbracket1;4\rrbracket)\\&=6\times4\\&=24\end{aligned}$$
+
+Ainsi, [[il y a 24 résultats possibles]]`,
+    },
+
+    // Probabilités, photos 5 et 6
+    {
+      id: 'principe-additif',
+      domaine: 'probabilites',
+      chapitre: 'Dénombrement',
+      titre: 'Utiliser le principe additif',
+      motsCles: ['cardinal', 'union disjointe', 'tirages successifs sans remise', 'parité', '4-listes'],
+      corps: String.raw`!! → 1000 boules $\in\llbracket1;1000\rrbracket$ ; 5 noires
+→ 4 tirages successifs sans remise
+→ Combien de tirages amènent 4 boules de la même parité ?
+
+Notons $M$ l'ensemble des résultats amenant 4 boules de même parité.
+Notons $M_p$ l'ensemble des tirages amenant 4 boules paires (respectivement $M_I$)
+D'après le protocole des tirages, il y a autant d'éléments dans $M_p$ qu'il y a de 4-listes d'éléments distincts d'un ensemble fini de cardinal 500 modélisant les 500 boules paires de l'urne, à savoir, par théorème :
+$$500\times499\times498\times497=\frac{500!}{496!}$$
+
+Ainsi, $M_p$ est un ensemble fini de cardinal $\dfrac{500!}{496!}$
+
+De même, $M_I$ est un ensemble fini de cardinal $\dfrac{500!}{496!}$
+
+Par ailleurs, $M=M_I\cup M_p$ et $M_I\cap M_p=\emptyset$
+Donc, par théorème (principe additif), $M$ est un ensemble fini et :
+$$\operatorname{Card}(M)=\operatorname{Card}(M_p)+\operatorname{Card}(M_I)=2\times\frac{500!}{496!}$$
+
+Ainsi, [[il y a $2\,\dfrac{500!}{496!}$ résultats amenant 4 boules de même parité]]`,
     },
   ],
 };
