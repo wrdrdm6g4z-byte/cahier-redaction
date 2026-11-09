@@ -699,7 +699,7 @@ $$\sum_{k=1}^{+\infty}\left(\frac{1}{4}\right)^{2k+1}=\frac{1}{60}$$]]`,
 
 !! {{$\odot$ __Par négligeabilité :__}}
 
-« Donc, d'après un critère de {{?}} (par négligeabilité), ... »
+« Donc, d'après un critère de comparaison (par négligeabilité), ... »
 
 !! {{$\odot$ __Par équivalence :__}}
 
