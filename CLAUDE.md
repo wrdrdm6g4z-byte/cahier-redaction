@@ -7,8 +7,15 @@ Site statique pour GitHub Pages, public mais non référencé (`noindex`). Aucun
 - Transcription **mot pour mot** des modèles du professeur : phrases, ordre, notations, exemple d'origine. Ne jamais reformuler, compléter, corriger, généraliser ou inventer.
 - Seule exception, autorisée par l'élève : corriger une erreur de calcul avérée, après vérification, et lui indiquer chaque correction. Le texte et la rédaction restent intouchés.
 - Un passage illisible ou douteux n'est pas deviné : demander à l'élève avant de l'ajouter.
-- Si une nouvelle source contredit un modèle existant, signaler la différence à l'élève au lieu de trancher seul.
+- Les corrigés PDF publiés par le professeur font foi. Si un corrigé rédige différemment un modèle déjà présent, remplacer le modèle du site par celui du professeur et indiquer le remplacement à l'élève. Pour toute autre source en contradiction, signaler la différence sans trancher seul.
 - Titres les plus sobres et austères possible. Aucun texte d'explication sur le site.
+
+## Nouveaux modèles
+
+L'élève ne recopie plus les modèles dans un cahier. Les titres sont désormais à créer : sobres, appropriés et intuitifs, pour comprendre d'un coup d'œil l'objet du modèle.
+
+1. Photo d'un exercice du cours : le transcrire mot pour mot, lui créer un titre, l'ajouter au site.
+2. Sujet de DS avec corrigé : y repérer les modèles routiniers absents du site, les transcrire mot pour mot depuis le corrigé, leur créer un titre, les ajouter.
 - Classement : Algèbre, Analyse ou Probabilités, puis chapitre avec le titre du cours.
 - Modèles « routiniers » uniquement, sauf demande contraire.
 
