@@ -67,6 +67,7 @@
       .replace(/__(.+?)__/gs, '<u>$1</u>')
       .replace(/==(.+?)==/gs, '<span class="fluo">$1</span>')
       .replace(/\[\[(.+?)\]\]/gs, '<span class="encadre">$1</span>')
+      .replace(/\{\{(.+?)\}\}/gs, '<span class="rouge">$1</span>')
       .replace(/\u0001/g, '<mark>')
       .replace(/\u0002/g, '</mark>')
       .replace(/\n/g, '<br>')

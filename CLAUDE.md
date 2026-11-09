@@ -36,6 +36,7 @@ Reproduire aussi la mise en forme du cahier :
 - `==texte==` : surligné au fluo. Dans une formule : `\fluo{...}`.
 - `[[texte]]` : résultat encadré.
 - `||x||` en tête de bloc : annotation écrite dans la marge.
+- `{{texte}}` : texte écrit en rouge. `{{?}}` signale un mot à lever avec l'élève.
 - `\rouge{...}` : écrit en rouge dans le formule. Un `\rouge{?}` signale un doute à lever avant publication.
 
 Macros LaTeX : `\R \N \Z \Q \C \K \E \V \P`, `\Vect \rg \Sp`, `\ent{a}{b}`.

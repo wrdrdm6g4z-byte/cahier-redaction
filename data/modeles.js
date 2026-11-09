@@ -2,7 +2,7 @@ window.CAHIER = {
   // Ordre d'affichage des chapitres, avec les titres du professeur.
   chapitres: {
     algebre: ['Espaces vectoriels', 'Matrices', 'Réduction'],
-    analyse: [],
+    analyse: ['Fonctions', 'Suites', 'Séries'],
     probabilites: ['Espaces probabilisés', 'Dénombrement'],
   },
 
@@ -367,6 +367,343 @@ Donc, par théorème (principe additif), $M$ est un ensemble fini et :
 $$\operatorname{Card}(M)=\operatorname{Card}(M_p)+\operatorname{Card}(M_I)=2\times\frac{500!}{496!}$$
 
 Ainsi, [[il y a $2\,\dfrac{500!}{496!}$ résultats amenant 4 boules de même parité]]`,
+    },
+
+    // Analyse, photo 1
+    {
+      id: 'determiner-df',
+      domaine: 'analyse',
+      chapitre: 'Fonctions',
+      titre: String.raw`Déterminer $\mathcal{D}f$`,
+      motsCles: ['ensemble de définition', 'domaine', 'quotient'],
+      corps: String.raw`!! • Déterminons l'ensemble de définition de $f:x\mapsto\dfrac{3x^2+3x+5}{x+2}$
+
+• $x\mapsto3x^2+3x+5$ et $x\mapsto x+2$ sont définies sur $\R$.
+• $x\mapsto\dfrac{1}{x}$ ==n'est définie que== sur $\R^*$.
+Donc :
+$$\begin{aligned}\mathcal{D}f&=\{x\in\R\mid x+2\neq0\}\\&=\{x\in\R\mid x\neq-2\}\end{aligned}$$
+
+Donc, [[$\mathcal{D}f=\R\setminus\{-2\}$]]`,
+    },
+
+    // Analyse, p. 2 et page suivante. b = -3 corrigé d'après le calcul (lecture : 3).
+    {
+      id: 'identification-coefficients',
+      domaine: 'analyse',
+      chapitre: 'Fonctions',
+      titre: 'Identification coefficients',
+      motsCles: ['identification', 'polynôme', 'équivalences', 'système', 'division'],
+      corps: String.raw`!! $\odot$ Déterminer $(a,b,c)\in\R^3$ tel que :
+$$\forall x\in\R\setminus\{-2\},\ \frac{3x^2+3x+5}{x+2}=ax+b+\frac{c}{x+2}$$
+
+• Soit $(a,b,c)\in\R^3$.
+Alors :
+$$\begin{aligned}&\forall x\in\R\setminus\{-2\},\ \frac{3x^2+3x+5}{x+2}=ax+b+\frac{c}{x+2}\\&\Longleftrightarrow\forall x\in\R\setminus\{-2\},\ \frac{3x^2+3x+5}{x+2}=\frac{(ax+b)(x+2)+c}{x+2}\\&\Longleftrightarrow\forall x\in\R\setminus\{-2\},\ 3x^2+3x+5=(ax+b)(x+2)+c\\&\Longleftrightarrow\forall x\in\R\setminus\{-2\},\ ax^2+(2a+b)x+2b+c=\dots\\&\underset{(1)}{\Longleftrightarrow}\begin{cases}a=3\\2a+b=3\\2b+c=5\end{cases}\\&\Longleftrightarrow(a,b,c)=(3,-3,11)\end{aligned}$$
+
+$(1)$ : ==D'après le principe d'identification== « {{?}} »
+
+Donc, en vertu des équivalences précédentes,
+
+[[==Si on pose== $(a,b,c)=(3,-3,11)$, ==alors== $(a,b,c)\in\R^3$ et :
+$$\forall x\in\R\setminus\{-2\},\ \frac{3x^2+3x+5}{x+2}=ax+b+\frac{c}{x+2}$$]]`,
+    },
+
+    // Analyse, p. 3
+    {
+      id: 'prolonger-par-continuite',
+      domaine: 'analyse',
+      chapitre: 'Fonctions',
+      titre: 'Prolonger par continuité',
+      motsCles: ['prolongement', 'limite', 'continuité'],
+      corps: String.raw`!! $\odot$ Prolonger $x\mapsto x^x$ en $0$.
+
+• $\mathcal{D}f=\R_+^*$
+• $\forall x\in\mathcal{D}f,\ f(x)=e^{x\ln(x)}$
+• $\lim\limits_{0^+}f=1$
+
+• Or, $\mathcal{D}f=\R_+^*$
+• Donc, ==$\lim\limits_{0}f$ existe et vaut 1== car $0\notin\mathcal{D}f$.
+
+• Donc, $f$ est prolongeable par continuité en $0$.
+
+[[Si :
+$$\forall x\in\R_+,\ \text{on pose }\hat{f}(x)=\begin{cases}f(x)&\text{si }x>0\\1&\text{si }x=0\end{cases},$$
+alors ==$\hat{f}$ est le prolongement par continuité de $f$ en $0$.==]]`,
+    },
+
+    // Analyse, p. 4 et page suivante. Quotient par x rétabli d'après le calcul (lecture : ln(1+x)).
+    {
+      id: 'continuite-derivabilite-morceaux',
+      domaine: 'analyse',
+      chapitre: 'Fonctions',
+      titre: "Continuité et dérivabilité d'une fonction définie par morceaux en un point",
+      motsCles: ['taux d\'accroissement', 'limite à gauche', 'limite à droite', 'dérivée'],
+      corps: String.raw`!! $\odot$ Montrons la continuité et la dérivabilité en $0$ de :
+$$f:x\mapsto\begin{cases}\dfrac{\ln(1+x)}{x}&\text{si }x\in\,]-1,0[\,\cup\,]0;+\infty[\\1&\text{si }x=0\end{cases}$$
+
+• $\begin{cases}\lim\limits_{0^-}f=1\\f(0)=1\\\lim\limits_{0^+}f=1\end{cases}$
+
+Donc : $\lim\limits_{0^-}f=f(0)=\lim\limits_{0^+}f$
+
+Donc, par théorème, ==$\lim\limits_{0}f$ existe et vaut $f(0)$==
+
+Donc, [[$f$ est continue en $0$.]]
+
+!! • Montrons que $f$ est dérivable en $0$, et calculons $f'(0)$.
+
+==Pour ce faire, formons le taux d'accroissement de $f$ en $0$, noté $T_{f,0}$.==
+
+• ==$\lim\limits_{0}T_{f,0}$ existe, est finie et vaut $-\dfrac{1}{2}$.==
+
+Donc, [[$f$ est dérivable en $0$ et $f'(0)=-\dfrac{1}{2}$]]`,
+    },
+
+    // Analyse, p. 5 et page suivante. C^2 corrigé (lecture : C_2).
+    {
+      id: 'taylor-young-ordre-2',
+      domaine: 'analyse',
+      chapitre: 'Fonctions',
+      titre: "Taylor Young à l'ordre 2",
+      motsCles: ['développement limité', 'DL2', 'classe C2', 'dérivée seconde'],
+      corps: String.raw`!! $\odot$ Déterminons un DL2 en $0$ de $x\mapsto\dfrac{1}{2+3x}$
+
+• $\mathcal{D}f=\R\setminus\left\{-\dfrac{2}{3}\right\}$
+
+• $x\mapsto2+3x$ est $C^2$ sur $\left[-\dfrac{1}{3};1\right]$.
+
+Donc ==$f$ est de classe $C^2$== sur $\left[-\dfrac{1}{3};1\right]$ en tant qu'inverse d'une telle fonction ne s'annulant pas sur $\left[-\dfrac{1}{3};1\right]$
+
+De plus, ==$0\in\left[-\dfrac{1}{3};1\right]$==
+
+• ==Donc, d'après la formule de Taylor-Young à l'ordre 2, $f$ possède un DL2 donné par :==
+$$(*)\quad f(x)\underset{x\to0}{=}f(0)+f'(0)(x-0)+\frac{f''(0)}{2}(x-0)^2+o((x-0)^2)$$
+
+• $f$ étant $C^2$ sur $\left[-\dfrac{1}{3};1\right]$, $f$ est a fortiori ==deux fois dérivable sur cet intervalle==, et :
+$$\forall x\in\left[-\frac{1}{3};1\right],\ f'(x)=-3(2+3x)^{-2}$$
+De plus,
+$$\forall x\in\left[-\frac{1}{3};1\right],\ f''(x)=18(2+3x)^{-3}$$
+Donc :
+$$\begin{aligned}&*\ f(0)=\frac{1}{2}\\[.4em]&*\ f'(0)=-\frac{3}{4}\\[.4em]&*\ f''(0)=\frac{9}{4}\end{aligned}$$
+
+Donc, ==d'après $(*)$==, [[$f$ possède un DL2 en $0$ donné par :
+$$f(x)\underset{x\to0}{=}\frac{1}{2}-\frac{3}{4}x+\frac{9}{8}x^2+o(x^2)$$]]`,
+    },
+
+    // Analyse, p. 6
+    {
+      id: 'asymptote-oblique',
+      domaine: 'analyse',
+      chapitre: 'Fonctions',
+      titre: 'Asymptote oblique à la courbe de $f$',
+      motsCles: ['asymptote', 'limite', 'droite'],
+      corps: String.raw`!! $\odot$ Montrons que $f:x\mapsto3x-3+\dfrac{11}{x+2}$ admet une asymptote oblique en $+\infty$.
+
+• On a :
+$$\forall x\in\R_+,\ f(x)-(3x-3)=\frac{11}{x+2}$$
+• $\lim\limits_{x\to+\infty}\dfrac{11}{x+2}=0$
+• Donc, $\lim\limits_{x\to+\infty}f(x)-(3x-3)=0$
+
+Or, ==$(3,-3)\in\R^2$.==
+Donc, [[$\mathcal{C}f$ admet une asymptote oblique en $+\infty$ : ==la droite d'équation $y=3x-3$== est asymptote oblique à cette fonction.]]`,
+    },
+
+    // Analyse, p. 11 et page suivante. Par f_n corrigé (lecture : par f).
+    {
+      id: 'theoreme-bijection',
+      domaine: 'analyse',
+      chapitre: 'Fonctions',
+      titre: 'Théorème de la bijection',
+      motsCles: ['bijection monotone', 'unique solution', 'équation', 'antécédent', 'strictement croissante'],
+      corps: String.raw`!! $\odot$ Soit $n\in\N$. Montrons que l'équation $x^n+x^2+2x-1=0$ d'inconnue $x\in\R$ admet une unique solution dans $\R_+$.
+
+• Posons, pour tout $x\in\R_+$, $f_n(x)=x^n+x^2+2x-1$
+
+• On a :
+
+> $\odot$ $f_n$ est dérivable sur $\R_+$ donc __$f_n$ est continue sur $\R_+$__
+$\odot$ $f_n$ est __strictement croissante sur $\R_+$__
+$\odot$ On a :
+$$\begin{aligned}&*\ f_n(0)=-1\\[.4em]&*\ \lim_{+\infty}f_n=+\infty\end{aligned}$$
+
+• Donc, d'après les 3 points précédents $\odot$, d'après le théorème de la bijection monotone, $f_n$ induit une bijection de ==l'intervalle== $\R_+$ ==sur l'intervalle== $f_n(\R_+)$ et,
+$$\begin{aligned}f_n(\R_+)&=\left[f_n(0);\lim_{+\infty}f_n\right[\\&=[-1;+\infty[\end{aligned}$$
+
+Donc, tout élément de $[-1;+\infty[$ possède un unique antécédent par $f_n$ ==dans $\R_+$.==
+Or, $0\in[-1;+\infty[$
+Donc, $0$ possède un unique antécédent par $f_n$ ==dans $\R_+$.==
+Donc, l'équation $f_n(x)=0$ d'inconnue $x\in\R$ ==possède== une unique solution dans $\R_+$
+
+Donc, [[l'équation $x^n+x^2+2x-1=0$ d'inconnue $x\in\R$ possède une unique solution dans $\R_+$, et ce pour tout $n\in\N$.]]`,
+    },
+
+    // Analyse, p. 7 et page suivante
+    {
+      id: 'suite-arithmetico-geometrique',
+      domaine: 'analyse',
+      chapitre: 'Suites',
+      titre: 'Terme général suite arithmético-géométrique',
+      motsCles: ['point fixe', 'suite géométrique', 'raison'],
+      corps: String.raw`!! $\odot$ Déterminons le terme général de $(V_n)_{n\in\N}$ définie par : $\begin{cases}\forall n\in\N,\ V_{n+1}=2V_n+1\\V_0=e^2\end{cases}$
+
+• On a : ==$2\neq1$==
+Donc $(V_n)_{n\in\N}$ est une suite __arithmético-géométrique__
+
+• On a :
+$$\forall x\in\R,\ x=2x+1\Longleftrightarrow x=\fluo{-1}$$
+
+• Montrons que ==$(V_n-(-1))$==$_{n\in\N}$ est __géométrique__
+On a :
+$$\begin{aligned}\forall n\in\N,\ V_{n+1}-(-1)&=2V_n+1-(-1)\\&=2V_n+2\\&=2(V_n+1)\\&=2(V_n-(-1))\end{aligned}$$
+Donc, $(V_n-(-1))_{n\in\N}$ est __géométrique de raison 2.__
+
+• Donc, par théorème :
+$$\begin{aligned}\forall n\in\N,\ V_n-(-1)&=(V_0-(-1))2^n\\&=(e^2+1)2^n\end{aligned}$$
+Donc :
+[[$\forall n\in\N,\ V_n=(e^2+1)2^n-1$]]`,
+    },
+
+    // Analyse, deux pages suivantes. V_{n+2} corrigé (lecture : U_{n+2}).
+    {
+      id: 'suite-recurrente-lineaire-ordre-2',
+      domaine: 'analyse',
+      chapitre: 'Suites',
+      titre: "Terme général d'une suite récurrente linéaire d'ordre 2",
+      motsCles: ['équation caractéristique', 'récurrence linéaire'],
+      corps: String.raw`!! $\odot$ Déterminons le terme général de $(V_n)_{n\in\N}$ définie par : $\begin{cases}V_0=0\\V_1=\ln(2)\\\forall n\in\N,\ V_{n+2}=\dfrac{1}{2}V_{n+1}+\dfrac{1}{2}V_n\end{cases}$
+
+• $(V_n)_{n\in\N}$ __vérifie__ une relation de récurrence linéaire d'ordre 2.
+
+• Résolvons __l'équation caractéristique $(E)$__ associée à la relation de récurrence __vérifiée__ par $(V_n)_{n\in\N}$.
+
+$(E)$ est l'équation du second degré :
+$$E(x):x^2-\frac{1}{2}x-\frac{1}{2}=0\ \text{ d'inconnue }x\in\R.$$
+__L'ensemble des solutions de $(E)$__, noté $\mathcal{S}(E)$ est donné par :
+$$\mathcal{S}(E)=\left\{-\frac{1}{2};1\right\}$$
+Donc, $(E)$ possède deux solutions réelles distinctes.
+Donc, par théorème $\left(\fluo{\dfrac{1}{2}\neq0}\right)$, ==on dispose de== $(\lambda,\mu)\in\R^2$ tel que :
+$$\forall n\in\N,\ V_n=\lambda\left(-\frac{1}{2}\right)^n+\mu1^n$$
+Donc :
+$$\forall n\in\N,\ V_n=\lambda\left(-\frac{1}{2}\right)^n+\mu\quad(*)$$
+Donc, ==en particulier, « pour $n=0$ » et « pour $n=1$ »== :
+$$\begin{cases}\mu=\dfrac{2}{3}\ln(2)\\[.6em]\lambda=-\dfrac{2}{3}\ln(2)\end{cases}$$
+Donc, d'après $*$ :
+[[$\forall n\in\N,\ V_n=\dfrac{2}{3}\ln(2)\left(1-\left(-\dfrac{1}{2}\right)^n\right)$]]`,
+    },
+
+    // Analyse, p. 9 et page suivante
+    {
+      id: 'squelette-recurrence',
+      domaine: 'analyse',
+      chapitre: 'Suites',
+      titre: 'Squelette de la récurrence',
+      motsCles: ['initialisation', 'hérédité', 'conclusion', 'raisonnement par récurrence'],
+      corps: String.raw`• Notons, pour tout $n\in\N$, $P_n$ : « $U_n$ »
+• Montrons que $P_n$ est vraie pour tout $n\in\N$ __en raisonnant par récurrence__
+
+!! $\odot$ __Initialisation :__
+
+Montrons $P_0$
+$\vdots$
+Donc $U_0$
+==Donc $P_0$==
+
+!! $\odot$ __Hérédité :__
+
+==Soit $n\in\N$.==
+Supposons $P_n$.
+Montrons $P_{n+1}$.
+$\vdots$
+Donc $U_{n+1}$
+==Donc $P_{n+1}$==
+
+!! $\odot$ __Conclusion :__
+
+__En vertu du principe de récurrence,__ $P_n$ est vraie pour tout $n\in\N$.
+
+Donc, [[pour tout $n\in\N$, $U_n$.]]
+
+{{⚠ utiliser des alinéas}}`,
+    },
+
+    // Analyse, p. 10
+    {
+      id: 'variations-suite-recurrente',
+      domaine: 'analyse',
+      chapitre: 'Suites',
+      titre: "Méthode : Variations d'une suite du type $U_{n+1}=f(U_n)$",
+      motsCles: ['monotonie', 'croissante', 'signe', 'suite récurrente'],
+      corps: String.raw`!! $\odot$ __Méthode 1 :__
+
+==$U_{n+1}-U_n$== avec : factorisation / tableau de signe / encadrement
+
+!! $\odot$ __Méthode 2 :__
+
+étude du signe de ==$h:x\mapsto f(x)-x$==
+
+!! $\odot$ __Méthode 3 :__
+
+Si $f$ est croissante sur un intervalle contenant tous les termes de $(U_n)_{n\in\N}$, on peut raisonner ==par récurrence==.`,
+    },
+
+    // Analyse, p. 12
+    {
+      id: 'nature-serie-numerique',
+      domaine: 'analyse',
+      chapitre: 'Séries',
+      titre: "Déterminer la nature d'une série numérique",
+      motsCles: ['divergence', 'sommes partielles', 'somme usuelle'],
+      corps: String.raw`!! • Déterminons la nature de : $\sum\limits_{k\geqslant0}1$
+
+On a :
+$$\begin{aligned}\forall n\in\N,\ \sum_{k=0}^{n}1&\underset{(1)}{=}(n+1)1\\&=n+1\end{aligned}$$
+
+$(1)$ : somme usuelle
+Or, $\lim\limits_{n\to+\infty}(n+1)=+\infty$
+
+Donc, $\lim\limits_{n\to+\infty}\sum\limits_{k=0}^{n}1$ existe certes, mais n'est pas finie.
+
+Donc, [[$\sum\limits_{k\geqslant0}1$ diverge]]`,
+    },
+
+    // Analyse, p. 13 et page suivante
+    {
+      id: 'series-geometriques-derivees',
+      domaine: 'analyse',
+      chapitre: 'Séries',
+      titre: 'Séries géométriques/dérivées',
+      motsCles: ['série géométrique', 'convergence', 'changement d\'indice', 'somme'],
+      corps: String.raw`!! • Montrons que la série $\sum\limits_{k\geqslant1}\left(\dfrac{1}{4}\right)^{2k+1}$ converge.
+
+On a :
+$$\begin{aligned}\forall k\in\N^*,\ \left(\frac{1}{4}\right)^{2k+1}&=\dots\\&=\frac{1}{64}\times\left(\frac{1}{16}\right)^{k-1}\end{aligned}$$
+
+On reconnaît le __terme général de la série géométrique de paramètre $\dfrac{1}{16}$__, à une constante multiplicative près $\left(\dfrac{1}{64}\right)$ et à un changement d'indice par translation près (« $i=k-1$ »)
+Or, $\dfrac{1}{16}\in\,]-1;1[$
+Donc, par théorème, $\sum\limits_{k\geqslant1}\dfrac{1}{64}\times\left(\dfrac{1}{16}\right)^{k-1}$ converge et :
+$$\sum_{k=1}^{+\infty}\frac{1}{64}\times\left(\frac{1}{16}\right)^{k-1}=\frac{1}{60}$$
+
+Donc, [[la série $\sum\limits_{k\geqslant1}\left(\dfrac{1}{4}\right)^{2k+1}$ converge et :
+$$\sum_{k=1}^{+\infty}\left(\frac{1}{4}\right)^{2k+1}=\frac{1}{60}$$]]`,
+    },
+
+    // Analyse, p. 14
+    {
+      id: 'comparaison-series-termes-positifs',
+      domaine: 'analyse',
+      chapitre: 'Séries',
+      titre: 'Formulation pour la comparaison des séries à termes positifs',
+      motsCles: ['critère de comparaison', 'inégalité', 'négligeabilité', 'équivalence', 'convergence'],
+      corps: String.raw`!! {{$\odot$ __Par inégalité :__}}
+
+« Donc, d'après un critère de comparaison (par inégalité) dans le contexte des séries à termes positifs, la série $\sum\limits_{k\geqslant\dots}\dots$ converge »
+
+!! {{$\odot$ __Par négligeabilité :__}}
+
+« Donc, d'après un critère de {{?}} (par négligeabilité), ... »
+
+!! {{$\odot$ __Par équivalence :__}}
+
+« Donc, d'après un critère de comparaison (par équivalence), ... »`,
     },
   ],
 };
