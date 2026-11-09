@@ -1,0 +1,306 @@
+(() => {
+  'use strict';
+
+  const DOMAINES = [
+    { id: 'algebre', nom: 'Algèbre' },
+    { id: 'analyse', nom: 'Analyse' },
+    { id: 'probabilites', nom: 'Probabilités' },
+  ];
+
+  const { chapitres = {}, modeles = [] } = window.CAHIER || {};
+  const view = document.getElementById('view');
+  const input = document.getElementById('q');
+
+  const MACROS = {
+    '\\R': '\\mathbb{R}', '\\N': '\\mathbb{N}', '\\Z': '\\mathbb{Z}',
+    '\\Q': '\\mathbb{Q}', '\\C': '\\mathbb{C}', '\\K': '\\mathbb{K}',
+    '\\E': '\\mathbb{E}', '\\V': '\\mathbb{V}', '\\P': '\\mathbb{P}',
+    '\\ent': '\\llbracket #1,#2 \\rrbracket',
+    '\\Vect': '\\operatorname{Vect}', '\\rg': '\\operatorname{rg}', '\\Sp': '\\operatorname{Sp}',
+    '\\fluo': '\\htmlClass{fluo}{#1}', '\\rouge': '\\htmlClass{rouge}{#1}',
+  };
+
+  const sansAccent = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const norm = (s) => sansAccent(s).toLowerCase().replace(/œ/g, 'oe');
+  const slug = (s) => norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const echappe = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  const MATH = /\$\$[\s\S]+?\$\$|\$(?:\\.|[^$\\\n])+\$/g;
+  const PUA = 0xe000;
+
+  function maths(src, display) {
+    if (!window.katex) return echappe(src);
+    return window.katex.renderToString(src, { displayMode: display, throwOnError: false, strict: false, trust: true, macros: { ...MACROS } });
+  }
+
+  // Marque les termes cherchés dans le texte, jamais dans les formules.
+  function surligne(texte, termes) {
+    if (!termes || !termes.length) return texte;
+    const chars = Array.from(texte);
+    const plat = chars.map((c) => { const n = norm(c); return n.length === 1 ? n : c; }).join('');
+    if (plat.length !== texte.length) return texte;
+    const marques = new Array(plat.length).fill(false);
+    for (const t of termes) {
+      let i = plat.indexOf(t);
+      while (i !== -1) {
+        marques.fill(true, i, i + t.length);
+        i = plat.indexOf(t, i + t.length);
+      }
+    }
+    let sortie = '';
+    let ouvert = false;
+    chars.forEach((c, i) => {
+      if (marques[i] !== ouvert) { sortie += marques[i] ? '\u0001' : '\u0002'; ouvert = marques[i]; }
+      sortie += c;
+    });
+    return sortie + (ouvert ? '\u0002' : '');
+  }
+
+  function enLigne(src, termes) {
+    const formules = [];
+    const sansMaths = src.replace(MATH, (m) => {
+      formules.push(m.startsWith('$$') ? maths(m.slice(2, -2), true) : maths(m.slice(1, -1), false));
+      return String.fromCharCode(PUA + formules.length - 1);
+    });
+    return echappe(surligne(sansMaths, termes))
+      .replace(/\*\*(.+?)\*\*/gs, '<strong>$1</strong>')
+      .replace(/__(.+?)__/gs, '<u>$1</u>')
+      .replace(/==(.+?)==/gs, '<span class="fluo">$1</span>')
+      .replace(/\[\[(.+?)\]\]/gs, '<span class="encadre">$1</span>')
+      .replace(/\u0001/g, '<mark>')
+      .replace(/\u0002/g, '</mark>')
+      .replace(/\n/g, '<br>')
+      .replace(/[-]/g, (c) => formules[c.charCodeAt(0) - PUA]);
+  }
+
+  function corps(src, termes) {
+    return src.trim().split(/\n\s*\n/).map((bloc) => {
+      const net = bloc.replace(/\n?(\$\$[\s\S]+?\$\$)\n?/g, '$1');
+      if (net.startsWith('!!')) return `<p class="enonce">${enLigne(net.slice(2).trim(), termes)}</p>`;
+      if (/^>\s?/.test(net)) {
+        return `<p class="retrait">${enLigne(net.replace(/^>\s?/gm, ''), termes)}</p>`;
+      }
+      return `<p>${enLigne(net, termes)}</p>`;
+    }).join('');
+  }
+
+  // Chapitres d'un domaine : ordre déclaré, puis ordre d'apparition.
+  function chapitresDe(domaine) {
+    const noms = [...(chapitres[domaine] || [])];
+    for (const m of modeles) {
+      if (m.domaine === domaine && !noms.includes(m.chapitre)) noms.push(m.chapitre);
+    }
+    return noms
+      .map((nom) => ({ nom, id: slug(nom), modeles: modeles.filter((m) => m.domaine === domaine && m.chapitre === nom) }))
+      .filter((c) => c.modeles.length);
+  }
+
+  const CHEVRON = '<svg class="chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4"/></svg>';
+  const modeleParId = new Map(modeles.map((m) => [m.id, m]));
+  const ouverts = new Set();
+  let termesActifs = [];
+
+  function ligne(m, n, i, contexte) {
+    const ouvert = ouverts.has(m.id);
+    const sous = contexte ? `<small>${echappe(nomDomaine(m.domaine))} · ${echappe(m.chapitre)}</small>` : '';
+    return `<article class="m${ouvert ? ' open' : ''}" data-id="${echappe(m.id)}" style="--i:${Math.min(i, 16)}">
+      <h3><button class="m-tete" type="button" aria-expanded="${ouvert}" aria-controls="p-${echappe(m.id)}">
+        <span class="n">${n}</span>
+        <span class="t">${enLigne(m.titre, termesActifs)}${sous}</span>
+        ${CHEVRON}
+      </button></h3>
+      <div class="m-panel" id="p-${echappe(m.id)}"><div class="m-clip"><div class="m-corps">${ouvert ? contenu(m) : ''}</div></div></div>
+    </article>`;
+  }
+
+  const nomDomaine = (id) => DOMAINES.find((d) => d.id === id).nom;
+
+  function contenu(m) {
+    const source = m.source ? `<span class="source">${echappe(m.source)}</span>` : '';
+    return corps(m.corps, termesActifs) + source;
+  }
+
+  function basculer(article, etat) {
+    const m = modeleParId.get(article.dataset.id);
+    const ouvrir = etat ?? !article.classList.contains('open');
+    const zone = article.querySelector('.m-corps');
+    if (ouvrir && !zone.innerHTML) zone.innerHTML = contenu(m);
+    article.classList.toggle('open', ouvrir);
+    article.querySelector('.m-tete').setAttribute('aria-expanded', ouvrir);
+    if (ouvrir) ouverts.add(m.id); else ouverts.delete(m.id);
+  }
+
+  // Vues
+  function vueAccueil() {
+    return `<div class="grille">${DOMAINES.map((d, i) => {
+      const chaps = chapitresDe(d.id);
+      const total = chaps.reduce((s, c) => s + c.modeles.length, 0);
+      return `<section class="rubrique monte" style="--i:${i * 3}">
+        <a href="#/${d.id}"><h2>${d.nom}</h2><span class="nb">${total}</span></a>
+        <ul>${chaps.map((c) => `<li><a href="#/${d.id}/${c.id}"><span>${echappe(c.nom)}</span><span class="nb">${c.modeles.length}</span></a></li>`).join('')}</ul>
+      </section>`;
+    }).join('')}</div>`;
+  }
+
+  function vueDomaine(d) {
+    const chaps = chapitresDe(d.id);
+    const entete = `<div class="entete monte"><h1>${d.nom}</h1>${chaps.length ? `<button class="bascule" type="button">Tout déplier</button>` : ''}</div>`;
+    if (!chaps.length) return `${entete}<p class="vide">Aucun modèle.</p>`;
+    let i = 0;
+    return `${entete}<div class="colonnes">
+      <nav class="rail monte" style="--i:2" aria-label="Chapitres"><ol>${chaps.map((c) => `<li><a href="#/${d.id}/${c.id}" data-chap="${c.id}">${echappe(c.nom)}</a></li>`).join('')}</ol></nav>
+      <div>${chaps.map((c) => `<section class="chap" id="${c.id}"><h2 class="monte" style="--i:${Math.min(i, 16)}">${echappe(c.nom)}</h2>
+        <div class="liste">${c.modeles.map((m, n) => ligne(m, n + 1, i++)).join('')}</div>
+      </section>`).join('')}</div>
+    </div>`;
+  }
+
+  // Recherche
+  const index = modeles.map((m) => ({
+    m,
+    titre: norm(m.titre),
+    mots: norm((m.motsCles || []).join(' ')),
+    chap: norm(`${nomDomaine(m.domaine)} ${m.chapitre}`),
+    corps: norm(m.corps.replace(/\\[a-zA-Z]+/g, ' ').replace(/[$*_{}>!=&\\[\]]/g, ' ')),
+  }));
+
+  function chercher(q) {
+    const termes = norm(q).split(/\s+/).filter(Boolean);
+    const trouves = [];
+    for (const e of index) {
+      let score = 0;
+      const tous = termes.every((t) => {
+        const s = (e.titre.includes(t) ? 8 : 0) + (e.mots.includes(t) ? 4 : 0) + (e.chap.includes(t) ? 2 : 0) + (e.corps.includes(t) ? 1 : 0);
+        score += s;
+        return s > 0;
+      });
+      if (tous) trouves.push({ m: e.m, score });
+    }
+    trouves.sort((a, b) => b.score - a.score);
+    return { termes, resultats: trouves.map((r) => r.m) };
+  }
+
+  function afficherRecherche(q) {
+    const { termes, resultats } = chercher(q);
+    termesActifs = termes;
+    vueCourante = null;
+    observateur?.disconnect();
+    view.classList.remove('anim');
+    marquerDomaine(null);
+    view.innerHTML = `<div class="resultats">${resultats.length
+      ? `<div class="liste">${resultats.map((m, i) => ligne(m, i + 1, i, true)).join('')}</div>`
+      : '<p class="vide">Aucun résultat.</p>'}</div>`;
+  }
+
+  // Navigation
+  let vueCourante = null;
+  let observateur = null;
+
+  function marquerDomaine(id) {
+    document.querySelectorAll('.domains a').forEach((a) => {
+      if (a.dataset.d === id) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+  }
+
+  function suivreChapitres() {
+    observateur?.disconnect();
+    const liens = new Map([...view.querySelectorAll('[data-chap]')].map((a) => [a.dataset.chap, a]));
+    if (!liens.size) return;
+    const activer = (id) => {
+      liens.forEach((a, k) => { if (k === id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    };
+    activer(liens.keys().next().value);
+    observateur = new IntersectionObserver((entrees) => {
+      for (const e of entrees) if (e.isIntersecting) activer(e.target.id);
+    }, { rootMargin: '-120px 0px -70% 0px' });
+    view.querySelectorAll('.chap').forEach((s) => observateur.observe(s));
+  }
+
+  function afficher(html, cle, apres) {
+    view.classList.remove('anim');
+    void view.offsetWidth;
+    view.innerHTML = html;
+    view.classList.add('anim');
+    vueCourante = cle;
+    apres();
+  }
+
+  function vers(chapitre, doux) {
+    const cible = chapitre && document.getElementById(chapitre);
+    if (cible) cible.scrollIntoView({ behavior: doux ? 'smooth' : 'auto' });
+  }
+
+  function route() {
+    const [d, chapitre] = location.hash.replace(/^#\/?/, '').split('/');
+    const domaine = DOMAINES.find((x) => x.id === d);
+    const cle = domaine ? domaine.id : 'accueil';
+    termesActifs = [];
+    marquerDomaine(domaine ? domaine.id : null);
+    if (cle === vueCourante) { vers(chapitre, true); return; }
+    ouverts.clear();
+    afficher(domaine ? vueDomaine(domaine) : vueAccueil(), cle, () => {
+      if (chapitre) vers(chapitre, false);
+      else window.scrollTo({ top: 0, behavior: 'auto' });
+      if (domaine) suivreChapitres();
+      else observateur?.disconnect();
+    });
+  }
+
+  // Événements
+  view.addEventListener('click', (e) => {
+    const tete = e.target.closest('.m-tete');
+    if (tete) { basculer(tete.closest('.m')); return; }
+
+    const bascule = e.target.closest('.bascule');
+    if (bascule) {
+      const ouvrir = bascule.textContent === 'Tout déplier';
+      view.querySelectorAll('.m').forEach((a) => basculer(a, ouvrir));
+      bascule.textContent = ouvrir ? 'Tout replier' : 'Tout déplier';
+      return;
+    }
+
+    const chap = e.target.closest('[data-chap]');
+    if (chap) {
+      e.preventDefault();
+      history.replaceState(null, '', chap.getAttribute('href'));
+      vers(chap.dataset.chap, true);
+    }
+  });
+
+  document.querySelector('.top').addEventListener('click', (e) => {
+    const lien = e.target.closest('a');
+    if (lien && input.value) {
+      input.value = '';
+      if (lien.getAttribute('href') === location.hash) route();
+    }
+  });
+
+  input.addEventListener('input', () => {
+    if (input.value.trim()) afficherRecherche(input.value);
+    else { ouverts.clear(); route(); }
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const premier = view.querySelector('.resultats .m');
+      if (premier) { basculer(premier, true); input.blur(); }
+    } else if (e.key === 'Escape') {
+      input.value = '';
+      input.dispatchEvent(new Event('input'));
+      input.blur();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const raccourci = (e.key === '/' && !e.metaKey && !e.ctrlKey) || (e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey));
+    if (raccourci && document.activeElement !== input) {
+      e.preventDefault();
+      input.focus();
+      input.select();
+    }
+  });
+
+  addEventListener('hashchange', route);
+  route();
+})();
