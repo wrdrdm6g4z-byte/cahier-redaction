@@ -74,13 +74,14 @@
   }
 
   function corps(src, termes) {
-    return src.trim().split(/\n\s*\n/).map((bloc) => {
+    return src.trim().split(/\n\s*\n/).map((bloc, i) => {
       const net = bloc.replace(/\n?(\$\$[\s\S]+?\$\$)\n?/g, '$1');
-      if (net.startsWith('!!')) return `<p class="enonce">${enLigne(net.slice(2).trim(), termes)}</p>`;
+      const rang = `style="--c:${Math.min(i, 10)}"`;
+      if (net.startsWith('!!')) return `<p class="enonce" ${rang}>${enLigne(net.slice(2).trim(), termes)}</p>`;
       if (/^>\s?/.test(net)) {
-        return `<p class="retrait">${enLigne(net.replace(/^>\s?/gm, ''), termes)}</p>`;
+        return `<p class="retrait" ${rang}>${enLigne(net.replace(/^>\s?/gm, ''), termes)}</p>`;
       }
-      return `<p>${enLigne(net, termes)}</p>`;
+      return `<p ${rang}>${enLigne(net, termes)}</p>`;
     }).join('');
   }
 
@@ -95,7 +96,10 @@
       .filter((c) => c.modeles.length);
   }
 
-  const CHEVRON = '<svg class="chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4"/></svg>';
+  const PLUS = '<svg class="plus" viewBox="0 0 13 13" aria-hidden="true"><path d="M1 6.5h11"/><path class="v" d="M6.5 1v11"/></svg>';
+  const EASE = 'cubic-bezier(.22, 1, .36, 1)';
+  const reduit = matchMedia('(prefers-reduced-motion: reduce)');
+  const rendus = new Map();
   const modeleParId = new Map(modeles.map((m) => [m.id, m]));
   const ouverts = new Set();
   let termesActifs = [];
@@ -107,7 +111,7 @@
       <h3><button class="m-tete" type="button" aria-expanded="${ouvert}" aria-controls="p-${echappe(m.id)}">
         <span class="n">${n}</span>
         <span class="t">${enLigne(m.titre, termesActifs)}${sous}</span>
-        ${CHEVRON}
+        ${PLUS}
       </button></h3>
       <div class="m-panel" id="p-${echappe(m.id)}"><div class="m-clip"><div class="m-corps">${ouvert ? contenu(m) : ''}</div></div></div>
     </article>`;
@@ -117,7 +121,9 @@
 
   function contenu(m) {
     const source = m.source ? `<span class="source">${echappe(m.source)}</span>` : '';
-    return corps(m.corps, termesActifs) + source;
+    if (termesActifs.length) return corps(m.corps, termesActifs) + source;
+    if (!rendus.has(m.id)) rendus.set(m.id, corps(m.corps) + source);
+    return rendus.get(m.id);
   }
 
   function basculer(article, etat) {
@@ -125,6 +131,10 @@
     const ouvrir = etat ?? !article.classList.contains('open');
     const zone = article.querySelector('.m-corps');
     if (ouvrir && !zone.innerHTML) zone.innerHTML = contenu(m);
+    if (ouvrir && etat === undefined) {
+      article.classList.add('ouvre');
+      setTimeout(() => article.classList.remove('ouvre'), 1100);
+    }
     article.classList.toggle('open', ouvrir);
     article.querySelector('.m-tete').setAttribute('aria-expanded', ouvrir);
     if (ouvrir) ouverts.add(m.id); else ouverts.delete(m.id);
@@ -132,23 +142,23 @@
 
   // Vues
   function vueAccueil() {
-    return `<div class="grille">${DOMAINES.map((d, i) => {
+    return `<div class="sommaire">${DOMAINES.map((d, i) => {
       const chaps = chapitresDe(d.id);
       const total = chaps.reduce((s, c) => s + c.modeles.length, 0);
-      return `<section class="rubrique monte" style="--i:${i * 3}">
-        <a href="#/${d.id}"><h2>${d.nom}</h2><span class="nb">${total}</span></a>
-        <ul>${chaps.map((c) => `<li><a href="#/${d.id}/${c.id}"><span>${echappe(c.nom)}</span><span class="nb">${c.modeles.length}</span></a></li>`).join('')}</ul>
+      return `<section class="rubrique${total ? '' : ' sans'}" style="--i:${i * 3}">
+        <a class="r-tete" href="#/${d.id}"><h2><span class="revele"><span>${d.nom}</span></span></h2><span class="nb monte">${total}</span></a>
+        <ul class="monte">${chaps.map((c) => `<li><a href="#/${d.id}/${c.id}"><span>${echappe(c.nom)}</span><span class="nb">${c.modeles.length}</span></a></li>`).join('')}</ul>
       </section>`;
     }).join('')}</div>`;
   }
 
   function vueDomaine(d) {
     const chaps = chapitresDe(d.id);
-    const entete = `<div class="entete monte"><h1>${d.nom}</h1>${chaps.length ? `<button class="bascule" type="button">Tout déplier</button>` : ''}</div>`;
+    const entete = `<div class="entete"><h1><span class="revele"><span>${d.nom}</span></span></h1>${chaps.length ? `<button class="bascule monte" style="--i:6" type="button">Tout déplier</button>` : ''}</div>`;
     if (!chaps.length) return `${entete}<p class="vide">Aucun modèle.</p>`;
     let i = 0;
     return `${entete}<div class="colonnes">
-      <nav class="rail monte" style="--i:2" aria-label="Chapitres"><ol>${chaps.map((c) => `<li><a href="#/${d.id}/${c.id}" data-chap="${c.id}">${echappe(c.nom)}</a></li>`).join('')}</ol></nav>
+      <nav class="rail monte" style="--i:2" aria-label="Chapitres"><ol>${chaps.map((c) => `<li><a href="#/${d.id}/${c.id}" data-chap="${c.id}">${echappe(c.nom)}</a></li>`).join('')}<li class="curseur" aria-hidden="true"></li></ol></nav>
       <div>${chaps.map((c) => `<section class="chap" id="${c.id}"><h2 class="monte" style="--i:${Math.min(i, 16)}">${echappe(c.nom)}</h2>
         <div class="liste">${c.modeles.map((m, n) => ligne(m, n + 1, i++)).join('')}</div>
       </section>`).join('')}</div>
@@ -182,6 +192,9 @@
 
   function afficherRecherche(q) {
     const { termes, resultats } = chercher(q);
+    sortie?.cancel();
+    if (!view.querySelector('.resultats')) window.scrollTo({ top: 0, behavior: 'instant' });
+    const avant = new Map([...view.querySelectorAll('.resultats .m')].map((el) => [el.dataset.id, el.getBoundingClientRect().top]));
     termesActifs = termes;
     vueCourante = null;
     observateur?.disconnect();
@@ -190,17 +203,53 @@
     view.innerHTML = `<div class="resultats">${resultats.length
       ? `<div class="liste">${resultats.map((m, i) => ligne(m, i + 1, i, true)).join('')}</div>`
       : '<p class="vide">Aucun résultat.</p>'}</div>`;
+    if (reduit.matches) return;
+    // Les résultats conservés glissent vers leur nouvelle place, les nouveaux apparaissent.
+    view.querySelectorAll('.m').forEach((el, i) => {
+      if (i > 30) return;
+      const depart = avant.get(el.dataset.id);
+      if (depart === undefined) {
+        el.animate([{ opacity: 0, transform: 'translateY(7px)' }, { opacity: 1, transform: 'none' }], { duration: 320, delay: Math.min(i, 8) * 16, easing: EASE, fill: 'backwards' });
+      } else {
+        const ecart = depart - el.getBoundingClientRect().top;
+        if (ecart) el.animate([{ transform: `translateY(${ecart}px)` }, { transform: 'none' }], { duration: 380, easing: EASE });
+      }
+    });
   }
 
   // Navigation
   let vueCourante = null;
   let observateur = null;
+  let sortie = null;
+  const nav = document.querySelector('.domains');
+  const entete = document.querySelector('.top');
+
+  // Trait rouge qui glisse d'un lien actif à l'autre.
+  function placer(curseur, lien) {
+    if (!curseur) return;
+    if (!lien) { curseur.style.opacity = 0; return; }
+    const neuf = curseur.style.opacity !== '1';
+    if (neuf) curseur.style.transition = 'none';
+    curseur.style.setProperty('--x', `${lien.offsetLeft}px`);
+    curseur.style.setProperty('--y', `${lien.offsetTop}px`);
+    curseur.style.setProperty('--l', `${lien.offsetWidth}px`);
+    curseur.style.setProperty('--h', `${lien.offsetHeight}px`);
+    curseur.style.opacity = 1;
+    if (neuf) { void curseur.offsetWidth; curseur.style.transition = ''; }
+  }
+
+  function recaler() {
+    document.documentElement.style.setProperty('--top-h', `${entete.offsetHeight}px`);
+    placer(nav.querySelector('.curseur'), nav.querySelector('[aria-current]'));
+    placer(view.querySelector('.rail .curseur'), view.querySelector('[data-chap][aria-current]'));
+  }
 
   function marquerDomaine(id) {
-    document.querySelectorAll('.domains a').forEach((a) => {
+    nav.querySelectorAll('a').forEach((a) => {
       if (a.dataset.d === id) a.setAttribute('aria-current', 'page');
       else a.removeAttribute('aria-current');
     });
+    placer(nav.querySelector('.curseur'), nav.querySelector('[aria-current]'));
   }
 
   function suivreChapitres() {
@@ -209,6 +258,10 @@
     if (!liens.size) return;
     const activer = (id) => {
       liens.forEach((a, k) => { if (k === id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+      const lien = liens.get(id);
+      const rail = lien.closest('ol');
+      placer(rail.querySelector('.curseur'), lien);
+      if (rail.scrollWidth > rail.clientWidth) rail.scrollTo({ left: lien.offsetLeft - 16, behavior: 'smooth' });
     };
     activer(liens.keys().next().value);
     observateur = new IntersectionObserver((entrees) => {
@@ -218,17 +271,24 @@
   }
 
   function afficher(html, cle, apres) {
-    view.classList.remove('anim');
-    void view.offsetWidth;
-    view.innerHTML = html;
-    view.classList.add('anim');
-    vueCourante = cle;
-    apres();
+    const poser = () => {
+      view.classList.remove('anim');
+      void view.offsetWidth;
+      view.innerHTML = html;
+      view.classList.add('anim');
+      vueCourante = cle;
+      apres();
+    };
+    sortie?.cancel();
+    if (!view.firstChild || reduit.matches || document.hidden) { poser(); return; }
+    sortie = view.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-5px)' }], { duration: 150, easing: 'ease-in', fill: 'forwards' });
+    const courante = sortie;
+    courante.onfinish = () => { poser(); courante.cancel(); };
   }
 
   function vers(chapitre, doux) {
     const cible = chapitre && document.getElementById(chapitre);
-    if (cible) cible.scrollIntoView({ behavior: doux ? 'smooth' : 'auto' });
+    if (cible) cible.scrollIntoView({ behavior: doux ? 'smooth' : 'instant' });
   }
 
   function route() {
@@ -237,11 +297,12 @@
     const cle = domaine ? domaine.id : 'accueil';
     termesActifs = [];
     marquerDomaine(domaine ? domaine.id : null);
+    sortie?.cancel();
     if (cle === vueCourante) { vers(chapitre, true); return; }
     ouverts.clear();
     afficher(domaine ? vueDomaine(domaine) : vueAccueil(), cle, () => {
       if (chapitre) vers(chapitre, false);
-      else window.scrollTo({ top: 0, behavior: 'auto' });
+      else window.scrollTo({ top: 0, behavior: 'instant' });
       if (domaine) suivreChapitres();
       else observateur?.disconnect();
     });
@@ -302,5 +363,20 @@
   });
 
   addEventListener('hashchange', route);
+  addEventListener('scroll', () => entete.classList.toggle('colle', scrollY > 8), { passive: true });
+  new ResizeObserver(recaler).observe(entete);
+  document.fonts?.ready.then(recaler);
   route();
+
+  // Prépare les formules en arrière-plan : l'ouverture d'un modèle est alors immédiate.
+  const inactif = window.requestIdleCallback || ((f) => setTimeout(f, 60));
+  let aPreparer = 0;
+  (function preparer() {
+    if (aPreparer >= modeles.length) return;
+    inactif(() => {
+      const m = modeles[aPreparer++];
+      if (!rendus.has(m.id)) rendus.set(m.id, corps(m.corps) + (m.source ? `<span class="source">${echappe(m.source)}</span>` : ''));
+      preparer();
+    });
+  })();
 })();

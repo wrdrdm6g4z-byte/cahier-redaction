@@ -5,6 +5,7 @@ Site statique pour GitHub Pages, public mais non référencé (`noindex`). Aucun
 ## Règles sur les modèles
 
 - Transcription **mot pour mot** des modèles du professeur : phrases, ordre, notations, exemple d'origine. Ne jamais reformuler, compléter, corriger, généraliser ou inventer.
+- Seule exception, autorisée par l'élève : corriger une erreur de calcul avérée, après vérification, et lui indiquer chaque correction. Le texte et la rédaction restent intouchés.
 - Un passage illisible ou douteux n'est pas deviné : demander à l'élève avant de l'ajouter.
 - Si une nouvelle source contredit un modèle existant, signaler la différence à l'élève au lieu de trancher seul.
 - Titres les plus sobres et austères possible. Aucun texte d'explication sur le site.
