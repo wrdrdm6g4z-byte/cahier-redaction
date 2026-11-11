@@ -1226,5 +1226,48 @@ Or, d'après 10), la suite réelle $(S_n)_{n\geqslant2}$ est croissante et major
 Donc, en vertu d'un théorème de limite monotone (dans le contexte des suites réelles), $(S_n)_{n\geqslant2}$ converge.
 Donc, en vertu des équivalences précédentes, [[$X$ admet une espérance.]]`,
     },
+    {
+      id: 'loi-binomiale-nombre-de-pile',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Montrer qu\'un nombre de succès suit une loi binomiale',
+      motsCles: ['loi binomiale', 'nombre de Pile', 'parties à k éléments', 'incompatibilité', 'indépendance', 'coefficient binomial', 'Proposition 82'],
+      source: 'Cours, Proposition 82',
+      corps: String.raw`!! **Proposition 82 - Exemple de référence**
+Soit $n\in\N^*$ et $p\in[0,1]$.
+On considère l'expérience aléatoire consistant à lancer $n$ fois une pièce de monnaie amenant Pile à chaque lancer avec la probabilité $p$.
+On se place dans un espace probabilisé $(\Omega,\mathcal{T},\P)$ adéquat modélisant la présente expérience aléatoire.
+On note $X$ la variable aléatoire égale au nombre de Pile obtenus.
+Alors : $X\hookrightarrow\mathcal{B}(n,p)$.
+
+Démonstration :
+Notons, pour tout $i\in\llbracket1,n\rrbracket$, $P_i$ : « Obtenir Pile au $i$ème lancer. »
+« Dans le pire des cas », les $n$ lancers amènent Face et $X$ prend alors la valeur $0$.
+« Dans le meilleur des cas », les $n$ lancers amènent Pile et $X$ prend alors la valeur $n$.
+Les cas intermédiaires étant possibles, $X(\Omega)=\llbracket0,n\rrbracket$.
+
+Soit $k\in X(\Omega)$
+Alors :
+l'événement $[X=k]$ est réalisé
+si et seulement si les $n$ lancers amènent très exactement $k$ Pile
+si et seulement si il existe une partie $I$ de $\llbracket1,n\rrbracket$ comportant $k$ éléments telle que, pour tout $i\in I$, $P_i$ est réalisé et pour tout $j\in\llbracket1,n\rrbracket\setminus I$, $\overline{P_j}$ est réalisé.
+Notons $\mathcal{P}_k(\llbracket1,n\rrbracket)$ l'ensemble des parties de $\llbracket1,n\rrbracket$ comportant $k$ éléments.
+Ainsi :
+$$[X=k]=\bigcup_{I\in\mathcal{P}_k(\llbracket1,n\rrbracket)}\left[\left(\bigcap_{i\in I}P_i\right)\cap\left(\bigcap_{j\in\llbracket1,n\rrbracket\setminus I}\overline{P_j}\right)\right]$$
+Or, les événements $\left(\displaystyle\bigcap_{i\in I}P_i\right)\cap\left(\displaystyle\bigcap_{j\in\llbracket1,n\rrbracket\setminus I}\overline{P_j}\right)$ ($I\in\mathcal{P}_k(\llbracket1,n\rrbracket)$) sont deux à deux incompatibles.
+Donc, __par incompatibilité__ et propriété d'additivité de $\P$ :
+$$\P(X=k)=\sum_{I\in\mathcal{P}_k(\llbracket1,n\rrbracket)}\P\left(\left(\bigcap_{i\in I}P_i\right)\cap\left(\bigcap_{j\in\llbracket1,n\rrbracket\setminus I}\overline{P_j}\right)\right)$$
+Donc, __par indépendance (mutuelle) des événements $P_i$ ($i\in\N^*$)__ induite par l'indépendance des lancers, nous avons :
+$$\P(X=k)=\sum_{I\in\mathcal{P}_k(\llbracket1,n\rrbracket)}\prod_{i\in I}\P(P_i)\prod_{j\in\llbracket1,n\rrbracket\setminus I}\P(\overline{P_j})$$
+Or, par hypothèse, la pièce amène Pile à chaque lancer avec la probabilité $p$, et donc Face avec la probabilité $1-p$, nous avons :
+$$\P(X=k)=\sum_{I\in\mathcal{P}_k(\llbracket1,n\rrbracket)}\prod_{i\in I}p\prod_{j\in\llbracket1,n\rrbracket\setminus I}(1-p)$$
+
+Ainsi,
+$$\begin{aligned}\P(X=k)&=\sum_{I\in\mathcal{P}_k(\llbracket1,n\rrbracket)}p^{\operatorname{card}(I)}(1-p)^{\operatorname{card}(\llbracket1,n\rrbracket\setminus I)}\\&=\sum_{I\in\mathcal{P}_k(\llbracket1,n\rrbracket)}p^k(1-p)^{n-k}\\&=p^k(1-p)^{n-k}\sum_{I\in\mathcal{P}_k(\llbracket1,n\rrbracket)}1\qquad(1)\\&=p^k(1-p)^{n-k}\operatorname{card}\left(\mathcal{P}_k(\llbracket1,n\rrbracket)\right)\\&=p^k(1-p)^{n-k}\binom{n}{k}\qquad(2)\\&=\binom{n}{k}p^k(1-p)^{n-k}\end{aligned}$$
+$(1)$ : par linéarité de $\sum$
+$(2)$ : par définition même des coefficients binomiaux, il y a très exactement $\dbinom{n}{k}$ parties de $\llbracket1,n\rrbracket$ comportant $k$ éléments.
+
+En vertu de qui précède, [[$X\hookrightarrow\mathcal{B}(n,p)$]]`,
+    },
   ],
 };
