@@ -1492,5 +1492,293 @@ $$\forall k\in\llbracket1,n\rrbracket,\ (k,k-1)\in\llbracket0,n\rrbracket^2$$
 Donc, d'après $(*)$ :
 $$\forall k\in\llbracket1,n\rrbracket,\ \P(M=k)=\left(\frac{k}{n}\right)^2-\left(\frac{k-1}{n}\right)^2$$`,
     },
+    {
+      id: 'loi-probabilites-totales-lois-conditionnelles',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Loi par la formule des probabilités totales (lois conditionnelles géométriques)',
+      motsCles: ['loi conditionnelle', 'schéma géométrique', 'loi géométrique', 'formule des probabilités totales', 'système complet d\'événements', 'SCE', 'double inclusion', 'Exercice 18'],
+      source: 'Exercice 18',
+      corps: String.raw`!! **Exercice 18 :** On dispose d'une urne comportant initialement 2 boules noires et 2 boules blanches.
+On considère l'expérience aléatoire consistant :
+• dans un premier temps, à extraire une boule dans cette urne, sans la remettre dans l'urne ;
+• dans un deuxième temps, à effectuer une série illimitée de tirages avec remise dans cette urne.
+On se place dans un espace probabilisé $(\Omega,\mathcal{T},\P)$ adéquat.
+On note $N$ : « la boule extraite et non remise dans l'urne est noire »
+On note $X$ la variable aléatoire égale au rang d'apparition de la première boule blanche, dans la succession illimitée de tirages.
+On admet que l'événement « Ne jamais tirer de boule blanche lors de la deuxième épreuve » est quasi-impossible.
+1) Déterminer la loi conditionnelle de $X$ sachant $N$.
+2) Déterminer la loi conditionnelle de $X$ sachant $\overline{N}$.
+3) Déduire des questions précédentes la loi de $X$.
+
+1) Déterminons la loi conditionnelle de $X$ sachant $N$.
+Par équiprobabilité lors de l'unique tirage effectué dans un 1er temps, et d'après le protocole :
+$$\begin{aligned}\P(N)&=\frac{2}{4}\\&=\frac{1}{2}\end{aligned}$$
+Donc, $\P(N)\neq0$.
+Donc, la loi de $X$ sachant $N$ est bien définie
+
+||$(*)$||Sachant $N$, on reconnaît un __schéma géométrique__
+Sachant $N$, $X$ est égale au rang d'apparition du 1er succès (« Obtenir une boule blanche »)
+suite à la répétition d'un nombre illimité d'épreuves de Bernoulli indépendantes (les tirages s'effectuent __avec remise__) dont la probabilité de succès à chaque épreuve vaut $\dfrac{2}{3}$ __par équiprobabilité à tous les tirages__
+Ainsi, [[sachant $N$, $X$ suit la loi géométrique de paramètre $\dfrac{2}{3}$.]]
+Donc, [[$$\begin{aligned}\forall k\in\N^*,\ \P_N(X=k)&=\left(1-\frac{2}{3}\right)^{k-1}\times\frac{2}{3}\\&=\left(\frac{1}{3}\right)^{k-1}\times\frac{2}{3}\end{aligned}$$]]
+
+2) De la même manière qu'en 1), on montre que [[la loi de $X$ sachant $\overline{N}$ est la loi géométrique de paramètre $1/3$.]]
+En effet, sachant $\overline{N}$ réalisé d'après le protocole, l'urne comporte très exactement $4-1$, autrement dit 3 boules dont 1 boule blanche, et ce avant chaque tirage effectué dans un deuxième temps
+Donc, [[$$\begin{aligned}\forall k\in\N^*,\ \P([X=k])&=\left(1-\frac{1}{3}\right)^{k-1}\times\frac{1}{3}\\&=\left(\frac{2}{3}\right)^{k-1}\times\frac{1}{3}\end{aligned}$$]]
+
+3) On suppose que $X$ prend la valeur $-1$ ssi « l'on ne tire jamais de boules blanches lors de la 2ème épreuve » est réalisé.
+D'après l'énoncé, $\P(X=-1)=0$
+Par définition de $X$, et d'après ce qui précède,
+$$X(\Omega)\subset\{-1\}\cup\N^*$$
+Soit $k\in\{-1\}\cup\N^*$
+__Raisonnons par disjonction des cas :__
+
+> $\odot$ __1er cas : $k=-1$__
+Alors, d'après ce qui précède, $\P([X=k])=0$
+
+> $\odot$ __2ème cas : $k\in\N^*$__
+Comme $N$ est un événement, par théorème, $\{N;\overline{N}\}$ est un SCE.
+Or, $\P(N)=\dfrac{1}{2}$ et $\dfrac{1}{2}\in\,]0,1[$
+Donc, $\begin{cases}\P(N)\neq0\\\P(\overline{N})\neq0\end{cases}$
+Donc, d'après la __formule des probabilités totales (avec conditionnement)__ relativement au SCE $\{N;\overline{N}\}$ de probabilité non nulle :
+$$\begin{aligned}\P(X=k)&=\P(N)\times\P_N(X=k)+\P(\overline{N})\P_{\overline{N}}(X=k)\\&\underset{(1)}{=}\frac{1}{2}\times\left(\frac{1}{3}\right)^{k-1}\times\frac{2}{3}+\left(1-\frac{1}{2}\right)\times\left(\frac{2}{3}\right)^{k-1}\times\frac{1}{3}\\&=\left(\frac{1}{3}\right)^k+\left(\frac{1}{6}\right)\left(\frac{2}{3}\right)^{k-1}\end{aligned}$$
+$(1)$ : d'après 1) et 2)
+
+Ainsi, $$\begin{cases}X(\Omega)\subset\{-1\}\cup\N^*\\\forall k\in\N^*,\ \P(X=k)=\left(\dfrac{1}{3}\right)^k+\dfrac{1}{6}\left(\dfrac{2}{3}\right)^{k-1}\\\P(X=-1)=0\end{cases}$$
+Or, $\forall k\in\N^*$, $\left(\dfrac{1}{3}\right)^k+\dfrac{1}{6}\left(\dfrac{2}{3}\right)^{k-1}>0$.
+Donc, $\forall k\in\N^*$, $\P(X=k)\neq0$
+Donc, nécessairement,
+$$\forall k\in\N^*,\ [X=k]\neq\emptyset.$$
+Donc,
+$$\forall k\in\N^*,\ \exists\omega\in\Omega,\ X(\omega)=k$$
+Donc, $\N^*\subset X(\Omega)$.
+Par ailleurs, si, dans un deuxième temps, on n'obtient que des boules noires (ce qui est possible d'après le protocole), alors $X$ prend la valeur $-1$.
+Donc, $-1\in X(\Omega)$
+Donc, $\{-1\}\cup\N^*\subset X(\Omega)$.
+Donc, __par double inclusion__, $X(\Omega)=\{-1\}\cup\N^*$.
+
+Ainsi, [[la loi de $X$ nous est donnée par : $$X(\Omega)=\{-1\}\cup\N^*$$ $$\forall k\in X(\Omega),\ \P([X=k])=\begin{cases}0&\text{si }k=-1\\\left(\dfrac{1}{3}\right)^k+\dfrac{1}{6}\left(\dfrac{2}{3}\right)^{k-1}&\text{sinon}\end{cases}$$ où l'on a supposé que $X$ prend la valeur $-1$ ssi tous les tirages effectués dans un second temps amènent une boule noire]]`,
+    },
+    {
+      id: 'variables-non-independantes',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Montrer que deux variables aléatoires ne sont pas indépendantes',
+      motsCles: ['indépendance', 'non indépendantes', 'contre-exemple', 'loi uniforme', 'somme de variables', 'Exercice 19'],
+      source: 'Exercice 19',
+      corps: String.raw`!! **Exercice 19 :** On considère deux urnes, $\mathcal{U}_1$ et $\mathcal{U}_2$ contenant chacune 5 boules numérotées de 1 à 5.
+On effectue un tirage au hasard dans $\mathcal{U}_1$ et on note $X_1$ le numéro obtenu, puis on effectue un tirage au hasard dans $\mathcal{U}_2$ et on note $X_2$ le numéro obtenu.
+On suppose que l'on dispose d'espace probabilisé $(\Omega,\mathcal{T},\P)$ modélisant la présente expérience aléatoire.
+1) Déterminer la loi de $X_1$ et la loi de $X_2$.
+2) $X_1$ et $X_2$ sont-elles indépendantes ?
+3) $X_1$ et $X_1+X_2$ sont-elles indépendantes ?
+
+1) $\odot$ Identifions la loi suivie par $X_1$.
+D'après l'énoncé et la définition de $X_1$,
+$$X_1(\Omega)=\llbracket1,5\rrbracket$$
+et __par équiprobabilité__ lors de l'unique tirage dans $\mathcal{U}_1$, $X$ prend chacune des 5 valeurs de l'ensemble $\llbracket1,5\rrbracket$ avec la même probabilité égale à $1/5$.
+Donc : [[$X_1\hookrightarrow\mathcal{U}(\llbracket1,5\rrbracket)$]]
+Autrement dit : [[$\begin{cases}X_1(\Omega)=\llbracket1,5\rrbracket\\\forall k\in X_1(\Omega),\ \P(X_1=k)=1/5\end{cases}$]]
+
+$\odot$ De même, par symétrie du protocole vis-à-vis des urnes 1 et 2, on a :
+[[$X_2\hookrightarrow\mathcal{U}(\llbracket1,5\rrbracket)$]]
+Autrement dit : [[$\begin{cases}X_2(\Omega)=\llbracket1,5\rrbracket\\\forall k\in X_2(\Omega),\ \P(X=k)=1/5\end{cases}$]]
+
+2) D'après le protocole (deux tirages effectués dans deux urnes physiquement indépendantes), [[$X_1$ et $X_2$ peuvent être supposées indépendantes pour $\P$.]]
+
+3) $\odot$ On a :
+$$\P(X_1=3)\underset{(1)}{=}1/5$$
+$(1)$ : d'après 1) (car $3\in\llbracket1,5\rrbracket$)
+
+$\odot$ Calculons : $\P(X_1+X_2=2)$
+On a :
+$[X_1+X_2=2]$ est réalisé $\underset{(1)}{\text{si et seulement si}}$ $[X_1=1]$ et $[X_2=1]$ sont réalisés
+$(1)$ : En effet, d'après 1), $\begin{cases}X_1(\Omega)=\llbracket1,5\rrbracket\\X_2(\Omega)=\llbracket1,5\rrbracket\end{cases}$
+Donc, $[X_1+X_2=2]=[X_1=1]\cap[X_2=1]$
+Donc, $$\begin{aligned}\P([X_1+X_2=2])&=\P([X_1=1]\cap[X_2=1])\\&\underset{(1)}{=}\P([X_1=1])\P([X_2=1])\\&\underset{(2)}{=}\frac{1}{5}\times\frac{1}{5}\\&=\frac{1}{25}\end{aligned}$$
+$(1)$ : Par indépendance de $X_1$ et $X_2$ par $\P$, justifiée en 2.
+$(2)$ : D'après 1), car $1\in\llbracket1,5\rrbracket$.
+
+Donc, d'après les 2 points $\odot$ précédents,
+$$\begin{aligned}\P(X_1=3)\P(X_1+X_2=2)&=\frac{1}{5}\times\frac{1}{25}\\&=\frac{1}{125}\end{aligned}$$
+Donc, $\P(X_1=3)\P(X_1+X_2=2)\neq0\ (*)$
+De plus,
+$$\begin{aligned}\P([X_1=3]\cap[X_1+X_2=2])&=\P([X_1=3]\cap[3+X_2=2])\\&=\P([X_1=3]\cap[X_2=-1])\\&\underset{(1)}{=}\P([X_1=3]\cap\emptyset)\\&\underset{(2)}{=}\P(\emptyset)\\&\underset{(3)}{=}0\end{aligned}$$
+$(1)$ : Comme, d'après 1), $X_2(\Omega)$ et comme $-1<1$, $[X_2=-1]=\emptyset$
+$(2)$ : Par absorbance de $\emptyset$ par « $\cap$ »
+$(3)$ : Par théorème
+Donc, $\P([X_1=3]\cap[X_1+X_2=2])=0\ (**)$
+Donc, d'après $(*)$ et $(**)$, $\P([X_1=3]\cap[X_1+X_2=2])\neq\P(X_1=3)\P(X_1+X_2=2)$
+Or, $\begin{cases}\text{d'après 1), }3\in X_1(\Omega)\\\text{comme }\P(X_1+X_2=2)\neq0,\ [X_1+X_2=2]\neq\emptyset\\\text{Donc, }2\in(X_1+X_2)(\Omega)\end{cases}$
+Donc : $\exists(x,y)\in X_1(\Omega)\times(X_1+X_2)(\Omega)$, $\P([X_1=x]\cap[X_1+X_2=y])\neq\P(X_1=x)\P(X_1+X_2=y)$
+Par ailleurs, $X_1$ et $X_1+X_2$ sont discrètes car $X_1$ et $X_2$ sont discrètes ($X_1(\Omega)$ et $X_2(\Omega)$ sont finis)
+Donc, $X_1$ et $X_1+X_2$ ne sont pas indépendantes`,
+    },
+    {
+      id: 'loi-produit-bernoulli-independantes',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Loi du produit XY : (XY)(Ω) par double inclusion',
+      motsCles: ['produit', 'XY', 'loi de Bernoulli', 'indépendance', 'raisonnement par l\'absurde', 'double inclusion', 'Exercice 20'],
+      source: 'Exercice 20, question 1)',
+      corps: String.raw`!! **Exercice 20 :** Soient $X$ et $Y$ deux variables aléatoires discrètes définies sur un espace probabilisé $(\Omega,\mathcal{T},\P)$.
+On suppose que $X$ et $Y$ sont indépendantes, et suivent toutes les deux la loi de Bernoulli de paramètre $\dfrac{1}{2}$.
+1) Déterminer la loi de $XY$.
+
+1) Par hypothèse, $X$ et $Y$ sont 2 VA définies sur $(\Omega,\mathcal{T},\P)$, suivant une loi de Bernoulli.
+Donc, $X$ et $Y$ sont 2 VAD définies sur $(\Omega,\mathcal{T},\P)$.
+Donc, par théorème, $XY$ est une VAD définie sur $(\Omega,\mathcal{T},\P)$.
+On a :
+$$(XY)(\Omega)\subset\{xy,\ (x,y)\in X(\Omega)\times Y(\Omega)\}$$
+Or, $$\begin{aligned}\{xy,\ (x,y)\in X(\Omega)\times Y(\Omega)\}&\underset{(1)}{=}\{xy,\ (x,y)\in\{0,1\}^2\}\\&=\{0\times0,\ 0\times1,\ 1\times0,\ 1\times1\}\\&=\{0,0,0,1\}\\&=\{0,1\}\end{aligned}$$
+$(1)$ : Comme $X\hookrightarrow\mathcal{B}(1/2)$ et $Y\hookrightarrow\mathcal{B}(1/2)$, $X(\Omega)=\{0,1\}=Y(\Omega)$
+
+Donc, $(XY)(\Omega)\subset\{0,1\}$.
+De plus, $[XY=1]\underset{(1)}{=}[X=1]\cap[Y=1]$
+$(1)$ : D'après ce qui précède, $\begin{cases}X(\Omega)=\{0,1\}\\Y(\Omega)=\{0,1\}\end{cases}$ et $\forall(x,y)\in\{0,1\}^2$, $xy=1\iff x=1$ et $y=1$
+Donc, $$\begin{aligned}\P(XY=1)&=\P([X=1]\cap[Y=1])\\&\underset{(1)}{=}\P(X=1)\P(Y=1)\\&\underset{(2)}{=}\frac{1}{2}\times\frac{1}{2}\\&=\frac{1}{4}\end{aligned}$$
+$(1)$ : Par indépendance de $X$ et de $Y$
+$(2)$ : Car $X$ et $Y$ suivent la loi de Bernoulli de paramètre $1/2$.
+Donc,
+$$\begin{cases}XY(\Omega)\subset\{0,1\}\ (A)\\\P(XY=1)=1/4\ (C)\end{cases}$$
+Donc, $\P(XY=1)\neq0$
+Donc, $[XY=1]\neq\emptyset$
+Donc, $1\in XY(\Omega)\ (B)$
+
+__Raisonnons par l'absurde__ et supposons que $0\notin(XY)(\Omega)$
+
+> Alors, d'après $(A)$ et $(B)$, $(XY)(\Omega)=\{1\}$
+Or, $XY$ est discrète.
+Donc, par théorème, $\sum\limits_{k\in(XY)(\Omega)}\P(XY=k)=1$
+Donc, $\P(XY=1)=1$
+Or, d'après $(C)$, $\P(XY=1)=1/4$.
+Donc, on a obtenu une contradiction.
+Donc, $0\in(XY)(\Omega)$.
+
+Donc, $\{0,1\}\subset(XY)(\Omega)$
+Donc, d'après $(A)$, par double inclusion, $(XY)(\Omega)=\{0,1\}$
+De plus, d'après $(C)$, $\P(XY=1)=\dfrac{1}{4}$
+Donc, [[$XY\hookrightarrow\mathcal{B}\left(\dfrac{1}{4}\right)$]]`,
+    },
+    {
+      id: 'esperance-existence-ou-non',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Espérance : divergence ou convergence de la série de terme général nP(X = n)',
+      motsCles: ['espérance', 'convergence absolue', 'positivité du terme général', 'série de Riemann', 'série géométrique dérivée', 'Exercice 21'],
+      source: 'Exercice 21',
+      corps: String.raw`!! **Exercice 21 :** Soit $X$ une variable aléatoire définie sur un espace probabilisé $(\Omega,\mathcal{T},\P)$ vérifiant $X(\Omega)=\N^*$.
+1) On suppose que :
+$$\forall n\in\N^*,\ \P(X=n)=\frac{1}{n}-\frac{1}{n+1}$$
+et l'on admet que $\left(\dfrac{1}{n}-\dfrac{1}{n+1}\right)_{n\in\N^*}$ définit bien une loi de probabilité discrète.
+Montrer que $X$ ne possède pas d'espérance.
+2) On suppose que :
+$$\forall n\in\N^*,\ \P(X=n)=\left(\frac{1}{2}\right)^n$$
+et l'on admet que $\left(\left(\dfrac{1}{2}\right)^n\right)_{n\in\N^*}$ définit bien une loi de probabilité discrète.
+Montrer que $X$ possède une espérance et expliciter $E(X)$.
+
+1) Par hypothèse, $X(\Omega)=\N^*$.
+Or, $\N^*$ est un ensemble dénombrable.
+Donc, $X$ est une variable aléatoire __discrète non finie__.
+Alors, $X$ admet une espérance ssi la série $\sum\limits_{n\geqslant1}n\P(X=n)$ converge absolument
+$\underset{(1)}{\text{ssi}}$ la série $\sum\limits_{n\geqslant1}n\P(X=n)$ converge
+$(1)$ : par positivité du terme général : $\forall n\in\N^*$, $n\P(X=n)\geqslant0$.
+Or,
+$$\begin{aligned}\forall n\in\N^*,\ n\P(X=n)&=n\left(\frac{1}{n}-\frac{1}{n+1}\right)\\&=n\left(\frac{n+1-n}{n(n+1)}\right)\\&=\frac{1}{n+1}\end{aligned}$$
+Or, la série $\sum\limits_{n\geqslant1}\dfrac{1}{n+1}$ diverge en tant que __série de Riemann de paramètre 1__ à un changement d'indice par translation près (« $m=n+1$ »)
+Donc, la série $\sum\limits_{n\geqslant1}n\P(X=n)$ diverge
+Donc, en vertu des équivalences précédentes, [[$X$ ne possède pas d'espérance.]]
+
+2) Par hypothèse, $X(\Omega)=\N^*$.
+Or, $\N^*$ est dénombrable.
+Donc, $X$ est une __VAD non finie.__
+Alors,
+$X$ admet une espérance ssi la série $\sum\limits_{n\geqslant1}n\P(X=n)$ converge absolument
+$\underset{(1)}{\text{ssi}}$ la série $\sum\limits_{n\geqslant1}n\P(X=n)$ converge
+$(1)$ : Par positivité du terme général
+Or :
+$$\begin{aligned}\forall n\in\N^*,\ n\P(X=n)&=n\left(\frac{1}{2}\right)^n\\&=n\left(\frac{1}{2}\right)^{n-1+1}\\&=n\left(\frac{1}{2}\right)^{n-1}\frac{1}{2}\\&=\frac{1}{2}n\left(\frac{1}{2}\right)^{n-1}\end{aligned}$$
+Or, la série $\sum\limits_{n\geqslant1}\dfrac{1}{2}n\left(\dfrac{1}{2}\right)^{n-1}$ converge en tant que __série géométrique dérivée d'ordre {{?}} $\dfrac{1}{2}$__ à une constante multiplicative près $\left(\dfrac{1}{2}\right)$ et $\dfrac{1}{2}\in\,]-1,1[$.
+Donc, la série $\sum\limits_{n\geqslant1}n\P(X=n)$ converge.
+Donc, d'après les équivalences précédentes, $X$ possède une espérance et
+$$\begin{aligned}E(X)&\underset{(1)}{=}\sum_{n=1}^{+\infty}n\P(X=n)\\&=\sum_{n=1}^{+\infty}\frac{1}{2}n\left(\frac{1}{2}\right)^{n-1}\\&=\frac{1}{2}\sum_{n=1}^{+\infty}n\left(\frac{1}{2}\right)^{n-1}\\&=\frac{1}{2}\times\frac{1}{\left(1-\frac{1}{2}\right)^2}\\&=\frac{1}{2}\times\frac{1}{\frac{1}{4}}\\&=\frac{1}{2}\times4\\&=2\end{aligned}$$
+$(1)$ : $X(\Omega)=\N^*$.
+Donc, [[$X$ possède une espérance et $E(X)=2$]]`,
+    },
+    {
+      id: 'loi-fonction-variable-aleatoire',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Loi de Y = f(X) : Y(Ω), puis [Y = k] exprimé avec X',
+      motsCles: ['transfert', 'Y = f(X)', 'image', 'Y(Ω)', 'loi de Bernoulli', 'loi uniforme', 'produit nul', 'disjonction des cas', 'Rademacher', 'Exemples 24'],
+      source: 'Exemples 24',
+      corps: String.raw`!! **Exemples 24 :**
+1) Soit $p\in\,]0,1[$ et soit $X$ une variable aléatoire définie sur un espace probabilisé $(\Omega,\mathcal{T},\P)$ dont la loi est donnée par : $X(\Omega)=\{-1;1\}$ et $\P(X=1)=p$ et $\P(X=-1)=1-p$
+Remarque : si $p=\dfrac{1}{2}$, on dit que $X$ suit la loi de Rademacher.
+Cette loi, simple mais hors-programme, intervient dans de nombreux sujets de Concours.
+Déterminer la loi de $Y=\dfrac{X+1}{2}$.
+2) On considère l'expérience aléatoire consistant à lancer une fois un dé cubique standard.
+On note $X$ le numéro indiqué par le dé.
+Déterminer la loi de $Y=(X-3)^2$.
+
+1) On a : $$\begin{aligned}Y(\Omega)&\underset{(1)}{=}\left(\frac{X+1}{2}\right)(\Omega)\\&\underset{(2)}{=}\left\{\frac{x+1}{2};\ x\in X(\Omega)\right\}\\&=\left\{\frac{x+1}{2};\ x\in\{-1,1\}\right\}\\&=\left\{\frac{1+1}{2};\ \frac{1-1}{2}\right\}\\&=\{0,1\}\end{aligned}$$
+$(1)$ : Par définition de $Y$.
+$(2)$ : Par théorème (Prop 49)
+
+De plus,
+$$\begin{aligned}\P(Y=1)&=\P\left(\frac{X+1}{2}=1\right)\\&=\P(X+1=2)\\&=\P(X=1)\\&\underset{(1)}{=}p\end{aligned}$$
+$(1)$ : D'après l'énoncé
+Ainsi, $Y(\Omega)=\{0,1\}$
+$\P(Y=1)=p$
+Donc, [[$Y\hookrightarrow\mathcal{B}(p)$ ie $Y$ suit la loi de Bernoulli de paramètre $p$.]]
+
+2) Par définition de $X$,
+$X(\Omega)=\llbracket1;6\rrbracket$ et
+$X$ prend chacune des 6 valeurs $\llbracket1;6\rrbracket$ avec la même probabilité égale à $1/6$, __par équiprobabilité__ lors du lancer (dé cubique standard)
+
+Donc, $X\hookrightarrow\mathcal{U}(\llbracket1,6\rrbracket)$
+Donc, $\begin{cases}X(\Omega)=\llbracket1,6\rrbracket\quad(*)\\\forall k\in X(\Omega),\ \P(X=k)=\dfrac{1}{6}\quad(**)\end{cases}$
+
+Déterminons la loi de $Y$.
+Par définition,
+$$Y=(X-3)^2$$
+Comme $X(\Omega)=\llbracket1,6\rrbracket$ et $\llbracket1,6\rrbracket$ est au plus dénombrable, $X$ est discrète.
+De plus, $x\mapsto(x-3)^2$ est définie sur $\R$ et $X(\Omega)\subset\R$.
+Donc, $Y$ est une VAD définie sur $(\Omega,\mathcal{T},\P)$ par théorème, $(\Omega,\mathcal{T},\P)$ étant un espace probabilisé adéquat modélisant la présente expérience aléatoire.
+On a :
+$$\begin{aligned}Y(\Omega)&=(X-3)^2(\Omega)\\&\underset{(1)}{=}\{(x-3)^2,\ x\in X(\Omega)\}\\&\underset{(2)}{=}\{(x-3)^2,\ x\in\llbracket1,6\rrbracket\}\\&=\{(1-3)^2,(2-3)^2,(3-3)^2,(4-3)^2,(5-3)^2,(6-3)^2\}\\&=\{4;1;0;1;4;9\}\\&=\{0,1,4,9\}\end{aligned}$$
+$(1)$ : par théorème
+$(2)$ : D'après $(*)$
+
+Soit $k\in\{0,1,4,9\}$
+__Raisonnons par disjonction des cas :__
+
+* __1er cas : $k=0$__
+On a : $$\begin{aligned}[Y=k]&=[Y=0]\\&=[(X-3)^2=0]\\&=\{\omega\in\Omega\mid(X(\omega)-3)^2=0\}\\&\underset{(1)}{=}\{\omega\in\Omega\mid X(\omega)-3=0\}\\&=\{\omega\in\Omega\mid X(\omega)=3\}\\&=[X=3]\end{aligned}$$
+$(1)$ : d'après la règle du produit nul dans $\R$.
+Donc, $$\begin{aligned}\P(Y=k)&=\P(X=3)\\&\underset{(1)}{=}\frac{1}{6}\end{aligned}$$
+$(1)$ : d'après $(**)$ et car $3\in\llbracket1;6\rrbracket$.
+
+* __2ème cas : $k=9$__
+On a : $$\begin{aligned}[Y=k]&=[Y=9]\\&=[(X-3)^2=9]\\&=\{\omega\in\Omega\mid(X(\omega)-3)^2-9=0\}\\&=\{\omega\in\Omega\mid X(\omega)^2-2(3)X(\omega)+9-9=0\}\\&=\{\omega\in\Omega\mid X(\omega)^2-6X(\omega)=0\}\\&=\{\omega\in\Omega\mid X(\omega)(X(\omega)-6)=0\}\\&\underset{(1)}{=}\{\omega\in\Omega\mid X(\omega)=0\text{ ou }X(\omega)-6=0\}\\&\underset{(2)}{=}\{\omega\in\Omega\mid X(\omega)=6\}\\&=[X=6]\end{aligned}$$
+$(1)$ : d'après la règle du produit nul dans $\R$.
+$(2)$ : d'après $(*)$, $X(\Omega)=\llbracket1,6\rrbracket$. Or, $0\notin\llbracket1,6\rrbracket$. Donc : $\forall\omega\in\Omega$, $X(\omega)\neq0$
+Donc, $$\begin{aligned}\P(Y=k)&=\P(X=6)\\&\underset{(1)}{=}\frac{1}{6}\end{aligned}$$
+$(1)$ : d'après $(**)$ et car $6\in\llbracket1,6\rrbracket$.
+
+* __3ème cas : $k=1$__
+On a : $$\begin{aligned}[Y=k]&=[Y=1]\\&=[(X-3)^2=1]\\&=\{\omega\in\Omega\mid(X(\omega)-3)^2-1^2=0\}\\&=\{\omega\in\Omega\mid(X(\omega)-2)(X(\omega)-4)=0\}\\&\underset{(1)}{=}\{\omega\in\Omega\mid X(\omega)=2\text{ ou }X(\omega)=4\}\\&=\{\omega\in\Omega\mid X(\omega)=2\}\cup\{\omega\in\Omega\mid X(\omega)=4\}\\&=[X=2]\cup[X=4]\end{aligned}$$
+$(1)$ : d'après la règle du produit nul dans $\R$.
+Donc, $$\begin{aligned}\P(Y=k)&=\P([X=2]\cup[X=4])\\&\underset{(1)}{=}\P(X=2)+\P(X=4)\\&\underset{(2)}{=}\frac{1}{6}+\frac{1}{6}\\&=\frac{1}{3}\end{aligned}$$
+$(1)$ Par incompatibilité des événements $[X=2]$ et $[X=4]$ et par additivité de $\P$.
+$(2)$ : d'après $(**)$ et car $(2,4)\in\llbracket1,6\rrbracket^2$
+
+* __4ème cas : $k=4$__
+De la même manière qu'au 3ème cas, on montre que :
+$[Y=k]=[X=1]\cup[X=5]$ et on en déduit de même que $\P(Y=k)=\dfrac{1}{3}$.
+
+Donc, [[la loi de $Y$ nous est donnée par : $$\begin{cases}Y(\Omega)=\{0;1;4;9\}\\[4pt]\P(Y=0)=\dfrac{1}{6}=\P(Y=9)\\[8pt]\P(Y=4)=\dfrac{1}{3}=\P(Y=1)\end{cases}$$]]`,
+    },
   ],
 };
