@@ -1425,7 +1425,7 @@ Déterminer la loi de $X$.
 
 Déterminons la loi de $X$.
 On reconnaît un __schéma binomial.__
-Par définition, la variable aléatoire $X$ est égale au nombre de succès (« Obtenir le chiffre 1 »), suite à la répartition de __10__ épreuves de Bernoulli (identiques et) __indépendantes__ (par indépendance des lancers (on fait cette hypothèse raisonnable ici)) de probabilité égale à $\dfrac{1}{8}$ __(par équiprobabilité à chaque__ lancer, le dé étant octaédrique et équilibré).
+Par définition, la variable aléatoire $X$ est égale au nombre de succès (« Obtenir le chiffre 1 »), suite à la répétition de __10__ épreuves de Bernoulli (identiques et) __indépendantes__ (par indépendance des lancers (on fait cette hypothèse raisonnable ici)) de probabilité égale à $\dfrac{1}{8}$ __(par équiprobabilité à chaque__ lancer, le dé étant octaédrique et équilibré).
 
 Donc, [[$X$ suit la loi binomiale de paramètres $10$ et $1/8$.]]
 On écrit : $X\hookrightarrow\mathcal{B}(10;1/8)$
