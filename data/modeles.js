@@ -1780,5 +1780,181 @@ $[Y=k]=[X=1]\cup[X=5]$ et on en déduit de même que $\P(Y=k)=\dfrac{1}{3}$.
 
 Donc, [[la loi de $Y$ nous est donnée par : $$\begin{cases}Y(\Omega)=\{0;1;4;9\}\\[4pt]\P(Y=0)=\dfrac{1}{6}=\P(Y=9)\\[8pt]\P(Y=4)=\dfrac{1}{3}=\P(Y=1)\end{cases}$$]]`,
     },
+    {
+      id: 'transfert-serie-exponentielle',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Théorème de transfert : espérance de f(X) par la série exponentielle',
+      motsCles: ['théorème de transfert', 'espérance', 'série exponentielle', 'loi de probabilité discrète', 'changement d\'indice', 'factorielle', 'Exercice 23'],
+      source: 'Exercice 23',
+      corps: String.raw`!! **Exercice 23 :** Soit $(x_n)_{n\in\N}$ la suite réelle définie par :
+$$\forall n\in\N,\ x_n=\frac{e^{-1}}{n!}$$
+1) Montrer que la suite $(x_n)_{n\in\N}$ définit une loi de probabilité discrète.
+Considérons une variable aléatoire discrète $X$ définie sur un espace probabilisé $(\Omega,\mathcal{T},\P)$ telle que $X(\Omega)=\N$ et $\forall n\in\N,\ \P(X=n)=x_n$.
+2) Montrer que $\dfrac{1}{1+X}$ admet une espérance que l'on explicitera.
+
+1) $\odot$ On a :
+$$\forall n\in\N,\ x_n=\frac{e^{-1}}{n!}$$
+Or, $\begin{cases}e^{-1}>0\\\forall n\in\N,\ n!>0\end{cases}$
+Donc, $\forall n\in\N$, $\dfrac{e^{-1}}{n!}>0$
+Donc, $\forall n\in\N$, $x_n>0$
+Donc, __$\forall n\in\N$, $x_n\geqslant0$__
+
+$\odot$ Montrons que la série $\sum\limits_{n\geqslant0}x_n$ converge de somme 1.
+On a :
+$$\begin{aligned}\forall n\in\N,\ x_n&=\frac{e^{-1}}{n!}\\&=e^{-1}\times\frac{1}{n!}\\&=e^{-1}\times\frac{1^n}{n!}\end{aligned}$$
+On reconnaît le terme général de la __série exponentielle de paramètre 1,__ à une constante multiplicative près.
+Donc, par théorème, $\sum\limits_{n\geqslant0}x_n$ converge et
+$$\begin{aligned}\sum_{n=0}^{+\infty}x_n&=\sum_{n=0}^{+\infty}e^{-1}\times\frac{1^n}{n!}\\&=e^{-1}\sum_{n=0}^{+\infty}\frac{1^n}{n!}\\&=e^{-1}\times e^1\\&=e^{-1+1}\\&=e^0\\&=1\end{aligned}$$
+Donc, en vertu des deux points $\odot$ précédents, [[la suite $(x_n)_{n\in\N}$ définit une loi de probabilité discrète (non finie)]]
+
+2) Montrons que $\dfrac{1}{1+X}$ possède une espérance, que l'on explicitera.
+On a :
+$\odot$ $X(\Omega)=\N\quad(*)$
+$\odot$ $\forall n\in\N$, $\P(X=n)=\dfrac{e^{-1}}{n!}\ (=x_n)\quad(**)$
+
+D'après $(*)$, comme $\N$ est dénombrable, $X$ est une VAD __non finie__.
+De plus, $x\mapsto\dfrac{1}{1+x}$ est définie sur $\R\setminus\{-1\}$, a fortiori sur $\N$.
+Alors : $\dfrac{1}{1+X}$ possède une espérance $\underset{(1)}{\text{ssi}}$ la série $\sum\limits_{n\geqslant0}\dfrac{1}{1+n}\P(X=n)$ converge absolument
+$\underset{(2)}{\text{ssi}}$ la série $\sum\limits_{n\geqslant0}\dfrac{1}{1+n}\P(X=n)$ converge
+$(1)$ : D'après le __théorème de transfert__ (dans le cas des transformées de VAD non finies)
+$(2)$ : Par positivité du terme général $\left(\forall n\in\N,\ \begin{cases}\dfrac{1}{1+n}>0\\\P(X=n)\geqslant0\end{cases}\text{ Donc, }\forall n\in\N,\ \dfrac{1}{1+n}\P(X=n)\geqslant0\right)$
+
+On a :
+$$\begin{aligned}\forall n\in\N,\ \frac{1}{1+n}\P(X=n)&\underset{(1)}{=}\frac{1}{1+n}\,\frac{e^{-1}}{n!}\\&\underset{(2)}{=}\frac{e^{-1}}{(n+1)!}\\&=e^{-1}\times\frac{1^{n+1}}{(n+1)!}\end{aligned}$$
+$(1)$ : D'après $(**)$
+$(2)$ : Par propriété de la factorielle.
+
+On reconnaît le terme général de la __série exponentielle de paramètre 1__ à un changement d'indice par translation près (« $k=n+1$ ») et à une constante multiplicative près $(e^{-1})$.
+Donc, par théorème, la série $\sum\limits_{n\geqslant0}\dfrac{1}{1+n}\P(X=n)$ converge et :
+$$\begin{aligned}\sum_{k=0}^{+\infty}\frac{1}{1+k}\P(X=k)&=\sum_{k=0}^{+\infty}e^{-1}\times\frac{1^{k+1}}{(k+1)!}\\&=e^{-1}\sum_{k=0}^{+\infty}\frac{1^{k+1}}{(k+1)!}\\&=e^{-1}\sum_{n=1}^{+\infty}\frac{1^n}{n!}\\&=e^{-1}\left(\sum_{n=0}^{+\infty}\frac{1^n}{n!}-\frac{1^0}{0!}\right)\\&=e^{-1}(e^1-1)\\&=1-e^{-1}\end{aligned}$$
+Donc, en vertu des équivalences précédentes,
+[[$\dfrac{1}{1+X}$ possède une espérance et $E\left(\dfrac{1}{1+X}\right)=1-e^{-1}$]]`,
+    },
+    {
+      id: 'schema-binomial-tirages-avec-remise',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Reconnaître un schéma binomial (tirages avec remise)',
+      motsCles: ['schéma binomial', 'loi binomiale', 'tirages avec remise', 'épreuves de Bernoulli', 'équiprobabilité', 'Exercice 24'],
+      source: 'Exercice 24',
+      corps: String.raw`!! **Exercice 24 :** Soit $n\in\N^*$.
+Soit $(b,r)\in(\N^*)^2$.
+On considère l'expérience aléatoire consistant à tirer successivement $n$ fois avec remise dans une urne comportant $b$ boules blanches et $r$ boules rouges.
+On note $X$ la variable aléatoire égale au nombre de boules blanches obtenues à l'issue de ces $n$ tirages.
+Déterminer la loi de $X$.
+
+On reconnaît un __schéma binomial__. Par définition, $X$ compte le nombre de succès (« Obtenir une boule blanche ») suite à la répétition de $n$ épreuves de Bernoulli (identiques et) indépendantes (les tirages s'effectuant __avec__ remise). dont la probabilité à chaque épreuve vaut $\dfrac{b}{b+r}$, par __équiprobabilité__ à chaque tirage et d'après le protocole.
+Donc, [[$X\hookrightarrow\mathcal{B}\left(n,\dfrac{b}{b+r}\right)$]]`,
+    },
+    {
+      id: 'esperance-variance-transformee-affine',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Espérance et variance d\'une transformée affine aX + b',
+      motsCles: ['transformée affine', 'linéarité de l\'espérance', 'variance', 'V(aX+b)', 'loi de Poisson', 'Exemple 30', 'Exemple 32'],
+      source: 'Exemples 30 et 32',
+      corps: String.raw`!! **Exemple 30 :** Soit $X$ une variable aléatoire discrète définie sur un espace probabilisé $(\Omega,\mathcal{T},\P)$ suivant la loi de Poisson de paramètre 1.
+Montrer que $3X+1$ possède une espérance et calculer cette espérance.
+
+Posons $Y=3X+1$.
+Par hypothèse, $X\hookrightarrow\mathcal{P}(1)$
+Donc, par théorème, $X$ possède une espérance égale à 1.
+Donc, par __propriété de linéarité de l'espérance__, $Y$ possède une espérance en tant que transformée __affine__ d'une telle variable et :
+$$\begin{aligned}E(Y)&=3(E(X))+1\\&=3\times1+1\\&=4\end{aligned}$$
+Donc, [[$3X+1$ possède une espérance et $E(3X+1)=4$]]
+
+!! **Exemple 32 :** Soit $X$ une variable aléatoire suivant la loi $\mathcal{P}(1)$, définie sur un certain espace probabilisé $(\Omega,\mathcal{T},\P)$.
+Montrer que $3X+1$ possède une variance que l'on explicitera.
+
+Posons $Y=3X+1$.
+Par hypothèse, $X\hookrightarrow\mathcal{P}(1)$
+Donc, par théorème, $X$ possède une variance et $V(X)=1$.
+Donc, par propriété de la variance, $Y$ possède une variance en tant que transformée __affine__ d'une telle variable $(X)$ et :
+$$\begin{aligned}V(Y)&=V(3X+1)\\&=3^2V(X)\\&=3^2\times1\\&=9\end{aligned}$$
+Donc, [[$3X+1$ possède une variance et $V(3X+1)=9$]]`,
+    },
+    {
+      id: 'esperance-carre-koenig-huygens',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Espérance de X² par la formule de Koenig-Huygens',
+      motsCles: ['moment d\'ordre 2', 'E(X²)', 'Koenig-Huygens', 'variance', 'loi binomiale', 'variable finie', 'Exemple 31'],
+      source: 'Exemple 31',
+      corps: String.raw`!! **Exemple 31 :** Soit $(n,p)\in\N^*\times[0,1]$.
+Soit $X$ une variable aléatoire suivant la loi $\mathcal{B}(n,p)$ défini sur un espace probabilisé $(\Omega,\mathcal{T},\P)$.
+Montrer que $X^2$ possède une espérance que l'on explicitera.
+
+Par hypothèse, $X\hookrightarrow\mathcal{B}(n,p)$
+Donc, $X(\Omega)=\llbracket0,n\rrbracket$
+Or, $\llbracket0,n\rrbracket$ est un ensemble fini.
+Donc, $X$ est une variable aléatoire discrète __finie.__
+Donc, par théorème, $X$ possède un moment d'ordre 2.
+Donc, $X^2$ possède une espérance.
+Or, $X\hookrightarrow\mathcal{B}(n,p)$
+Donc, $X$ possède une espérance et une variance, et :
+$$\begin{cases}E(X)=np\\V(X)=np(1-p)\end{cases}$$
+$X$ possédant une variance, __la formule de Koenig-Huygens__ s'applique et donne :
+$$V(X)=E(X^2)-E(X)^2$$
+Donc, $E(X^2)=V(X)+E(X)^2$
+Donc, $$\begin{aligned}E(X^2)&=np(1-p)+(np)^2\\&=np(1-p+np)\end{aligned}$$
+Donc, [[$X^2$ possède une espérance et $E(X^2)=np(1-p+np)$]]`,
+    },
+    {
+      id: 'reconnaitre-loi-uniforme',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Reconnaître une loi uniforme',
+      motsCles: ['loi uniforme', 'équiprobabilité', 'tirage', 'Exemple 35'],
+      source: 'Exemple 35',
+      corps: String.raw`!! **Exemple 35 :** Soit $n\in\N$.
+On considère une urne comportant $n+1$ boules numérotées de 0 à $n$, dans laquelle on effectue un tirage. On note $X$ le numéro obtenu.
+Déterminer la loi de $X$.
+
+Identifions la loi de $X$.
+Par définition de $X$ et du protocole, $X(\Omega)=\llbracket0,n\rrbracket$ et, __par équiprobabilité lors du tirage,__ $X$ prend chacune des valeurs de $\llbracket0,n\rrbracket$ avec la même probabilité égale à $\dfrac{1}{n+1}$.
+Donc, [[$X\hookrightarrow\mathcal{U}(\llbracket0,n\rrbracket)$]]`,
+    },
+    {
+      id: 'loi-indicatrice-evenement',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Loi de l\'indicatrice d\'un événement',
+      motsCles: ['indicatrice', 'loi de Bernoulli', 'variable certaine', 'événement', 'disjonction des cas', 'Exemples 36'],
+      source: 'Exemples 36, 2)',
+      corps: String.raw`!! **Exemples 36 :**
+1) (Exemple type)
+Soit $p\in[0,1]$. On lance une fois une pièce amenant Pile avec la probabilité $p$.
+On note $X$ la variable aléatoire prenant la valeur 1 si on obtient Pile, 0 sinon.
+Alors, $X\hookrightarrow\mathcal{B}(p)$
+2) Soit $(\Omega,\mathcal{T},\P)$ un espace probabilisé.
+Soit $A$ un événement.
+Soit $X$ la variable aléatoire définie sur $(\Omega,\mathcal{T},\P)$ prenant la valeur 1 si $A$ est réalisé, et prenant la valeur 0 sinon.
+Déterminer la loi de $X$.
+
+2) __Raisonnons par disjonction des cas :__
+
+> * __1er cas : $A=\emptyset$__
+Alors, par définition de $X$,
+$$\forall\omega\in\Omega,\ X(\omega)=0$$
+Donc, $X$ est certaine égale à 0.
+
+> * __2ème cas : $A=\Omega$__
+Alors, par définition de $X$ :
+$$\forall\omega\in\Omega,\ X(\omega)=1$$
+Donc, $X$ est certaine égale à 1
+
+> * __3ème cas : $A\neq\emptyset$ et $A\neq\Omega$__
+Par définition de $X$ :
+$X(\Omega)=\{0,1\}$
+De plus,
+$[X=1]$ est réalisé ssi $A$ est réalisé
+Donc, $[X=1]=A$
+Donc, $\P([X=1])=\P(A)$
+Or, $X(\Omega)=\{0,1\}$
+Donc, $X\hookrightarrow\mathcal{B}(\P(A))$
+
+Donc, [[$\begin{cases}X\text{ est certaine égale à 0 si }A\text{ est impossible}\\X\text{ est certaine égale à 1 si }A\text{ est certain}\\X\hookrightarrow\mathcal{B}(\P(A))\text{ sinon}\end{cases}$]]`,
+    },
   ],
 };
