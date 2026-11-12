@@ -293,6 +293,24 @@ $$\begin{aligned}X\in E_0(J)&\Longleftrightarrow JX=0X\\&\underset{(1)}{\Longlef
 Donc, $E_0(J)=\Vect\left(\begin{pmatrix}-1\\1\\0\end{pmatrix},\begin{pmatrix}-1\\0\\1\end{pmatrix}\right)$`,
     },
 
+    {
+      id: 'methode-construction-espace-probabilise',
+      domaine: 'probabilites',
+      chapitre: 'Espaces probabilisés',
+      titre: 'Construire un espace probabilisé adéquat : squelette de rédaction',
+      motsCles: ['méthode', 'espace probabilisé', 'univers', 'tribu', 'probabilité uniforme', 'équiprobabilité', 'card(A)/card(Ω)'],
+      source: 'Cours, Méthode (abrégée)',
+      corps: String.raw`!! **Sans construction**
+
+« On se place dans un espace probabilisé fini $(\Omega,\mathcal{T},\P)$ adéquat / modélisant la présente expérience aléatoire. »
+
+!! **Construction** (équiprobabilité « globale », $\P(A)=\dfrac{\operatorname{card}(A)}{\operatorname{card}(\Omega)}$)
+
+– __Univers $\Omega$__ : « L'expérience aléatoire consistant à …, une issue peut être modélisée par… Ainsi, l'ensemble univers $\Omega$ peut être modélisé par l'ensemble des… »
+– __Tribu__ : « $\Omega$ étant fini, toute partie de $\Omega$ a droit au statut d'événement. On se place dans l'espace probabilisable fini $(\Omega,\mathcal{P}(\Omega))$ ».
+– __Probabilité $\P$__ : « Les boules étant supposées indiscernables au toucher/les tirage s'effectuant au hasard/l'urne étant opaque, nous nous trouvons en situation d'équiprobabilité et nous pouvons donc munir l'espace probabilisable fini $(\Omega,\mathcal{P}(\Omega))$ de la probabilité uniforme, que l'on notera $\P$. »
+– __Conclusion__ : « On se placera dans l'espace probabilisé $(\Omega,\mathcal{P}(\Omega),\P)$ ainsi construit. »`,
+    },
     // Probabilités, photos 1 et 2
     {
       id: 'construire-espace-probabilise-fini',
@@ -345,16 +363,40 @@ Ainsi, [[la probabilité d'obtenir les boules 1, 2 et 3 lors du tirage vaut $1/5
 
     // Probabilités, photo 3
     {
-      id: 'modeliser-un-evenement',
+      id: 'quasi-impossibilite-que-des-pile',
       domaine: 'probabilites',
       chapitre: 'Espaces probabilisés',
-      titre: 'Modéliser un événement',
-      motsCles: ['événement', 'intersection', 'réalisé', 'Pile'],
-      corps: String.raw`!! • Modélisons l'événement $A$ : « N'obtenir que des Pile »
+      titre: 'Modéliser un événement puis montrer qu\'il est quasi-impossible (encadrement)',
+      motsCles: ['événement', 'intersection', 'réalisé', 'Pile', 'quasi-impossible', 'croissance de P', 'indépendance mutuelle', 'encadrement', 'unicité de la limite', 'Exemple 19'],
+      source: 'Cours, Exemple 19',
+      corps: String.raw`!! **Exemple 19 :** Soit $p\in\,]0,1[$.
+On considère l'expérience aléatoire consistant à lancer indéfiniment une même pièce de monnaie amenant Pile à chaque lancer avec la probabilité $p$.
+Montrer qu'il est quasi-impossible de n'obtenir que des Pile.
 
-$$\begin{aligned}A\text{ est réalisé}\quad&\text{ssi}\quad\text{« On obtient que des Pile » est réalisé}\\&\text{ssi}\quad\text{pour tout }i\in\N^*,\ P_i\text{ est réalisé}\\&\text{ssi}\quad\bigcap_{i=1}^{+\infty}P_i\text{ est réalisé}\end{aligned}$$
-
-Donc, [[$A=\displaystyle\bigcap_{i=1}^{+\infty}P_i$]]`,
+On se place dans un espace probabilisé $(\Omega,\mathcal{T},\P)$ adéquat.
+On note $T$ : « N'obtenir que des Pile. »
+On note, pour tout $i\in\N^*$, $P_i$ : « Obtenir Pile au $i$ème lancer. »
+Alors, $T$ est réalisé si et seulement si, pour tout $i\in\N^*$, $P_i$ est réalisé
+Donc :
+$$T=\bigcap_{i=1}^{+\infty}P_i$$
+Or, si, pour tout $i\in\N^*$, $P_i$ est réalisé, alors, pour tout $n\in\N^*$, pour tout $i\in\llbracket1,n\rrbracket$, $P_i$ est réalisé.
+Donc :
+$$\forall n\in\N^*,\ \bigcap_{i=1}^{+\infty}P_i\subset\bigcap_{i=1}^{n}P_i$$
+Donc :
+$$\forall n\in\N^*,\ T\subset\bigcap_{i=1}^{n}P_i$$
+Donc, par croissance et positivité de $\P$ :
+$$\forall n\in\N^*,\ 0\leqslant\P(T)\leqslant\P\left(\bigcap_{i=1}^{n}P_i\right)$$
+Or, __par indépendance mutuelle des $P_i$__ ($i\in\N^*$) (induite par l'indépendance des lancers) :
+$$\forall n\in\N^*,\ \P\left(\bigcap_{i=1}^{n}P_i\right)=\prod_{i=1}^{n}\P(P_i)$$
+Donc :
+$$\forall n\in\N^*,\ \P\left(\bigcap_{i=1}^{n}P_i\right)=\prod_{i=1}^{n}p=p^n$$
+Ainsi :
+$$\forall n\in\N^*,\ 0\leqslant\P(T)\leqslant p^n$$
+Or, $\lim\limits_{n\to+\infty}0=0$ et, par théorème, comme $p\in\,]-1,1[$, $\lim\limits_{n\to+\infty}p^n=0$.
+Donc, d'après le théorème d'encadrement, $\lim\limits_{n\to+\infty}\P(T)=0$.
+Or, $\lim\limits_{n\to+\infty}\P(T)=\P(T)$.
+Donc, __par unicité de la limite__, $\P(T)=0$.
+Ainsi, [[il est quasi-impossible de n'obtenir que des Pile.]]`,
     },
 
     // Probabilités, photo 4
@@ -1294,6 +1336,53 @@ $(1)$ : par linéarité de $\sum$
 $(2)$ : par définition même des coefficients binomiaux, il y a très exactement $\dbinom{n}{k}$ parties de $\llbracket1,n\rrbracket$ comportant $k$ éléments.
 
 En vertu de qui précède, [[$X\hookrightarrow\mathcal{B}(n,p)$]]`,
+    },
+    {
+      id: 'loi-geometrique-rang-premier-pile',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Montrer que le rang du premier succès suit une loi géométrique',
+      motsCles: ['loi géométrique', 'rang du premier Pile', 'premier succès', 'indépendance', 'disjonction des cas', 'Proposition 84'],
+      source: 'Cours, Proposition 84',
+      corps: String.raw`!! **Proposition 84 - Exemple de référence**
+Soit $p\in\,]0,1[$.
+On considère l'expérience aléatoire consistant à lancer indéfiniment une même pièce de monnaie amenant Pile à chaque lancer avec la probabilité $p$.
+On se place dans un espace probabilisé $(\Omega,\mathcal{T},\P)$ adéquat modélisant la présente expérience aléatoire.
+On note $X$ la variable aléatoire égale, sous réserve d'existence, au numéro du lancer où l'on a obtenu Pile pour la première fois (ie égale au rang du premier Pile).
+Alors : $X\hookrightarrow\mathcal{G}(p)$
+
+Démonstration :
+Notons, pour tout $i\in\N^*$, $P_i$ : « Obtenir Pile au $i$ème lancer ».
+Dans « le meilleur des cas », on obtient Pile au premier lancer, et $X$ prend alors la valeur $1$.
+De plus, le premier Pile peut potentiellement arriver après un nombre arbitrairement grand de lancers, et donc $X$ prend prendre des valeurs entières arbitrairement grandes. De plus, tout entier naturel non nul est une valeur que peut prendre $X$.
+Enfin, l'événement « Ne jamais obtenir Pile » est quasi-impossible (cf exemple du cour).
+Ainsi, on en déduit que $X(\Omega)=\N^*$ (on a négligé l'événement « Ne jamais obtenir Pile »).
+
+Soit $k\in\N^*$.
+__Raisonnons par disjonction des cas :__
+
+> • **1er cas** : $k=1$
+Alors, l'événement $[X=k]$ est réalisé si et seulement si le premier lancer amène Pile.
+Ainsi,
+$$[X=k]=P_1$$
+Or, la pièce amène Pile à chaque lancer avec la probabilité $p$.
+Donc, $\P(X=k)=\P(P_1)=p$
+
+> • **2ème cas** : $k\geqslant2$
+Alors :
+l'événement $[X=k]$ est réalisé
+si et seulement si les $k-1$ premiers lancers amènent Face et le $k$ème lancer amène Pile
+si et seulement si, pour tout $i\in\llbracket1,k-1\rrbracket$, $P_i$ n'est pas réalisé et $P_k$ est réalisé
+Ainsi :
+$$[X=k]=\bigcap_{i=1}^{k-1}\overline{P_i}\cap P_k$$
+Donc, __par indépendance (mutuelle) des événement $P_i$ ($i\in\N^*$)__ induite par l'indépendance des lancers, nous avons :
+$$\P(X=k)=\prod_{i=1}^{k-1}\P(\overline{P_i})\P(P_k)=(1-p)^{k-1}p$$
+
+Or, si $k=1$, $(1-p)^{k-1}p=(1-p)^{1-1}p=p$.
+Ainsi, « les deux cas se rejoignent ».
+Donc,
+$$\forall k\in\N^*,\ \P(X=k)=(1-p)^{k-1}p\ \text{ et }\ X(\Omega)=\N^*$$
+Donc, par définition, [[$X\hookrightarrow\mathcal{G}(p)$]]`,
     },
     {
       id: 'methodes-loi-variable-discrete',

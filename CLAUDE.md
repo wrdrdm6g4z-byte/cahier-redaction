@@ -18,6 +18,8 @@ L'élève ne recopie plus les modèles dans un cahier. Les titres sont désormai
 2. Sujet de DS avec corrigé : y repérer les modèles routiniers absents du site, les transcrire mot pour mot depuis le corrigé, leur créer un titre, les ajouter.
 - Classement : Algèbre, Analyse ou Probabilités, puis chapitre avec le titre du cours.
 - Modèles « routiniers » uniquement, sauf demande contraire.
+- Quand l'élève fournit l'énoncé, le placer en tête du modèle dans un bloc `!!`. Le titre nomme l'idée capitale de l'exercice (ex. : l'équiprobabilité).
+- Encadrés de méthode du cours : ne garder que le squelette de rédaction (étapes et phrases attendues), sans les informations annexes.
 
 ## Format d'un modèle
 
