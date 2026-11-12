@@ -316,6 +316,32 @@ Nous pouvons alors munir l'espace probabilisable $(\Omega,\mathcal{P}(\Omega))$ 
 
 Donc, [[l'espace probabilisé $(\Omega,\mathcal{P}(\Omega),\P)$ ainsi construit modélise la présente expérience aléatoire.]]`,
     },
+    {
+      id: 'probabilite-equiprobabilite-cardinaux',
+      domaine: 'probabilites',
+      chapitre: 'Espaces probabilisés',
+      titre: 'Calculer une probabilité par équiprobabilité',
+      motsCles: ['probabilité uniforme', 'équiprobabilité', 'cardinal', 'card(A)/card(Ω)', 'coefficients binomiaux', 'symétrie', 'tirage simultané', 'Exercice 9'],
+      source: 'Exercice 9, question 2)',
+      corps: String.raw`!! **Exercice 9 :** On considère l'expérience aléatoire consistant à tirer au hasard simultanément 4 boules dans une urne opaque contenant 6 boules indiscernables au toucher numérotées de 1 à 6.
+2) Calculer la probabilité d'obtenir les boules 1, 2 et 3 au niveau du tirage.
+
+2) Notons $A$ l'événement $A$ : « Obtenir les boules 1, 2 et 3 lors du tirage ».
+$\P$ étant la probabilité uniforme sur $(\Omega,\mathcal{P}(\Omega))$, par théorème,
+$$\P(A)=\frac{\operatorname{Card}(A)}{\operatorname{Card}(\Omega)}$$
+Or, $\odot$ D'après 1),
+$$\begin{aligned}\operatorname{Card}(\Omega)&=\binom{6}{4}\\&=\binom{6}{6-4}\\&\underset{(1)}{=}\binom{6}{2}\\&\underset{(2)}{=}\frac{6(6-1)}{2}\\&=15\end{aligned}$$
+$(1)$ : Par symétrie des coefficients binomiaux
+$(2)$ : Par propriété
+
+$\odot$ Déterminons $\operatorname{Card}(A)$.
+On a, par définition de $A$ et de $\Omega$ :
+$$A=\{\{1;2;3;4\};\{1;2;3;5\};\{1;2;3;6\}\}$$
+Ainsi, $\operatorname{Card}(A)=3$
+
+Donc, $$\begin{aligned}\P(A)&=\frac{3}{15}\\&=\frac{1}{5}\end{aligned}$$
+Ainsi, [[la probabilité d'obtenir les boules 1, 2 et 3 lors du tirage vaut $1/5$.]]`,
+    },
 
     // Probabilités, photo 3
     {
@@ -1268,6 +1294,203 @@ $(1)$ : par linéarité de $\sum$
 $(2)$ : par définition même des coefficients binomiaux, il y a très exactement $\dbinom{n}{k}$ parties de $\llbracket1,n\rrbracket$ comportant $k$ éléments.
 
 En vertu de qui précède, [[$X\hookrightarrow\mathcal{B}(n,p)$]]`,
+    },
+    {
+      id: 'methodes-loi-variable-discrete',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Déterminer la loi d\'une variable aléatoire discrète : trois méthodes',
+      motsCles: ['méthode', 'loi', 'calcul naïf', 'loi usuelle', 'Proposition 46', 'X(Ω)', 'minimum', 'maximum'],
+      source: 'Cours, Méthode (abrégée)',
+      corps: String.raw`!! **Méthode 1 : calcul naïf**
+a) On détermine l'ensemble-image $X(\Omega)$ : cas « extrêmes » et « intermédiaires » ; parfois par double inclusion.
+b) Pour tout $x$ dans $X(\Omega)$, on écrit $[X=x]$ comme intersection/union/complémentaire d'événements auxiliaires, __puis__ on calcule $\P(X=x)$ : arguments d'incompatibilité, d'indépendance et d'équiprobabilité.
+
+!! **Méthode 2 : loi usuelle**
+a) On identifie la loi usuelle reconnue et on justifie que $X$ suit cette loi (modèle de rédaction spécifique).
+b) Par définition de la loi identifiée, on en déduit immédiatement $X(\Omega)$ et $\P(X=k)$ : rien à prouver.
+
+!! **Méthode 3 : Proposition 46**
+On calcule pour tout $k$ $\P(X\leqslant k)$ ou $\P(X>k)$, puis on en déduit $\P(X=k)$ pour tout $k\in X(\Omega)$.
+Pour le min ou le max d'une famille finie de variables aléatoires indépendantes de même loi connue.`,
+    },
+    {
+      id: 'suite-loi-probabilite-discrete',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Montrer qu\'une suite définit une loi de probabilité discrète',
+      motsCles: ['loi de probabilité discrète', 'positivité', 'somme égale à 1', 'télescopage', 'série', 'existence d\'une variable aléatoire', 'Exercice 14'],
+      source: 'Exercice 14',
+      corps: String.raw`!! **Exercice 14 :** Montrer que la suite réelle $(u_n)_{n\in\N^*}$ définie par :
+$$\forall n\in\N^*,\ u_n=\frac{1}{n}-\frac{1}{n+1}$$
+définit une loi de probabilité discrète.
+
+Montrons que la suite $(u_n)_{n\in\N^*}$ définit une loi de probabilité discrète.
+$\odot$ On a :
+$$\forall n\in\N^*,\ u_n=\frac{1}{n}-\frac{1}{n+1}.$$
+Soit $n\in\N^*$.
+Alors : $0\leqslant n\leqslant n+1$
+Donc, par décroissance de $x\mapsto\dfrac{1}{x}$ sur $\R_+^*$, $\dfrac{1}{n+1}\leqslant\dfrac{1}{n}$
+Donc, $\dfrac{1}{n}-\dfrac{1}{n+1}\geqslant0$
+Donc, __$u_n\geqslant0$, et ce pour tout $n\in\N^*$.__
+
+$\odot$ Montrons que $\sum\limits_{n\geqslant1}u_n$ converge et $\sum\limits_{n=1}^{+\infty}u_n=1$.
+On a : $\forall N\in\N^*$,
+$$\begin{aligned}\sum_{n=1}^{N}u_n&=\sum_{n=1}^{N}\left(\frac{1}{n}-\frac{1}{n+1}\right)\\&\underset{(1)}{=}\frac{1}{1}-\frac{1}{N+1}\\&=1-\frac{1}{N+1}\end{aligned}$$
+$(1)$ : Par télescopage additif.
+Or, $\lim\limits_{N\to+\infty}(N+1)=+\infty$
+Donc, par passage à l'inverse, puis produit, puis somme, $\lim\limits_{N\to+\infty}\left(1-\dfrac{1}{N+1}\right)=1$
+Donc, $\lim\limits_{N\to+\infty}\sum\limits_{n=1}^{N}u_n$ existe, est finie et vaut $1$.
+Donc, la série $\sum\limits_{n\geqslant1}u_n$ converge et $\sum\limits_{n=1}^{+\infty}u_n=1$
+
+Donc, en vertu des deux points $\odot$ précédents, [[la suite réelle $(u_n)_{n\in\N^*}$ définit une loi de probabilité discrète (non finie)]]
+
+Donc, par théorème, il existe un espace probabilisé $(\Omega,\mathcal{T},\P)$ et une VAD $X$ définie sur $(\Omega,\mathcal{T},\P)$ tels que : • $X(\Omega)=\N^*$.
+• $\forall n\in\N^*$, $\P([X=n])=u_n$`,
+    },
+    {
+      id: 'loi-calcul-naif-probabilites-composees',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Loi par calcul naïf : double inclusion et probabilités composées',
+      motsCles: ['calcul naïf', 'X(Ω)', 'double inclusion', 'disjonction des cas', 'probabilités composées', 'tirages sans remise', 'incompatibilité', 'équiprobabilité', 'Exercice 15'],
+      source: 'Exercice 15',
+      corps: String.raw`!! **Exercice 15 :** Soit $n\geqslant2$. Soit $b\geqslant2$.
+On effectue deux tirages successifs sans remise dans une urne comportant $n$ boules noires et $b$ boules blanches.
+On note $X$ la variable aléatoire égale au nombre de boules blanches obtenues.
+Déterminer la loi de $X$.
+
+On suppose que l'on dispose d'un espace probabilisé $(\Omega,\mathcal{T},\P)$ modélisant la présente expérience aléatoire.
+Déterminons la loi de $X$.
+
+> $\odot$ Déterminons $X(\Omega)$.
+* Le nombre de boules blanches obtenues est un entier naturel qui ne peut excéder strictement le nombre de tirages effectués, à savoir 2.
+Donc, $X(\Omega)\subset\llbracket0;2\rrbracket$
+*
+$\triangleright$ Si chacun des deux tirages amène une boule noire (ce qui est possible d'après le protocole $(n\geqslant2)$), alors $X$ prend la valeur $0$.
+$\triangleright$ Si le premier tirage amène une boule noire et le 2ème tirage amène une boule blanche (ce qui est possible d'après le protocole $\left(\begin{array}{l}n\geqslant1\\b\geqslant1\end{array}\right)$), alors $X$ prend la valeur $1$.
+$\triangleright$ Si chacun des deux tirages amène une boule blanche (…), alors $X$ prend la valeur $2$.
+Ainsi, $\llbracket0,2\rrbracket\subset X(\Omega)$.
+
+Donc, __par double inclusion__, $X(\Omega)=\llbracket0,2\rrbracket$.
+
+$\odot$ __Calculons $\P([X=k])$, pour tout $k\in\llbracket0,2\rrbracket$.__
+Notons, pour tout $i\in\{1,2\}$,
+$N_i$ : « obtenir une boule noire au $i$-ième tirage »
+et $B_i$ : « obtenir une boule blanche au $i$-ième tirage »
+
+Soit $k\in\llbracket0,2\rrbracket$.
+__Raisonnons par disjonction des cas :__
+
+* __1er cas : $k=0$__
+Alors, $[X=k]$ est réalisé ssi « chacun des 2 tirages amène une boule noire est réalisé »
+ssi $N_1$ et $N_2$ sont réalisés
+Donc, $[X=k]=N_1\cap N_2$
+Donc, $$\begin{aligned}\P(X=k)&=\P(N_1\cap N_2)\\&\underset{(1)}{=}\P(N_1)\times\P_{N_1}(N_2)\\&\underset{(2)}{=}\frac{n}{n+b}\times\frac{n-1}{n+b-1}\\&=\frac{n(n-1)}{(n+b)(n+b-1)}\end{aligned}$$
+$(1)$ : D'après la __formule des probabilités composées__ $(\P(N_1)\neq0)$
+$(2)$ : __Par équiprobabilité__ à chaque tirage et d'après le protocole (tirage sans remise)
+
+* __2ème cas : $k=2$__
+En raisonnant comme au niveau du 1er cas, en intervertissant le rôle joué par les boules blanches et par les boules noires, on a :
+$$[X=k]=B_1\cap B_2$$
+puis
+$$\P(X=k)=\frac{b(b-1)}{(n+b)(n+b-1)}$$
+
+* __3ème cas : $k=1$__
+Alors :
+$[X=k]$ est réalisé ssi $[X=1]$ est réalisé
+ssi « On obtient très exactement une boule blanche à l'issue des deux tirages » est réalisé
+ssi « le 1er tirage amène une boule blanche et le deuxième tirage amène une boule noire ou le 1er tirage amène une boule noire et le 2ème tirage amène une boule blanche » est réalisé
+ssi $N_1\cap B_2$ est réalisé ou $B_1\cap N_2$ est réalisé
+ssi $(N_1\cap B_2)\cup(B_1\cap N_2)$ est réalisé
+Ainsi, $[X=k]=(N_1\cap B_2)\cup(B_1\cap N_2)$
+Donc :
+$$\begin{aligned}\P([X=k])&=\P\big((N_1\cap B_2)\cup(B_1\cap N_2)\big)\\&\underset{(1)}{=}\P(N_1\cap B_2)+\P(B_1\cap N_2)\\&\underset{(2)}{=}\P(N_1)\times\P_{N_1}(B_2)+\P(B_1)\times\P_{B_1}(N_2)\\&\underset{(3)}{=}\frac{n}{n+b}\times\frac{b}{n+b-1}+\frac{b}{n+b}\times\frac{n}{n+b-1}\\&=\frac{2nb}{(n+b)(n+b-1)}\end{aligned}$$
+$(1)$ : __Par incompatibilité des événements $N_1\cap B_2$ et $B_1\cap N_2$__ (car $N_1$ et $B_1$ le sont) et additivité de $\P$.
+$(2)$ : __D'après la formule des probabilités composées__ $(\P(N_1)\neq0$ et $\P(B_1)\neq0)$
+$(3)$ : __Par équiprobabilité des 2 tirages__ (et d'après le protocole
+
+Donc, [[la loi de $X$ nous est donnée par : $$\begin{cases}X(\Omega)=\llbracket0;2\rrbracket\\[4pt]\P([X=0])=\dfrac{n(n-1)}{(n+b)(n+b-1)}\\[8pt]\P([X=1])=\dfrac{2nb}{(n+b)(n+b-1)}\\[8pt]\P([X=2])=\dfrac{b(b-1)}{(n+b)(n+b-1)}\end{cases}$$]]`,
+    },
+    {
+      id: 'schema-binomial',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Reconnaître un schéma binomial',
+      motsCles: ['schéma binomial', 'loi binomiale', 'épreuves de Bernoulli', 'indépendance', 'nombre de succès', 'loi usuelle', 'Exercice 16'],
+      source: 'Exercice 16',
+      corps: String.raw`!! **Exercice 16 :** On lance 10 fois successivement le même dé octaédrique supposé parfaitement équilibré.
+On note $X$ la variable aléatoire égale au nombre de fois où l'on a obtenu le chiffre 1 suite à ces 10 lancers.
+Déterminer la loi de $X$.
+
+Déterminons la loi de $X$.
+On reconnaît un __schéma binomial.__
+Par définition, la variable aléatoire $X$ est égale au nombre de succès (« Obtenir le chiffre 1 »), suite à la répartition de __10__ épreuves de Bernoulli (identiques et) __indépendantes__ (par indépendance des lancers (on fait cette hypothèse raisonnable ici)) de probabilité égale à $\dfrac{1}{8}$ __(par équiprobabilité à chaque__ lancer, le dé étant octaédrique et équilibré).
+
+Donc, [[$X$ suit la loi binomiale de paramètres $10$ et $1/8$.]]
+On écrit : $X\hookrightarrow\mathcal{B}(10;1/8)$
+Donc, par définition de la loi $\mathcal{B}(10;1/8)$,
+[[$$\begin{cases}X(\Omega)=\llbracket0;10\rrbracket\\[4pt]\forall k\in X(\Omega),\ \P([X=k])=\dbinom{10}{k}\left(\dfrac{1}{8}\right)^k\left(\dfrac{7}{8}\right)^{10-k}\end{cases}$$]]`,
+    },
+    {
+      id: 'loi-maximum-fonction-repartition',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Loi d\'un maximum par le calcul de P(M ⩽ k)',
+      motsCles: ['maximum', 'max', 'fonction de répartition', 'P(M≤k)', 'loi uniforme', 'indépendance', 'tirages avec remise', 'Proposition 46', 'Exercice 17'],
+      source: 'Exercice 17',
+      corps: String.raw`!! **Exercice 17 :** Soit $n\geqslant2$. On considère l'expérience aléatoire qui consiste à tirer successivement au hasard avec remise 2 boules dans une urne contenant $n$ boules numérotées de 1 et à $n$.
+On appelle $M$ la variable aléatoire égale au plus grand des deux numéros obtenus.
+Déterminer la loi de $M$.
+
+On suppose que l'on dispose d'un espace probabilisé $(\Omega,\mathcal{T},\P)$ modélisant la présente expérience aléatoire.
+
+Pour tout $i\in\{1,2\}$, notons $X_i$ la variable aléatoire égale au numéro obtenu au $i$-ième tirage.
+On a, par définition de $M$,
+$$\forall\omega\in\Omega,\ M(\omega)=\begin{cases}X_1(\omega)&\text{si }X_1(\omega)\geqslant X_2(\omega)\\X_2(\omega)&\text{sinon}\end{cases}$$
+Donc :
+$$\forall\omega\in\Omega,\ M(\omega)=\max(X_1(\omega),X_2(\omega)).$$
+Donc :
+$$M=\max(X_1,X_2)$$
+Déterminons la loi de $M$.
+Soit $i\in\{1;2\}$
+Alors, par définition de $X_i$, $X_i(\Omega)=\llbracket1,n\rrbracket$ et $X_i$ prend chacune des $n$ valeurs de l'ensemble $\llbracket1,n\rrbracket$ avec la même probabilité égale à $\dfrac{1}{n}$ (par équiprobabilité lors des deux tirages d'après le protocole (tirages avec remise, « au hasard »)).
+Donc : $X_i\hookrightarrow\mathcal{U}(\llbracket1,n\rrbracket)$, et ce pour tout $i\in\{1,2\}$.
+On a : $(*)\ \begin{cases}\forall i\in\{1,2\},\ X_i(\Omega)=\llbracket1,n\rrbracket\\\forall k\in\llbracket1,n\rrbracket,\ \P([X=k])=1/n\end{cases}$
+De plus, les tirages s'effectuant avec remise, $X_1$ et $X_2$ peuvent être supposées indépendantes (pour $\P$) $(**)$
+On a :
+$$\begin{aligned}M(\Omega)&\underset{(0)}{=}\max(X_1,X_2)(\Omega)\\&\underset{(1)}{=}\{\max(x_1,x_2),\ (x_1,x_2)\in X_1(\Omega)\times X_2(\Omega)\}\\&\underset{(2)}{=}\{\max(x_1,x_2),\ (x_1,x_2)\in\llbracket1,n\rrbracket^2\}\\&\underset{(3)}{=}\llbracket1,n\rrbracket\end{aligned}$$
+$(0)$ : car $M=\max(X_1,X_2)$
+$(1)$ : par indépendance de $X_1$ et de $X_2$.
+$(2)$ : D'après $(*)$
+$(3)$ : D'après un raisonnement par double inclusion
+
+Soit $k\in\llbracket1,n\rrbracket$.
+On a :
+$$\begin{aligned}\P(M\leqslant k)&=\P(\max(X_1,X_2)\leqslant k)\\&\underset{(1)}{=}\P([X_1\leqslant k]\cap[X_2\leqslant k])\\&\underset{(2)}{=}\P(X_1\leqslant k)\P(X_2\leqslant k)\\&\underset{(3)}{=}F_{X_1}(k)F_{X_2}(k)\\&\underset{(4)}{=}F_{X_1}(k)F_{X_1}(k)\\&=(F_{X_1}(k))^2\\&=(\P(X_1\leqslant k))^2\\&\underset{(5)}{=}\left(\P\left(\bigcup_{i=1}^{k}[X_1=i]\right)\right)^2\\&\underset{(6)}{=}\left(\sum_{i=1}^{k}\P(X_1=i)\right)^2\\&=\ \dots\\&=\left(\frac{k}{n}\right)^2\end{aligned}$$
+Ainsi :
+$$\forall k\in\llbracket1,n\rrbracket,\ \P(M\leqslant k)=\left(\frac{k}{n}\right)^2$$
+Or :
+$\odot$ D'une part,
+$$\begin{aligned}\P(M\leqslant0)&\underset{(1)}{=}\P(\emptyset)\\&\underset{(2)}{=}0\end{aligned}$$
+$(1)$ : Comme $M(\Omega)=\llbracket1,n\rrbracket$, $[M\leqslant0]=\emptyset$
+$(2)$ : Par théorème
+
+$\odot$ D'autre part :
+$$\begin{aligned}\left(\frac{0}{n}\right)^2&=0^2\\&=0\end{aligned}$$
+Donc, $\P(M\leqslant0)=\left(\dfrac{0}{n}\right)^2$
+Donc : $\forall k\in\llbracket0,n\rrbracket$, $\P(M\leqslant k)=\left(\dfrac{k}{n}\right)^2\ (*)$
+Or : $M(\Omega)=\llbracket1,n\rrbracket$ et $\llbracket1,n\rrbracket\subset\Z$
+Donc : $M(\Omega)\subset\Z$.
+Donc, par théorème :
+$$\forall k\in\Z,\ \P(M=k)=\P(M\leqslant k)-\P(M\leqslant k-1)$$
+Or, $\llbracket1,n\rrbracket\subset\Z$.
+Donc :
+$$\forall k\in\llbracket1,n\rrbracket,\ \P(M=k)=\P(M\leqslant k)-\P(M\leqslant k-1)$$
+Or,
+$$\forall k\in\llbracket1,n\rrbracket,\ (k,k-1)\in\llbracket0,n\rrbracket^2$$
+Donc, d'après $(*)$ :
+$$\forall k\in\llbracket1,n\rrbracket,\ \P(M=k)=\left(\frac{k}{n}\right)^2-\left(\frac{k-1}{n}\right)^2$$`,
     },
   ],
 };
