@@ -1699,7 +1699,7 @@ $\underset{(1)}{\text{ssi}}$ la série $\sum\limits_{n\geqslant1}n\P(X=n)$ conve
 $(1)$ : Par positivité du terme général
 Or :
 $$\begin{aligned}\forall n\in\N^*,\ n\P(X=n)&=n\left(\frac{1}{2}\right)^n\\&=n\left(\frac{1}{2}\right)^{n-1+1}\\&=n\left(\frac{1}{2}\right)^{n-1}\frac{1}{2}\\&=\frac{1}{2}n\left(\frac{1}{2}\right)^{n-1}\end{aligned}$$
-Or, la série $\sum\limits_{n\geqslant1}\dfrac{1}{2}n\left(\dfrac{1}{2}\right)^{n-1}$ converge en tant que __série géométrique dérivée d'ordre {{?}} $\dfrac{1}{2}$__ à une constante multiplicative près $\left(\dfrac{1}{2}\right)$ et $\dfrac{1}{2}\in\,]-1,1[$.
+Or, la série $\sum\limits_{n\geqslant1}\dfrac{1}{2}n\left(\dfrac{1}{2}\right)^{n-1}$ converge en tant que __série géométrique dérivée d'ordre 2 $\dfrac{1}{2}$__ à une constante multiplicative près $\left(\dfrac{1}{2}\right)$ et $\dfrac{1}{2}\in\,]-1,1[$.
 Donc, la série $\sum\limits_{n\geqslant1}n\P(X=n)$ converge.
 Donc, d'après les équivalences précédentes, $X$ possède une espérance et
 $$\begin{aligned}E(X)&\underset{(1)}{=}\sum_{n=1}^{+\infty}n\P(X=n)\\&=\sum_{n=1}^{+\infty}\frac{1}{2}n\left(\frac{1}{2}\right)^{n-1}\\&=\frac{1}{2}\sum_{n=1}^{+\infty}n\left(\frac{1}{2}\right)^{n-1}\\&=\frac{1}{2}\times\frac{1}{\left(1-\frac{1}{2}\right)^2}\\&=\frac{1}{2}\times\frac{1}{\frac{1}{4}}\\&=\frac{1}{2}\times4\\&=2\end{aligned}$$
