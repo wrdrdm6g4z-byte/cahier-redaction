@@ -10,6 +10,8 @@
   const { chapitres = {}, modeles = [] } = window.CAHIER || {};
   const view = document.getElementById('view');
   const input = document.getElementById('q');
+  const racine = document.documentElement;
+  const corpsPage = document.body;
 
   const MACROS = {
     '\\R': '\\mathbb{R}', '\\N': '\\mathbb{N}', '\\Z': '\\mathbb{Z}',
@@ -20,7 +22,7 @@
     '\\fluo': '\\htmlClass{fluo}{#1}', '\\rouge': '\\htmlClass{rouge}{#1}',
   };
 
-  const sansAccent = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const sansAccent = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const norm = (s) => sansAccent(s).toLowerCase().replace(/œ/g, 'oe');
   const slug = (s) => norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const echappe = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -71,22 +73,42 @@
       .replace(/\u0001/g, '<mark>')
       .replace(/\u0002/g, '</mark>')
       .replace(/\n/g, '<br>')
-      .replace(/[-]/g, (c) => formules[c.charCodeAt(0) - PUA]);
+      .replace(/[\uE000-\uF8FF]/g, (c) => formules[c.charCodeAt(0) - PUA]);
   }
 
-  function corps(src, termes) {
-    return src.trim().split(/\n\s*\n/).map((bloc, i) => {
-      let net = bloc.replace(/\n?(\$\$[\s\S]+?\$\$)\n?/g, '$1');
-      const rang = `style="--c:${Math.min(i, 10)}"`;
-      // ||x|| en tête de bloc : annotation dans la marge.
-      const annotation = net.match(/^\|\|(.+?)\|\|\s*/);
-      const note = annotation ? `<span class="note">${enLigne(annotation[1])}</span>` : '';
-      if (annotation) net = net.slice(annotation[0].length);
-      if (net.startsWith('!!')) return `<p class="enonce" ${rang}>${note}${enLigne(net.slice(2).trim(), termes)}</p>`;
-      if (/^>\s?/.test(net)) {
-        return `<p class="retrait" ${rang}>${note}${enLigne(net.replace(/^>\s?/gm, ''), termes)}</p>`;
-      }
-      return `<p ${rang}>${note}${enLigne(net, termes)}</p>`;
+  // Un bloc « !! » qui commence par Exercice, Exemple ou Proposition est un énoncé.
+  const ENONCE = /^!!\s*\*\*(Exercices?|Exemples?|Proposition)\b/;
+  const NOTE = /^\|\|(.+?)\|\|\s*/;
+
+  function paragraphe(bloc, i, termes, dansEnonce) {
+    let net = bloc.replace(/\n?(\$\$[\s\S]+?\$\$)\n?/g, '$1');
+    const rang = `style="--c:${Math.min(i, 12)}"`;
+    const annotation = net.match(NOTE);
+    const note = annotation ? `<span class="note">${enLigne(annotation[1])}</span>` : '';
+    if (annotation) net = net.slice(annotation[0].length);
+    if (net.startsWith('!!')) {
+      const texte = enLigne(net.slice(2).trim(), termes);
+      return dansEnonce ? `<p ${rang}>${note}${texte}</p>` : `<p class="enonce" ${rang}>${note}${texte}</p>`;
+    }
+    if (/^>\s?/.test(net)) return `<p class="retrait" ${rang}>${note}${enLigne(net.replace(/^>\s?/gm, ''), termes)}</p>`;
+    return `<p ${rang}>${note}${enLigne(net, termes)}</p>`;
+  }
+
+  // Sépare le corps en blocs « Énoncé » et « Rédaction », dans l'ordre du texte.
+  function sections(src, termes) {
+    const groupes = [];
+    src.trim().split(/\n\s*\n/).forEach((bloc) => {
+      const type = ENONCE.test(bloc.replace(NOTE, '')) ? 'enonce' : 'redaction';
+      const dernier = groupes[groupes.length - 1];
+      if (dernier && dernier.type === type) dernier.blocs.push(bloc);
+      else groupes.push({ type, blocs: [bloc] });
+    });
+    let i = 0;
+    return groupes.map((g) => {
+      const html = g.blocs.map((b) => paragraphe(b, i++, termes, g.type === 'enonce')).join('');
+      return g.type === 'enonce'
+        ? `<section class="bloc-enonce" aria-label="Énoncé"><p class="etiquette">Énoncé</p><div class="texte">${html}</div></section>`
+        : `<section class="bloc-redaction" aria-label="Rédaction"><p class="etiquette">Rédaction</p><div class="texte">${html}</div></section>`;
     }).join('');
   }
 
@@ -101,73 +123,98 @@
       .filter((c) => c.modeles.length);
   }
 
-  const PLUS = '<svg class="plus" viewBox="0 0 13 13" aria-hidden="true"><path d="M1 6.5h11"/><path class="v" d="M6.5 1v11"/></svg>';
   const EASE = 'cubic-bezier(.22, 1, .36, 1)';
   const reduit = matchMedia('(prefers-reduced-motion: reduce)');
   const rendus = new Map();
   const modeleParId = new Map(modeles.map((m) => [m.id, m]));
-  const ouverts = new Set();
-  let termesActifs = [];
-
-  function ligne(m, n, i, contexte) {
-    const ouvert = ouverts.has(m.id);
-    const sous = contexte ? `<small>${echappe(nomDomaine(m.domaine))} · ${echappe(m.chapitre)}</small>` : '';
-    return `<article class="m${ouvert ? ' open' : ''}" data-id="${echappe(m.id)}" style="--i:${Math.min(i, 16)}">
-      <h3><button class="m-tete" type="button" aria-expanded="${ouvert}" aria-controls="p-${echappe(m.id)}">
-        <span class="n">${n}</span>
-        <span class="t">${enLigne(m.titre, termesActifs)}${sous}</span>
-        ${PLUS}
-      </button></h3>
-      <div class="m-panel" id="p-${echappe(m.id)}"><div class="m-clip"><div class="m-corps">${ouvert ? contenu(m) : ''}</div></div></div>
-    </article>`;
-  }
-
   const nomDomaine = (id) => DOMAINES.find((d) => d.id === id).nom;
+  let termesActifs = [];
+  let termesPourModele = [];
 
-  function contenu(m) {
-    const source = m.source ? `<span class="source">${echappe(m.source)}</span>` : '';
-    if (termesActifs.length) return corps(m.corps, termesActifs) + source;
-    if (!rendus.has(m.id)) rendus.set(m.id, corps(m.corps) + source);
+  function contenu(m, termes) {
+    if (termes && termes.length) return sections(m.corps, termes);
+    if (!rendus.has(m.id)) rendus.set(m.id, sections(m.corps));
     return rendus.get(m.id);
   }
 
-  function basculer(article, etat) {
-    const m = modeleParId.get(article.dataset.id);
-    const ouvrir = etat ?? !article.classList.contains('open');
-    const zone = article.querySelector('.m-corps');
-    if (ouvrir && !zone.innerHTML) zone.innerHTML = contenu(m);
-    if (ouvrir && etat === undefined) {
-      article.classList.add('ouvre');
-      setTimeout(() => article.classList.remove('ouvre'), 1100);
-    }
-    article.classList.toggle('open', ouvrir);
-    article.querySelector('.m-tete').setAttribute('aria-expanded', ouvrir);
-    if (ouvrir) ouverts.add(m.id); else ouverts.delete(m.id);
+  function carte(m, n, i, contexte) {
+    const meta = contexte
+      ? `${echappe(nomDomaine(m.domaine))} · ${echappe(m.chapitre)}`
+      : (m.source ? echappe(m.source) : '');
+    return `<a class="carte" href="#/m/${encodeURIComponent(m.id)}" data-id="${echappe(m.id)}" style="--i:${Math.min(i, 14)}">
+      <span class="carte-n">${n}</span>
+      <span class="carte-titre">${enLigne(m.titre, termesActifs)}</span>
+      ${meta ? `<span class="carte-meta">${meta}</span>` : ''}
+    </a>`;
   }
+
+  const FLECHE = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2l4 4-4 4"/></svg>';
 
   // Vues
   function vueAccueil() {
-    return `<div class="sommaire">${DOMAINES.map((d, i) => {
+    let i = 0;
+    return `<div class="accueil"><h1>Cahier de rédaction</h1>${DOMAINES.map((d) => {
       const chaps = chapitresDe(d.id);
       const total = chaps.reduce((s, c) => s + c.modeles.length, 0);
-      return `<section class="rubrique${total ? '' : ' sans'}" style="--i:${i * 3}">
-        <a class="r-tete" href="#/${d.id}"><h2><span class="revele"><span>${d.nom}</span></span></h2><span class="nb monte">${total}</span></a>
-        <ul class="monte">${chaps.map((c) => `<li><a href="#/${d.id}/${c.id}"><span>${echappe(c.nom)}</span><span class="nb">${c.modeles.length}</span></a></li>`).join('')}</ul>
+      return `<section class="domaine">
+        <a class="d-tete" href="#/${d.id}"><h2>${d.nom}</h2><span class="nb">${total}</span><span class="fleche" aria-hidden="true">→</span></a>
+        ${chaps.length ? `<div class="cartes">${chaps.map((c) => `<a class="carte carte-chap" href="#/${d.id}/${c.id}" style="--i:${Math.min(i++, 14)}">
+          <span class="carte-titre">${echappe(c.nom)}</span>
+          <span class="carte-meta">${c.modeles.length} modèle${c.modeles.length > 1 ? 's' : ''}</span>
+        </a>`).join('')}</div>` : '<p class="vide">Aucun modèle.</p>'}
       </section>`;
     }).join('')}</div>`;
   }
 
   function vueDomaine(d) {
     const chaps = chapitresDe(d.id);
-    const entete = `<div class="entete"><h1><span class="revele"><span>${d.nom}</span></span></h1>${chaps.length ? `<button class="bascule monte" style="--i:6" type="button">Tout déplier</button>` : ''}</div>`;
+    const total = chaps.reduce((s, c) => s + c.modeles.length, 0);
+    const entete = `<div class="entete"><h1>${d.nom}</h1><span class="nb">${total}</span></div>`;
     if (!chaps.length) return `${entete}<p class="vide">Aucun modèle.</p>`;
     let i = 0;
     return `${entete}<div class="colonnes">
-      <nav class="rail monte" style="--i:2" aria-label="Chapitres"><ol>${chaps.map((c) => `<li><a href="#/${d.id}/${c.id}" data-chap="${c.id}">${echappe(c.nom)}</a></li>`).join('')}<li class="curseur" aria-hidden="true"></li></ol></nav>
-      <div>${chaps.map((c) => `<section class="chap" id="${c.id}"><h2 class="monte" style="--i:${Math.min(i, 16)}">${echappe(c.nom)}</h2>
-        <div class="liste">${c.modeles.map((m, n) => ligne(m, n + 1, i++)).join('')}</div>
+      <nav class="rail" aria-label="Chapitres"><ol>${chaps.map((c) => `<li><a href="#/${d.id}/${c.id}" data-chap="${c.id}">${echappe(c.nom)}</a></li>`).join('')}<li class="curseur" aria-hidden="true"></li></ol></nav>
+      <div>${chaps.map((c) => `<section class="chap" id="${c.id}"><h2>${echappe(c.nom)}</h2>
+        <div class="cartes">${c.modeles.map((m, n) => carte(m, n + 1, i++)).join('')}</div>
       </section>`).join('')}</div>
     </div>`;
+  }
+
+  const ordreDomaine = (domaine) => chapitresDe(domaine).flatMap((c) => c.modeles);
+
+  function lienSuite(m, sens) {
+    if (!m) return '';
+    return `<a class="${sens === 'prec' ? 'prec' : 'suiv'}" href="#/m/${encodeURIComponent(m.id)}" rel="${sens === 'prec' ? 'prev' : 'next'}">
+      <span class="label">${sens === 'prec' ? '← Précédent' : 'Suivant →'}</span>
+      <span>${enLigne(m.titre)}</span>
+    </a>`;
+  }
+
+  function vueModele(m, termes) {
+    const d = DOMAINES.find((x) => x.id === m.domaine);
+    const liste = ordreDomaine(m.domaine);
+    const k = liste.indexOf(m);
+    const details = [
+      ['Domaine', echappe(d.nom)],
+      ['Chapitre', echappe(m.chapitre)],
+      m.source ? ['Source', echappe(m.source)] : null,
+      (m.motsCles || []).length ? ['Mots-clés', `<span class="mots">${m.motsCles.map((x) => `<span>${echappe(x)}</span>`).join('')}</span>`] : null,
+    ].filter(Boolean);
+    return `<article class="page-modele" data-id="${echappe(m.id)}">
+      <nav class="fil aux" aria-label="Fil d'Ariane">
+        <a href="#/${d.id}">${d.nom}</a><span class="sep" aria-hidden="true">/</span><a href="#/${d.id}/${slug(m.chapitre)}">${echappe(m.chapitre)}</a>
+      </nav>
+      <header class="tete-modele">
+        <h1 class="titre-modele">${enLigne(m.titre, termes)}</h1>
+        <button class="btn-lecture aux" type="button" aria-pressed="false">Mode lecture <kbd>L</kbd></button>
+      </header>
+      <div class="contenu">${contenu(m, termes)}</div>
+      <details class="details aux">
+        <summary>${FLECHE}Détails</summary>
+        <div class="details-corps"><div><dl>${details.map(([k2, v]) => `<dt>${k2}</dt><dd>${v}</dd>`).join('')}</dl></div></div>
+      </details>
+      <nav class="suite aux" aria-label="Modèles voisins">${lienSuite(liste[k - 1], 'prec')}${lienSuite(liste[k + 1], 'suiv')}</nav>
+    </article>`;
   }
 
   // Recherche
@@ -198,26 +245,30 @@
   function afficherRecherche(q) {
     const { termes, resultats } = chercher(q);
     sortie?.cancel();
+    afficher.jeton++;
+    lecture(false);
     if (!view.querySelector('.resultats')) window.scrollTo({ top: 0, behavior: 'instant' });
-    const avant = new Map([...view.querySelectorAll('.resultats .m')].map((el) => [el.dataset.id, el.getBoundingClientRect().top]));
+    const avant = new Map([...view.querySelectorAll('.resultats .carte')].map((el) => [el.dataset.id, el.getBoundingClientRect()]));
     termesActifs = termes;
     vueCourante = null;
     observateur?.disconnect();
     view.classList.remove('anim');
     marquerDomaine(null);
     view.innerHTML = `<div class="resultats">${resultats.length
-      ? `<div class="liste">${resultats.map((m, i) => ligne(m, i + 1, i, true)).join('')}</div>`
+      ? `<span class="nb">${resultats.length} résultat${resultats.length > 1 ? 's' : ''}</span><div class="cartes">${resultats.map((m, i) => carte(m, i + 1, i, true)).join('')}</div>`
       : '<p class="vide">Aucun résultat.</p>'}</div>`;
     if (reduit.matches) return;
-    // Les résultats conservés glissent vers leur nouvelle place, les nouveaux apparaissent.
-    view.querySelectorAll('.m').forEach((el, i) => {
+    // Les cartes conservées glissent vers leur nouvelle place, les nouvelles apparaissent.
+    view.querySelectorAll('.carte').forEach((el, i) => {
       if (i > 30) return;
       const depart = avant.get(el.dataset.id);
-      if (depart === undefined) {
-        el.animate([{ opacity: 0, transform: 'translateY(7px)' }, { opacity: 1, transform: 'none' }], { duration: 320, delay: Math.min(i, 8) * 16, easing: EASE, fill: 'backwards' });
+      if (!depart) {
+        el.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 240, delay: Math.min(i, 8) * 16, easing: EASE, fill: 'backwards' });
       } else {
-        const ecart = depart - el.getBoundingClientRect().top;
-        if (ecart) el.animate([{ transform: `translateY(${ecart}px)` }, { transform: 'none' }], { duration: 380, easing: EASE });
+        const r = el.getBoundingClientRect();
+        const dx = depart.left - r.left;
+        const dy = depart.top - r.top;
+        if (dx || dy) el.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }], { duration: 260, easing: EASE });
       }
     });
   }
@@ -228,8 +279,10 @@
   let sortie = null;
   const nav = document.querySelector('.domains');
   const entete = document.querySelector('.top');
+  const positions = new Map();
+  let depuisModele = false;
 
-  // Trait rouge qui glisse d'un lien actif à l'autre.
+  // Trait qui glisse d'un lien actif à l'autre.
   function placer(curseur, lien) {
     if (!curseur) return;
     if (!lien) { curseur.style.opacity = 0; return; }
@@ -244,7 +297,7 @@
   }
 
   function recaler() {
-    document.documentElement.style.setProperty('--top-h', `${entete.offsetHeight}px`);
+    racine.style.setProperty('--top-h', `${entete.offsetHeight}px`);
     placer(nav.querySelector('.curseur'), nav.querySelector('[aria-current]'));
     placer(view.querySelector('.rail .curseur'), view.querySelector('[data-chap][aria-current]'));
   }
@@ -266,7 +319,7 @@
       const lien = liens.get(id);
       const rail = lien.closest('ol');
       placer(rail.querySelector('.curseur'), lien);
-      if (rail.scrollWidth > rail.clientWidth) rail.scrollTo({ left: lien.offsetLeft - 16, behavior: 'smooth' });
+      if (rail.scrollWidth > rail.clientWidth) rail.scrollTo({ left: lien.offsetLeft - 16, behavior: reduit.matches ? 'instant' : 'smooth' });
     };
     activer(liens.keys().next().value);
     observateur = new IntersectionObserver((entrees) => {
@@ -280,49 +333,137 @@
       view.classList.remove('anim');
       void view.offsetWidth;
       view.innerHTML = html;
-      view.classList.add('anim');
+      if (!reduit.matches) view.classList.add('anim');
       vueCourante = cle;
       apres();
     };
     sortie?.cancel();
+    const jeton = ++afficher.jeton;
     if (!view.firstChild || reduit.matches || document.hidden) { poser(); return; }
-    sortie = view.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-5px)' }], { duration: 150, easing: 'ease-in', fill: 'forwards' });
+    sortie = view.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-4px)' }], { duration: 140, easing: 'ease-in', fill: 'forwards' });
     const courante = sortie;
-    courante.onfinish = () => { poser(); courante.cancel(); };
+    // La page est posée à la fin du fondu, ou au plus tard après 200 ms.
+    const finir = () => {
+      if (jeton !== afficher.jeton || courante.fait) return;
+      courante.fait = true;
+      poser();
+      courante.cancel();
+    };
+    courante.onfinish = finir;
+    setTimeout(finir, 200);
   }
+  afficher.jeton = 0;
 
   function vers(chapitre, doux) {
     const cible = chapitre && document.getElementById(chapitre);
-    if (cible) cible.scrollIntoView({ behavior: doux ? 'smooth' : 'instant' });
+    if (cible) cible.scrollIntoView({ behavior: doux && !reduit.matches ? 'smooth' : 'instant' });
   }
 
   function route() {
-    const [d, chapitre] = location.hash.replace(/^#\/?/, '').split('/');
+    const morceaux = location.hash.replace(/^#\/?/, '').split('/');
+    termesActifs = [];
+    sortie?.cancel();
+    afficher.jeton++;
+
+    if (morceaux[0] === 'm') {
+      const m = modeleParId.get(decodeURIComponent(morceaux[1] || ''));
+      if (m) {
+        const termes = termesPourModele;
+        termesPourModele = [];
+        marquerDomaine(m.domaine);
+        observateur?.disconnect();
+        afficher(vueModele(m, termes), `m:${m.id}`, () => {
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          corpsPage.classList.remove('entete-cachee');
+          const premiere = view.querySelector('mark');
+          if (premiere) premiere.scrollIntoView({ block: 'center', behavior: 'instant' });
+        });
+        return;
+      }
+    }
+
+    lecture(false);
+    const [d, chapitre] = morceaux;
     const domaine = DOMAINES.find((x) => x.id === d);
     const cle = domaine ? domaine.id : 'accueil';
-    termesActifs = [];
     marquerDomaine(domaine ? domaine.id : null);
-    sortie?.cancel();
     if (cle === vueCourante) { vers(chapitre, true); return; }
-    ouverts.clear();
+    const retour = depuisModele && positions.get(location.hash);
     afficher(domaine ? vueDomaine(domaine) : vueAccueil(), cle, () => {
-      if (chapitre) vers(chapitre, false);
+      if (retour !== undefined && retour !== false) window.scrollTo({ top: retour, behavior: 'instant' });
+      else if (chapitre) vers(chapitre, false);
       else window.scrollTo({ top: 0, behavior: 'instant' });
       if (domaine) suivreChapitres();
       else observateur?.disconnect();
     });
   }
 
+  // Mode lecture : seuls l'énoncé et la rédaction restent visibles.
+  function lecture(etat) {
+    const actif = etat ?? !corpsPage.classList.contains('lecture');
+    const page = view.querySelector('.page-modele');
+    if (actif && !page) return;
+    corpsPage.classList.toggle('lecture', actif);
+    view.querySelector('.btn-lecture')?.setAttribute('aria-pressed', actif);
+    try { sessionStorage.setItem('lecture', actif ? '1' : ''); } catch (e) { /* stockage indisponible */ }
+  }
+
+  // Thème : automatique, clair, sombre.
+  const THEMES = [null, 'light', 'dark'];
+  const NOMS_THEME = { null: 'automatique', light: 'clair', dark: 'sombre' };
+  const boutonTheme = document.querySelector('.theme');
+
+  function poserTheme(t, anime) {
+    if (anime && !reduit.matches) {
+      racine.classList.add('transition-theme');
+      clearTimeout(poserTheme.minuteur);
+      poserTheme.minuteur = setTimeout(() => racine.classList.remove('transition-theme'), 320);
+    }
+    if (t) racine.dataset.theme = t; else delete racine.dataset.theme;
+    const nom = `Thème : ${NOMS_THEME[t]}`;
+    boutonTheme.setAttribute('aria-label', nom);
+    boutonTheme.title = nom;
+    const sombre = t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches);
+    document.querySelector('meta[name="theme-color"]').content = sombre ? '#15171c' : '#f5f1e8';
+  }
+
+  boutonTheme.addEventListener('click', () => {
+    const actuel = racine.dataset.theme || null;
+    const suivant = THEMES[(THEMES.indexOf(actuel) + 1) % THEMES.length];
+    poserTheme(suivant, true);
+    try { if (suivant) localStorage.setItem('theme', suivant); else localStorage.removeItem('theme'); } catch (e) { /* stockage indisponible */ }
+  });
+
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => poserTheme(racine.dataset.theme || null, true));
+  poserTheme(racine.dataset.theme || null, false);
+
+  // Dépliage doux des détails.
+  function basculerDetails(details) {
+    const corps = details.querySelector('.details-corps');
+    if (!details.open) {
+      details.open = true;
+      void corps.offsetHeight; // fixe l'état replié pour que la transition parte de zéro
+      details.classList.add('deplie');
+    } else {
+      details.classList.remove('deplie');
+      if (reduit.matches) { details.open = false; return; }
+      const fermer = () => { if (!details.classList.contains('deplie')) details.open = false; };
+      corps.addEventListener('transitionend', fermer, { once: true });
+      setTimeout(fermer, 360);
+    }
+  }
+
   // Événements
   view.addEventListener('click', (e) => {
-    const tete = e.target.closest('.m-tete');
-    if (tete) { basculer(tete.closest('.m')); return; }
+    const resume = e.target.closest('.details summary');
+    if (resume) { e.preventDefault(); basculerDetails(resume.parentElement); return; }
 
-    const bascule = e.target.closest('.bascule');
-    if (bascule) {
-      const ouvrir = bascule.textContent === 'Tout déplier';
-      view.querySelectorAll('.m').forEach((a) => basculer(a, ouvrir));
-      bascule.textContent = ouvrir ? 'Tout replier' : 'Tout déplier';
+    if (e.target.closest('.btn-lecture')) { lecture(); return; }
+
+    const carteRes = e.target.closest('.resultats .carte');
+    if (carteRes) {
+      termesPourModele = termesActifs;
+      input.value = '';
       return;
     }
 
@@ -334,23 +475,30 @@
     }
   });
 
-  document.querySelector('.top').addEventListener('click', (e) => {
+  document.querySelector('.quitter-lecture').addEventListener('click', () => lecture(false));
+
+  entete.addEventListener('click', (e) => {
     const lien = e.target.closest('a');
     if (lien && input.value) {
       input.value = '';
-      if (lien.getAttribute('href') === location.hash) route();
+      if (lien.getAttribute('href') === location.hash) { vueCourante = null; route(); }
     }
   });
 
   input.addEventListener('input', () => {
     if (input.value.trim()) afficherRecherche(input.value);
-    else { ouverts.clear(); route(); }
+    else { vueCourante = null; route(); }
   });
 
   input.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      const premier = view.querySelector('.resultats .m');
-      if (premier) { basculer(premier, true); input.blur(); }
+      const premier = view.querySelector('.resultats .carte');
+      if (premier) {
+        termesPourModele = termesActifs;
+        input.value = '';
+        input.blur();
+        location.hash = premier.getAttribute('href');
+      }
     } else if (e.key === 'Escape') {
       input.value = '';
       input.dispatchEvent(new Event('input'));
@@ -359,19 +507,47 @@
   });
 
   document.addEventListener('keydown', (e) => {
-    const raccourci = (e.key === '/' && !e.metaKey && !e.ctrlKey) || (e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey));
-    if (raccourci && document.activeElement !== input) {
-      e.preventDefault();
-      input.focus();
-      input.select();
+    if (e.metaKey || e.ctrlKey || e.altKey) {
+      if (e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); lecture(false); input.focus(); input.select(); }
+      return;
+    }
+    const saisie = document.activeElement === input;
+    if (saisie) return;
+    if (e.key === '/') { e.preventDefault(); lecture(false); input.focus(); input.select(); return; }
+    if (!view.querySelector('.page-modele')) return;
+    if (e.key === 'l' || e.key === 'L') { e.preventDefault(); lecture(); }
+    else if (e.key === 'Escape') lecture(false);
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      const lien = view.querySelector(e.key === 'ArrowLeft' ? '.suite .prec' : '.suite .suiv');
+      if (lien) location.hash = lien.getAttribute('href');
     }
   });
 
-  addEventListener('hashchange', route);
-  addEventListener('scroll', () => entete.classList.toggle('colle', scrollY > 8), { passive: true });
+  addEventListener('hashchange', (e) => {
+    const ancien = new URL(e.oldURL).hash || '#/';
+    depuisModele = ancien.startsWith('#/m/');
+    if (!depuisModele) positions.set(ancien, scrollY);
+    route();
+  });
+
+  // L'en-tête s'efface quand on descend, revient quand on remonte.
+  let dernierY = scrollY;
+  addEventListener('scroll', () => {
+    const y = scrollY;
+    entete.classList.toggle('colle', y > 8);
+    if (document.activeElement !== input) {
+      if (y > dernierY + 6 && y > 160) corpsPage.classList.add('entete-cachee');
+      else if (y < dernierY - 6 || y < 80) corpsPage.classList.remove('entete-cachee');
+    }
+    dernierY = y;
+  }, { passive: true });
+
+  input.addEventListener('focus', () => corpsPage.classList.remove('entete-cachee'));
+
   new ResizeObserver(recaler).observe(entete);
   document.fonts?.ready.then(recaler);
   route();
+  try { if (sessionStorage.getItem('lecture') === '1') lecture(true); } catch (e) { /* stockage indisponible */ }
 
   // Prépare les formules en arrière-plan : l'ouverture d'un modèle est alors immédiate.
   const inactif = window.requestIdleCallback || ((f) => setTimeout(f, 60));
@@ -380,7 +556,7 @@
     if (aPreparer >= modeles.length) return;
     inactif(() => {
       const m = modeles[aPreparer++];
-      if (!rendus.has(m.id)) rendus.set(m.id, corps(m.corps) + (m.source ? `<span class="source">${echappe(m.source)}</span>` : ''));
+      if (!rendus.has(m.id)) rendus.set(m.id, sections(m.corps));
       preparer();
     });
   })();
