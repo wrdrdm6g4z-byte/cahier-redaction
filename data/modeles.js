@@ -399,46 +399,49 @@ Donc, __par unicité de la limite__, $\P(T)=0$.
 Ainsi, [[il est quasi-impossible de n'obtenir que des Pile.]]`,
     },
 
-    // Probabilités, photo 4
+    // Probabilités, corrigé du professeur (remplace la version du cahier)
     {
       id: 'principe-multiplicatif',
       domaine: 'probabilites',
       chapitre: 'Dénombrement',
       titre: 'Utiliser le principe multiplicatif',
-      motsCles: ['cardinal', 'produit cartésien', 'dé'],
-      corps: String.raw`L'expérience aléatoire consistant à lancer simultanément un dé cubique et un dé tétraédrique, l'ensemble des issues peut être modélisé par l'ensemble $\llbracket1;6\rrbracket\times\llbracket1;4\rrbracket$.
-Or, les ensembles $\llbracket1;6\rrbracket$ et $\llbracket1;4\rrbracket$ sont finis, de cardinal respectif 6 et 4.
-Donc, par théorème (__principe multiplicatif__), $\llbracket1;6\rrbracket\times\llbracket1;4\rrbracket$ est fini et :
-$$\begin{aligned}\operatorname{Card}(\llbracket1;6\rrbracket\times\llbracket1;4\rrbracket)&=\operatorname{Card}(\llbracket1;6\rrbracket)\operatorname{Card}(\llbracket1;4\rrbracket)\\&=6\times4\\&=24\end{aligned}$$
+      motsCles: ['cardinal', 'anagrammes', 'combinaisons', 'permutations', 'coefficients binomiaux'],
+      source: 'Corrigé, question 2',
+      corps: String.raw`Le mot MATHEMATIQUES est un mot de 13 lettres constitué de 2 lettres M, 2 lettres A, 2 lettres T, 2 lettres E, 1 lettre H, 1 lettre I, 1 lettre Q, 1 lettre U et 1 lettre S.
+Un anagramme du mot MATHEMATIQUES est entièrement déterminé par :
 
-Ainsi, [[il y a 24 résultats possibles]]`,
+• le choix de l'emplacement des 2 lettres M parmi les 13 emplacements possibles : il y a autant de tels choix qu'il y a de 2-combinaison de l'ensemble $\llbracket1,13\rrbracket$, à savoir, par définition même des coefficients binomiaux, $\dbinom{13}{2}$ ;
+• ce choix étant fait, par le choix de l'emplacement des 2 lettres A parmi les 11 emplacements possibles restants : il y a $\dbinom{11}{2}$ tels choix ;
+• ces choix étant faits, par le choix de l'emplacement des 2 lettres T parmi les 9 emplacements possibles restants : il y a $\dbinom{9}{2}$ tels choix ;
+• ces choix étant faits, par le choix de l'emplacement des 2 lettres E parmi les 7 emplacements possibles restants : il y a $\dbinom{7}{2}$ tels choix ;
+• ces choix étant faits, par le choix d'une permutation de l'ensemble des lettres « célibataires » H, I, Q, U et S : il y a autant de tels choix qu'il y a de permutations d'un ensemble de cardinal 5 à savoir, par théorème, $5!=120$.
+
+Ainsi, par théorème (__principe multiplicatif__),
+[[il y a $\dbinom{13}{2}\dbinom{11}{2}\dbinom{9}{2}\dbinom{7}{2}5!=389188800$ anagrammes du mot MATHEMATIQUES.]]`,
     },
 
-    // Probabilités, photos 5 et 6
+    // Probabilités, corrigé du professeur (remplace la version du cahier)
     {
       id: 'principe-additif',
       domaine: 'probabilites',
       chapitre: 'Dénombrement',
       titre: 'Utiliser le principe additif',
-      motsCles: ['cardinal', 'union disjointe', 'tirages successifs sans remise', 'parité', '4-listes'],
-      corps: String.raw`!! → 1000 boules $\in\llbracket1;1000\rrbracket$ ; 5 noires
-→ 4 tirages successifs sans remise
-→ Combien de tirages amènent 4 boules de la même parité ?
+      motsCles: ['cardinal', 'union disjointe', 'combinaisons', 'cartes', 'couleur', 'coefficients binomiaux'],
+      source: 'Corrigé, exercice 6',
+      corps: String.raw`Notons $\mathsf{T}$ l'ensemble des tirages amenant 5 cartes de la même couleur.
+Notons $\mathsf{R}$ l'ensemble des tirages amenant 5 cartes de couleur rouge.
+Notons $\mathsf{N}$ l'ensemble des tirages amenant 5 cartes de couleur noire.
+Rouge et noir étant les seules couleurs présentes dans le paquet de cartes, nous avons :
+$$\mathsf{T}=\mathsf{R}\cup\mathsf{N}$$
 
-Notons $M$ l'ensemble des résultats amenant 4 boules de même parité.
-Notons $M_p$ l'ensemble des tirages amenant 4 boules paires (respectivement $M_I$)
-D'après le protocole des tirages, il y a autant d'éléments dans $M_p$ qu'il y a de 4-listes d'éléments distincts d'un ensemble fini de cardinal 500 modélisant les 500 boules paires de l'urne, à savoir, par théorème :
-$$500\times499\times498\times497=\frac{500!}{496!}$$
+Il y a autant d'éléments dans $\mathsf{R}$ qu'il y a de 5-combinaisons de tout ensemble de cardinal 26 modélisant les 26 cartes de couleur rouge, à savoir, par définition même des coefficients binomiaux, $\dbinom{26}{5}$.
+Ainsi, $\operatorname{card}(\mathsf{R})=\dbinom{26}{5}$.
+De même, le paquet de cartes comportant également 26 cartes de couleur noire, $\mathsf{N}$ est un ensemble fini et $\operatorname{card}(\mathsf{N})=\dbinom{26}{5}$.
+De plus, $\mathsf{T}=\mathsf{R}\cup\mathsf{N}$ et $\mathsf{R}\cap\mathsf{N}=\varnothing$.
+Donc, par théorème (__principe additif__), $\mathsf{T}$ est un ensemble fini et :
+$$\operatorname{card}(\mathsf{T})=\operatorname{card}(\mathsf{R})+\operatorname{card}(\mathsf{N})=\binom{26}{5}+\binom{26}{5}=2\binom{26}{5}$$
 
-Ainsi, $M_p$ est un ensemble fini de cardinal $\dfrac{500!}{496!}$
-
-De même, $M_I$ est un ensemble fini de cardinal $\dfrac{500!}{496!}$
-
-Par ailleurs, $M=M_I\cup M_p$ et $M_I\cap M_p=\emptyset$
-Donc, par théorème (principe additif), $M$ est un ensemble fini et :
-$$\operatorname{Card}(M)=\operatorname{Card}(M_p)+\operatorname{Card}(M_I)=2\times\frac{500!}{496!}$$
-
-Ainsi, [[il y a $2\,\dfrac{500!}{496!}$ résultats amenant 4 boules de même parité]]`,
+Ainsi, [[$2\dbinom{26}{5}$ amènent 5 cartes de la même couleur.]]`,
     },
 
     // Analyse, photo 1
