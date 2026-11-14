@@ -949,6 +949,20 @@ De plus, d'après 2) (a), $\rg(M)=1$ et $1\neq3$.
 Donc, $M\in M_3(\R)$ et $\rg(M)\neq3$. Donc, par théorème, [[$M$ n'est pas inversible.]]`,
     },
     {
+      id: 'condition-necessaire-linearite',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: String.raw`Condition nécessaire de linéarité : $f(0_E)=0_F$`,
+      motsCles: ['méthode', 'linéarité', 'application linéaire', 'non linéaire', 'vecteur nul', 'f(0)=0', 'Remarque 13'],
+      source: 'Cours, Remarque 13 (méthode, abrégée)',
+      corps: String.raw`Tester l'égalité $f(0_E)=0_F$ :
+
+• Si $f(0_E)\neq0_F$, alors on peut conclure que $f$ n'est pas linéaire de $E$ dans $F$ ;
+• Si $f(0_E)=0_F$, alors on ne peut rien conclure quant à la linéarité de $f$.
+
+$\Rightarrow$ : On retiendra que l'égalité $f(0_E)=0_F$ est une condition nécessaire de linéarité (pour $f:E\longrightarrow F$).`,
+    },
+    {
       id: 'montrer-endomorphisme',
       domaine: 'algebre',
       chapitre: 'Applications linéaires',
