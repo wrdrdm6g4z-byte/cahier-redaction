@@ -1559,7 +1559,16 @@ $(3)$ : D'après un raisonnement par double inclusion
 
 Soit $k\in\llbracket1,n\rrbracket$.
 On a :
-$$\begin{aligned}\P(M\leqslant k)&=\P(\max(X_1,X_2)\leqslant k)\\&\underset{(1)}{=}\P([X_1\leqslant k]\cap[X_2\leqslant k])\\&\underset{(2)}{=}\P(X_1\leqslant k)\P(X_2\leqslant k)\\&\underset{(3)}{=}F_{X_1}(k)F_{X_2}(k)\\&\underset{(4)}{=}F_{X_1}(k)F_{X_1}(k)\\&=(F_{X_1}(k))^2\\&=(\P(X_1\leqslant k))^2\\&\underset{(5)}{=}\left(\P\left(\bigcup_{i=1}^{k}[X_1=i]\right)\right)^2\\&\underset{(6)}{=}\left(\sum_{i=1}^{k}\P(X_1=i)\right)^2\\&=\ \dots\\&=\left(\frac{k}{n}\right)^2\end{aligned}$$
+$$\begin{aligned}\P(M\leqslant k)&=\P(\max(X_1,X_2)\leqslant k)\\&\underset{(1)}{=}\P([X_1\leqslant k]\cap[X_2\leqslant k])\\&\underset{(2)}{=}\P(X_1\leqslant k)\P(X_2\leqslant k)\\&\underset{(3)}{=}F_{X_1}(k)F_{X_2}(k)\\&\underset{(4)}{=}F_{X_1}(k)F_{X_1}(k)\\&=(F_{X_1}(k))^2\\&=(\P(X_1\leqslant k))^2\\&\underset{(5)}{=}\left(\P\left(\bigcup_{i=1}^{k}[X_1=i]\right)\right)^2\\&\underset{(6)}{=}\left(\sum_{i=1}^{k}\P(X_1=i)\right)^2\\&\underset{(7)}{=}\left(\sum_{i=1}^{k}\frac{1}{n}\right)^2\\&\underset{(8)}{=}\left(k\times\frac{1}{n}\right)^2\\&=\left(\frac{k}{n}\right)^2\end{aligned}$$
+$(1)$ : l'événement $[\max(X_1,X_2)\leqslant k]$ est réalisé si et seulement si les événements $[X_1\leqslant k]$ et $[X_2\leqslant k]$ sont réalisés (conséquence de la définition de la notation « max » et de la transitivité de « $\leqslant$ »)
+$(2)$ : __par indépendance__ des variables aléatoires $X_1$ et $X_2$ justifiée au niveau de $(**)$ et par théorème (prop 47 (i) $\Rightarrow$ (ii)), $\underline{]{-\infty},k]}$ étant un intervalle ($[X_1\leqslant k]\cap[X_2\leqslant k]=[X_1\in\,]{-\infty},k]]\cap[X_2\in\,]{-\infty},k]]$)
+$(3)$ : par définition de la fonction de répartition $F_{X_i}$ de $X_i$, et ce pour tout $i\in\{1;2\}$
+$(4)$ : d'après $(*)$, $X_1$ et $X_2$ suivent la même loi. Donc, par théorème, $X_1$ et $X_2$ ont la même fonction de répartition. Donc, $F_{X_1}=F_{X_2}$
+$(5)$ : d'après $(*)$, $X_1(\Omega)=\llbracket1,n\rrbracket$. De plus, $k\in\llbracket1,n\rrbracket$. Donc, $[X_1\leqslant k]$ est réalisé si et seulement s'il existe $i\in\llbracket1,k\rrbracket$ tel que $[X_1=i]$ est réalisé. Donc, $[X_1\leqslant k]=\displaystyle\bigcup_{i=1}^{k}[X_1=i]$
+$(6)$ : __par incompatibilité__ deux à deux des événements $[X_1=i]$ $(i\in\llbracket1,k\rrbracket)$ et additivité de $\P$.
+$(7)$ : d'après $(*)$ et car $\llbracket1,k\rrbracket\subset\llbracket1,n\rrbracket$ (car $k\in\llbracket1,n\rrbracket$)
+$(8)$ : par théorème (somme usuelle)
+
 Ainsi :
 $$\forall k\in\llbracket1,n\rrbracket,\ \P(M\leqslant k)=\left(\frac{k}{n}\right)^2$$
 Or :
