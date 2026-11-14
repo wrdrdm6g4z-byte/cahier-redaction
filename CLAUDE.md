@@ -31,6 +31,8 @@ L'élève ne recopie plus les modèles dans un cahier. Les titres sont désormai
   titre: 'Titre sobre',
   motsCles: ['terme utile à la recherche'],
   source: 'DS n° 3', // facultatif
+  ajoute: '2026-11-14', // date d'ajout, obligatoire (rubrique Récents)
+  modifie: '2026-11-15', // facultatif : date d'un remplacement ou d'un complément
   corps: String.raw`Texte avec $x$ en ligne et $$x^2$$ centré.
 
 Ligne vide : nouveau paragraphe. **gras**, __souligné__.

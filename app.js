@@ -137,12 +137,38 @@
     return rendus.get(m.id);
   }
 
-  function carte(m, n, i, contexte) {
+  // Dates d'ajout et de modification
+  const dateDe = (m) => (m.modifie && m.modifie > (m.ajoute || '') ? m.modifie : m.ajoute || '');
+  const enDate = (iso) => { const [a, mo, j] = iso.split('-').map(Number); return new Date(a, mo - 1, j); };
+  const ilYa = (iso) => { const auj = new Date(); auj.setHours(0, 0, 0, 0); return Math.round((auj - enDate(iso)) / 864e5); };
+  const dateLongue = (iso, annee) => enDate(iso).toLocaleDateString('fr-FR', { weekday: annee ? undefined : 'long', day: 'numeric', month: 'long', year: annee ? 'numeric' : undefined });
+  function jourRelatif(iso) {
+    const n = ilYa(iso);
+    if (n === 0) return 'Aujourd’hui';
+    if (n === 1) return 'Hier';
+    const t = dateLongue(iso);
+    return t[0].toUpperCase() + t.slice(1);
+  }
+  const RECENT = 7;
+  const recents = modeles.filter((m) => m.ajoute)
+    .map((m, k) => ({ m, k }))
+    .sort((a, b) => dateDe(b.m).localeCompare(dateDe(a.m)) || b.k - a.k)
+    .map((x) => x.m);
+  const estMaj = (m) => !!m.modifie && dateDe(m) === m.modifie;
+  // marque : 'tout' (Nouveau ou Mis à jour), 'maj' (Mis à jour seulement), sinon rien.
+  function pastille(m, marque) {
+    if (!marque || !m.ajoute || ilYa(dateDe(m)) > RECENT) return '';
+    if (estMaj(m)) return '<span class="pastille maj">Mis à jour</span>';
+    return marque === 'tout' ? '<span class="pastille">Nouveau</span>' : '';
+  }
+
+  function carte(m, n, i, contexte, marque) {
     const meta = contexte
       ? `${echappe(nomDomaine(m.domaine))} · ${echappe(m.chapitre)}`
       : (m.source ? echappe(m.source) : '');
+    const p = pastille(m, marque);
     return `<a class="carte" href="#/m/${encodeURIComponent(m.id)}" data-id="${echappe(m.id)}" style="--i:${Math.min(i, 14)}">
-      <span class="carte-n">${n}</span>
+      ${n || p ? `<span class="carte-haut">${n ? `<span class="carte-n">${n}</span>` : ''}${p}</span>` : ''}
       <span class="carte-titre">${enLigne(m.titre, termesActifs)}</span>
       ${meta ? `<span class="carte-meta">${meta}</span>` : ''}
     </a>`;
@@ -151,9 +177,48 @@
   const FLECHE = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2l4 4-4 4"/></svg>';
 
   // Vues
-  function vueAccueil() {
+  function vueRecents() {
+    const jours = new Map();
+    recents.forEach((m) => {
+      const j = dateDe(m);
+      if (!jours.has(j)) jours.set(j, []);
+      jours.get(j).push(m);
+    });
     let i = 0;
-    return `<div class="accueil"><h1>Cahier de rédaction</h1>${DOMAINES.map((d) => {
+    return `<div class="entete"><h1>Récents</h1><span class="nb">${recents.length}</span></div>
+      <div class="chrono">${[...jours].map(([j, ms]) => `<section class="jour">
+        <h2 class="jour-titre"><span>${jourRelatif(j)}</span><span class="nb">${ms.length}</span></h2>
+        <div class="cartes">${ms.map((m) => carte(m, 0, i++, true, 'maj')).join('')}</div>
+      </section>`).join('')}</div>`;
+  }
+
+  function bandeauRecents() {
+    if (!recents.length) return '';
+    const ms = recents.slice(0, 8);
+    return `<section class="domaine bandeau">
+      <a class="d-tete" href="#/recents"><h2>Récents</h2><span class="nb">${jourRelatif(dateDe(ms[0]))}</span><span class="fleche" aria-hidden="true">Tout voir →</span></a>
+      <div class="piste">
+        <div class="defile" data-debut data-fin>${ms.map((m, k) => carte(m, 0, k, true, 'tout')).join('')}</div>
+        <button class="defile-btn prec" type="button" aria-label="Défiler vers la gauche">${FLECHE}</button>
+        <button class="defile-btn suiv" type="button" aria-label="Défiler vers la droite">${FLECHE}</button>
+      </div>
+    </section>`;
+  }
+
+  function suivreDefile() {
+    const piste = view.querySelector('.defile');
+    if (!piste) return;
+    const maj = () => {
+      piste.toggleAttribute('data-debut', piste.scrollLeft < 8);
+      piste.toggleAttribute('data-fin', piste.scrollLeft + piste.clientWidth > piste.scrollWidth - 8);
+    };
+    piste.addEventListener('scroll', maj, { passive: true });
+    maj();
+  }
+
+  function vueAccueil() {
+    let i = 8;
+    return `<div class="accueil"><h1>Cahier de rédaction</h1>${bandeauRecents()}${DOMAINES.map((d) => {
       const chaps = chapitresDe(d.id);
       const total = chaps.reduce((s, c) => s + c.modeles.length, 0);
       return `<section class="domaine">
@@ -198,6 +263,8 @@
       ['Domaine', echappe(d.nom)],
       ['Chapitre', echappe(m.chapitre)],
       m.source ? ['Source', echappe(m.source)] : null,
+      m.ajoute ? ['Ajouté', dateLongue(m.ajoute, true)] : null,
+      m.modifie ? ['Modifié', dateLongue(m.modifie, true)] : null,
       (m.motsCles || []).length ? ['Mots-clés', `<span class="mots">${m.motsCles.map((x) => `<span>${echappe(x)}</span>`).join('')}</span>`] : null,
     ].filter(Boolean);
     return `<article class="page-modele" data-id="${echappe(m.id)}">
@@ -383,6 +450,16 @@
     }
 
     lecture(false);
+    if (morceaux[0] === 'recents') {
+      marquerDomaine('recents');
+      observateur?.disconnect();
+      if (vueCourante === 'recents') { window.scrollTo({ top: 0, behavior: reduit.matches ? 'instant' : 'smooth' }); return; }
+      const retourR = depuisModele && positions.get(location.hash);
+      afficher(vueRecents(), 'recents', () => {
+        window.scrollTo({ top: retourR !== undefined && retourR !== false ? retourR : 0, behavior: 'instant' });
+      });
+      return;
+    }
     const [d, chapitre] = morceaux;
     const domaine = DOMAINES.find((x) => x.id === d);
     const cle = domaine ? domaine.id : 'accueil';
@@ -394,7 +471,7 @@
       else if (chapitre) vers(chapitre, false);
       else window.scrollTo({ top: 0, behavior: 'instant' });
       if (domaine) suivreChapitres();
-      else observateur?.disconnect();
+      else { observateur?.disconnect(); suivreDefile(); }
     });
   }
 
@@ -459,6 +536,13 @@
     if (resume) { e.preventDefault(); basculerDetails(resume.parentElement); return; }
 
     if (e.target.closest('.btn-lecture')) { lecture(); return; }
+
+    const fleche = e.target.closest('.defile-btn');
+    if (fleche) {
+      const piste = fleche.parentElement.querySelector('.defile');
+      piste.scrollBy({ left: (fleche.classList.contains('prec') ? -1 : 1) * piste.clientWidth * 0.8, behavior: reduit.matches ? 'instant' : 'smooth' });
+      return;
+    }
 
     const carteRes = e.target.closest('.resultats .carte');
     if (carteRes) {

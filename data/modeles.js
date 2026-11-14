@@ -10,6 +10,7 @@ window.CAHIER = {
     // Cahier, p. 1
     {
       id: 'absurde-combinaison-lineaire',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Espaces vectoriels',
       titre: "Raisonnement par l'absurde ⊕ Un vecteur donné n'est pas combinaison linéaire d'autres",
@@ -34,6 +35,7 @@ Donc, [[$M$ ne s'écrit pas comme ...]]`,
     // Cahier, p. 2
     {
       id: 'sev-caracterisation-3-points',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Espaces vectoriels',
       titre: "Montrer qu'un ensemble est un SEV d'un EV de référence → caractérisation en 3 points",
@@ -68,6 +70,7 @@ Donc, d'après les 3 points $\odot$ précédents, par théorème, ...`,
     // Cahier, p. 3
     {
       id: 'sev-vect',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Espaces vectoriels',
       titre: "Montrer qu'un ensemble est un SEV à l'aide de « Vect »",
@@ -108,6 +111,7 @@ Donc, en particulier, [[$E$ est un sous-espace vectoriel de $M_3(\R)$.]]`,
     // Cahier, p. 4
     {
       id: 'famille-libre',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Espaces vectoriels',
       titre: "Montrer qu'une famille est libre",
@@ -130,6 +134,7 @@ Ainsi, $(I_3,M)$ est libre dans $F_n$.`,
     // Cahier, p. 6
     {
       id: 'coordonnees-dans-une-base',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Espaces vectoriels',
       titre: "Amener les coordonnées d'un vecteur dans une base",
@@ -153,6 +158,7 @@ Donc, [[$(7,2,-2)$ sont les coordonnées de $(1,2,3)$ dans $B$.]]`,
     // Cahier, p. 7 (non numérotée sur la photo)
     {
       id: 'dimension-sous-espace',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Espaces vectoriels',
       titre: "Expliciter la dimension d'un sous-espace vectoriel",
@@ -166,6 +172,7 @@ Donc, [[$\dim(F_1)=1$]]`,
     // Cahier, p. 8
     {
       id: 'base-polynomes-racines-communes',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Espaces vectoriels',
       titre: "Montrer qu'une famille de polynômes est une base en exploitant les racines communes",
@@ -203,6 +210,7 @@ Donc, par théorème, [[$\mathcal{F}$ est une base de $\R_2[X]$]]`,
     // Cahier, p. 9
     {
       id: 'rang-inversibilite-det',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Matrices',
       titre: "Calcul du rang d'une matrice par son inversibilité ⊕ det",
@@ -221,6 +229,7 @@ Donc, par théorème, [[$\rg(A_3)=2$]]`,
     // Cahier, p. 10
     {
       id: 'spectre-ordre-2',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Réduction',
       titre: "Déterminer le spectre d'une matrice carrée d'ordre 2",
@@ -242,6 +251,7 @@ Donc, d'après les équivalences précédentes,
     // Cahier, p. 11 et page suivante
     {
       id: 'spectre-sans-sous-espaces-propres',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Réduction',
       titre: "Déterminer le spectre d'une matrice carrée sans les sous-espaces propres associés",
@@ -264,6 +274,7 @@ $(4)$ : Par théorème`,
     // Cahier, p. 12 et page suivante. Suite attendue (fin de la photo : E_0(J)).
     {
       id: 'spectre-avec-sous-espaces-propres',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Réduction',
       titre: "Déterminer le spectre d'une matrice carrée donnée, avec les sous-espaces propres associés",
@@ -295,6 +306,7 @@ Donc, $E_0(J)=\Vect\left(\begin{pmatrix}-1\\1\\0\end{pmatrix},\begin{pmatrix}-1\
 
     {
       id: 'methode-construction-espace-probabilise',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Espaces probabilisés',
       titre: 'Construire un espace probabilisé adéquat : squelette de rédaction',
@@ -314,6 +326,7 @@ Donc, $E_0(J)=\Vect\left(\begin{pmatrix}-1\\1\\0\end{pmatrix},\begin{pmatrix}-1\
     // Probabilités, photos 1 et 2
     {
       id: 'construire-espace-probabilise-fini',
+      ajoute: '2026-11-09',
       domaine: 'probabilites',
       chapitre: 'Espaces probabilisés',
       titre: String.raw`Construire un espace probabilisé fini $(\Omega,\mathcal{P}(\Omega),\P)$`,
@@ -336,6 +349,7 @@ Donc, [[l'espace probabilisé $(\Omega,\mathcal{P}(\Omega),\P)$ ainsi construit 
     },
     {
       id: 'probabilite-equiprobabilite-cardinaux',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Espaces probabilisés',
       titre: 'Calculer une probabilité par équiprobabilité',
@@ -364,6 +378,7 @@ Ainsi, [[la probabilité d'obtenir les boules 1, 2 et 3 lors du tirage vaut $1/5
     // Probabilités, photo 3
     {
       id: 'quasi-impossibilite-que-des-pile',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Espaces probabilisés',
       titre: 'Modéliser un événement puis montrer qu\'il est quasi-impossible (encadrement)',
@@ -402,6 +417,8 @@ Ainsi, [[il est quasi-impossible de n'obtenir que des Pile.]]`,
     // Probabilités, corrigé du professeur (remplace la version du cahier)
     {
       id: 'principe-multiplicatif',
+      ajoute: '2026-11-09',
+      modifie: '2026-11-13',
       domaine: 'probabilites',
       chapitre: 'Dénombrement',
       titre: 'Utiliser le principe multiplicatif',
@@ -423,6 +440,8 @@ Ainsi, par théorème (__principe multiplicatif__),
     // Probabilités, corrigé du professeur (remplace la version du cahier)
     {
       id: 'principe-additif',
+      ajoute: '2026-11-09',
+      modifie: '2026-11-13',
       domaine: 'probabilites',
       chapitre: 'Dénombrement',
       titre: 'Utiliser le principe additif',
@@ -447,6 +466,7 @@ Ainsi, [[$2\dbinom{26}{5}$ amènent 5 cartes de la même couleur.]]`,
     // Analyse, photo 1
     {
       id: 'determiner-df',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Fonctions',
       titre: String.raw`Déterminer $\mathcal{D}f$`,
@@ -464,6 +484,7 @@ Donc, [[$\mathcal{D}f=\R\setminus\{-2\}$]]`,
     // Analyse, p. 2 et page suivante. b = -3 corrigé d'après le calcul (lecture : 3).
     {
       id: 'identification-coefficients',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Fonctions',
       titre: 'Identification coefficients',
@@ -486,6 +507,7 @@ $$\forall x\in\R\setminus\{-2\},\ \frac{3x^2+3x+5}{x+2}=ax+b+\frac{c}{x+2}$$]]`,
     // Analyse, p. 3
     {
       id: 'prolonger-par-continuite',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Fonctions',
       titre: 'Prolonger par continuité',
@@ -509,6 +531,7 @@ alors ==$\hat{f}$ est le prolongement par continuité de $f$ en $0$.==]]`,
     // Analyse, p. 4 et page suivante. Quotient par x rétabli d'après le calcul (lecture : ln(1+x)).
     {
       id: 'continuite-derivabilite-morceaux',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Fonctions',
       titre: "Continuité et dérivabilité d'une fonction définie par morceaux en un point",
@@ -581,6 +604,7 @@ Donc, [[$f$ est dérivable en $0$ et $f'(0)=\dfrac{1}{2}$.]]`,
     // Analyse, p. 5 et page suivante. C^2 corrigé (lecture : C_2).
     {
       id: 'taylor-young-ordre-2',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Fonctions',
       titre: "Taylor Young à l'ordre 2",
@@ -616,6 +640,7 @@ $$\ln(1-x)\underset{x\to0}{=}-x-\frac{x^2}{2}+o\left(x^2\right)$$]]`,
     // Analyse, p. 6
     {
       id: 'asymptote-oblique',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Fonctions',
       titre: 'Asymptote oblique à la courbe de $f$',
@@ -651,6 +676,7 @@ Donc, par définition, [[la droite $(\Delta_a):y=ax-\ln(2a)$ est asymptote obliq
     // Analyse, p. 11 et page suivante. Par f_n corrigé (lecture : par f).
     {
       id: 'theoreme-bijection',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Fonctions',
       titre: 'Théorème de la bijection',
@@ -672,6 +698,7 @@ Ainsi, [[il existe un seul réel de $[0,1[$, noté $u_n$ tel que $f(u_n)=n$, et 
     // Analyse, p. 7 et page suivante
     {
       id: 'suite-arithmetico-geometrique',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Suites',
       titre: 'Terme général suite arithmético-géométrique',
@@ -698,6 +725,7 @@ Donc :
     // Analyse, deux pages suivantes. V_{n+2} corrigé (lecture : U_{n+2}).
     {
       id: 'suite-recurrente-lineaire-ordre-2',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Suites',
       titre: "Terme général d'une suite récurrente linéaire d'ordre 2",
@@ -726,6 +754,7 @@ Donc, d'après $*$ :
     // Analyse, p. 9 et page suivante
     {
       id: 'squelette-recurrence',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Suites',
       titre: 'Squelette de la récurrence',
@@ -761,6 +790,7 @@ Donc, [[pour tout $n\in\N$, $U_n$.]]
     // Analyse, p. 10
     {
       id: 'variations-suite-recurrente',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Suites',
       titre: "Méthode : Variations d'une suite du type $U_{n+1}=f(U_n)$",
@@ -781,6 +811,7 @@ Si $f$ est croissante sur un intervalle contenant tous les termes de $(U_n)_{n\i
     // Analyse, p. 12
     {
       id: 'nature-serie-numerique',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Séries',
       titre: "Déterminer la nature d'une série numérique",
@@ -801,6 +832,7 @@ Donc, [[$\sum\limits_{k\geqslant0}1$ diverge]]`,
     // Analyse, p. 13 et page suivante
     {
       id: 'series-geometriques-derivees',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Séries',
       titre: 'Séries géométriques/dérivées',
@@ -822,6 +854,7 @@ $$\sum_{k=1}^{+\infty}\left(\frac{1}{4}\right)^{2k+1}=\frac{1}{60}$$]]`,
     // Analyse, p. 14
     {
       id: 'comparaison-series-termes-positifs',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Séries',
       titre: 'Formulation pour la comparaison des séries à termes positifs',
@@ -842,6 +875,7 @@ $$\sum_{k=1}^{+\infty}\left(\frac{1}{4}\right)^{2k+1}=\frac{1}{60}$$]]`,
     // Corrigés des DS 1 et 2
     {
       id: 'base-libre-generatrice-dimension',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Espaces vectoriels',
       titre: 'Montrer qu\'une famille libre et génératrice est une base, puis donner la dimension',
@@ -866,6 +900,7 @@ Donc, [[$\dim(E)=3$.]]`,
     },
     {
       id: 'base-libre-cardinal',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Espaces vectoriels',
       titre: 'Montrer qu\'une famille est une base par sa liberté et son cardinal',
@@ -889,6 +924,7 @@ Donc, par théorème, [[$\mathcal{B}'$ est une base de $E$.]]`,
     },
     {
       id: 'analyse-synthese',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Espaces vectoriels',
       titre: 'Déterminer un ensemble par analyse-synthèse',
@@ -918,6 +954,7 @@ Ainsi, par analyse-synthèse, nous avons montré : [[$T_E=\left\{\begin{pmatrix}
     },
     {
       id: 'matrice-inversible-noyau',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Matrices',
       titre: 'Montrer qu\'une matrice est inversible par l\'étude du système $AX=0$',
@@ -932,6 +969,7 @@ Donc, par théorème, [[$A$ est inversible.]]`,
     },
     {
       id: 'rang-definition-non-inversible',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Matrices',
       titre: 'Calculer un rang par la dimension du Vect des colonnes, puis conclure sur l\'inversibilité',
@@ -950,6 +988,7 @@ Donc, $M\in M_3(\R)$ et $\rg(M)\neq3$. Donc, par théorème, [[$M$ n'est pas inv
     },
     {
       id: 'condition-necessaire-linearite',
+      ajoute: '2026-11-14',
       domaine: 'algebre',
       chapitre: 'Applications linéaires',
       titre: String.raw`Condition nécessaire de linéarité : $f(0_E)=0_F$`,
@@ -964,6 +1003,7 @@ $\Rightarrow$ : On retiendra que l'égalité $f(0_E)=0_F$ est une condition néc
     },
     {
       id: 'montrer-endomorphisme',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Applications linéaires',
       titre: 'Montrer qu\'une application est un endomorphisme',
@@ -987,6 +1027,7 @@ Donc, [[$f$ est un endomorphisme de l'espace vectoriel de référence $\R^4$.]]`
     },
     {
       id: 'endomorphisme-canoniquement-associe',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Applications linéaires',
       titre: 'Former la matrice d\'un endomorphisme dans la base canonique',
@@ -1017,6 +1058,7 @@ Donc, [[$f$ est l'endomorphisme de $\R^4$ canoniquement associé à la matrice $
     },
     {
       id: 'bijectivite-noyau-image-endomorphisme',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Applications linéaires',
       titre: 'Déduire la bijectivité, le noyau et l\'image d\'un endomorphisme de sa matrice',
@@ -1038,6 +1080,7 @@ Donc, par théorème, [[$\ker(f)=\{0_{\R^4}\}$ et $\operatorname{Im}(f)=\R^4$.]]
     },
     {
       id: 'spectre-matrice-triangulaire',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Réduction',
       titre: 'Déterminer le spectre d\'une matrice triangulaire',
@@ -1051,6 +1094,7 @@ Donc, d'après ce qui précède, [[$\Sp(M)=\{0;1\}$.]]`,
     },
     {
       id: 'sous-espace-propre-base',
+      ajoute: '2026-11-09',
       domaine: 'algebre',
       chapitre: 'Réduction',
       titre: 'Expliciter un sous-espace propre et en donner une base',
@@ -1068,6 +1112,7 @@ Libre dans $E(\lambda,M)$ et génératrice de $E(\lambda,M)$, $\left(\begin{pmat
     },
     {
       id: 'fonction-bien-definie',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Fonctions',
       titre: 'Montrer qu\'une fonction est bien définie',
@@ -1081,6 +1126,7 @@ Ainsi, [[$f_a$ est définie sur $\R$.]]`,
     },
     {
       id: 'parite-fonction',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Fonctions',
       titre: 'Étudier la parité d\'une fonction et l\'interpréter géométriquement',
@@ -1094,6 +1140,7 @@ Ainsi, [[la représentation graphique $(C_a)$ de $f_a$ est symétrique par rappo
     },
     {
       id: 'derivabilite-quotient',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Fonctions',
       titre: 'Justifier la dérivabilité d\'un quotient et calculer sa dérivée',
@@ -1114,6 +1161,7 @@ Ainsi, [[$\forall x\in\,]-\infty,0[\,\cup\,]0,1[$, $f'(x)=-\dfrac{\ln(1-x)+x}{((
     },
     {
       id: 'integrale-bien-definie',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Intégration',
       titre: 'Montrer qu\'une intégrale est un réel bien défini',
@@ -1133,6 +1181,7 @@ Donc, [[$I_n(y)$ est un réel correctement défini, et ce pour tout $n\in\N$, po
     },
     {
       id: 'equation-differentielle-ordre-2',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Équations différentielles',
       titre: 'Résoudre une équation différentielle linéaire homogène du second ordre',
@@ -1153,6 +1202,7 @@ Donc, par théorème, l'ensemble-solution de l'équation différentielle $(E)$ e
     },
     {
       id: 'recurrence-suite-bien-definie-encadree',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Suites',
       titre: 'Montrer par récurrence qu\'une suite existe et reste dans un intervalle',
@@ -1196,6 +1246,7 @@ Ainsi, [[pour tout $n\in\N$, $u_n$ existe et $u_n\in\,]0,1[$.]]`,
     },
     {
       id: 'variations-suite-signe-g-moins-x',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Suites',
       titre: 'Déduire les variations d\'une suite récurrente du signe de $g(x)-x$',
@@ -1213,6 +1264,7 @@ Donc, [[$(u_n)_{n\in\N}$ est décroissante.]]`,
     },
     {
       id: 'convergence-limite-monotone-point-fixe',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Suites',
       titre: 'Montrer qu\'une suite récurrente converge et déterminer sa limite',
@@ -1240,6 +1292,7 @@ Ainsi, [[$(u_n)_{n\in\N}$ converge de limite nulle.]]`,
     },
     {
       id: 'nature-serie-comparaison-inegalite',
+      ajoute: '2026-11-09',
       domaine: 'analyse',
       chapitre: 'Séries',
       titre: 'Déterminer la nature d\'une série par comparaison (inégalité)',
@@ -1257,6 +1310,7 @@ Donc, d'après un critère de comparaison (par inégalité) dans le contexte des
     },
     {
       id: 'evenement-probabilite-independance',
+      ajoute: '2026-11-09',
       domaine: 'probabilites',
       chapitre: 'Espaces probabilisés',
       titre: 'Expliciter un événement puis calculer sa probabilité par indépendance',
@@ -1275,6 +1329,7 @@ Ainsi, [[$a_2=\dfrac{1}{4}$]]`,
     },
     {
       id: 'evenement-union-incompatibles',
+      ajoute: '2026-11-09',
       domaine: 'probabilites',
       chapitre: 'Espaces probabilisés',
       titre: 'Décomposer un événement en union d\'événements incompatibles',
@@ -1294,6 +1349,7 @@ Donc, [[$u_n=\displaystyle\sum_{k=2}^{n}a_k$, et ce pour tout $n\geqslant2$.]]`,
     },
     {
       id: 'existence-esperance-limite-monotone',
+      ajoute: '2026-11-09',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Montrer qu\'une variable aléatoire admet une espérance',
@@ -1313,6 +1369,7 @@ Donc, en vertu des équivalences précédentes, [[$X$ admet une espérance.]]`,
     },
     {
       id: 'loi-binomiale-nombre-de-pile',
+      ajoute: '2026-11-11',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Montrer qu\'un nombre de succès suit une loi binomiale',
@@ -1356,6 +1413,7 @@ En vertu de qui précède, [[$X\hookrightarrow\mathcal{B}(n,p)$]]`,
     },
     {
       id: 'loi-geometrique-rang-premier-pile',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Montrer que le rang du premier succès suit une loi géométrique',
@@ -1403,6 +1461,7 @@ Donc, par définition, [[$X\hookrightarrow\mathcal{G}(p)$]]`,
     },
     {
       id: 'methodes-loi-variable-discrete',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Déterminer la loi d\'une variable aléatoire discrète : trois méthodes',
@@ -1422,6 +1481,7 @@ Pour le min ou le max d'une famille finie de variables aléatoires indépendante
     },
     {
       id: 'suite-loi-probabilite-discrete',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Montrer qu\'une suite définit une loi de probabilité discrète',
@@ -1456,6 +1516,7 @@ Donc, par théorème, il existe un espace probabilisé $(\Omega,\mathcal{T},\P)$
     },
     {
       id: 'loi-calcul-naif-probabilites-composees',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Loi par calcul naïf : double inclusion et probabilités composées',
@@ -1520,6 +1581,7 @@ Donc, [[la loi de $X$ nous est donnée par : $$\begin{cases}X(\Omega)=\llbracket
     },
     {
       id: 'schema-binomial',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Reconnaître un schéma binomial',
@@ -1540,6 +1602,8 @@ Donc, par définition de la loi $\mathcal{B}(10;1/8)$,
     },
     {
       id: 'loi-maximum-fonction-repartition',
+      ajoute: '2026-11-12',
+      modifie: '2026-11-14',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Loi d\'un maximum par le calcul de P(M ⩽ k)',
@@ -1609,6 +1673,7 @@ $$\forall k\in\llbracket1,n\rrbracket,\ \P(M=k)=\left(\frac{k}{n}\right)^2-\left
     },
     {
       id: 'loi-probabilites-totales-lois-conditionnelles',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Loi par la formule des probabilités totales (lois conditionnelles géométriques)',
@@ -1677,6 +1742,7 @@ Ainsi, [[la loi de $X$ nous est donnée par : $$X(\Omega)=\{-1\}\cup\N^*$$ $$\fo
     },
     {
       id: 'variables-non-independantes',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Montrer que deux variables aléatoires ne sont pas indépendantes',
@@ -1732,6 +1798,7 @@ Donc, $X_1$ et $X_1+X_2$ ne sont pas indépendantes`,
     },
     {
       id: 'loi-produit-bernoulli-independantes',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Loi du produit XY : (XY)(Ω) par double inclusion',
@@ -1778,6 +1845,7 @@ Donc, [[$XY\hookrightarrow\mathcal{B}\left(\dfrac{1}{4}\right)$]]`,
     },
     {
       id: 'esperance-existence-ou-non',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Espérance : divergence ou convergence de la série de terme général nP(X = n)',
@@ -1823,6 +1891,7 @@ Donc, [[$X$ possède une espérance et $E(X)=2$]]`,
     },
     {
       id: 'loi-fonction-variable-aleatoire',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Loi de Y = f(X) : Y(Ω), puis [Y = k] exprimé avec X',
@@ -1897,6 +1966,7 @@ Donc, [[la loi de $Y$ nous est donnée par : $$\begin{cases}Y(\Omega)=\{0;1;4;9\
     },
     {
       id: 'transfert-serie-exponentielle',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Théorème de transfert : espérance de f(X) par la série exponentielle',
@@ -1948,6 +2018,7 @@ Donc, en vertu des équivalences précédentes,
     },
     {
       id: 'schema-binomial-tirages-avec-remise',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Reconnaître un schéma binomial (tirages avec remise)',
@@ -1964,6 +2035,7 @@ Donc, [[$X\hookrightarrow\mathcal{B}\left(n,\dfrac{b}{b+r}\right)$]]`,
     },
     {
       id: 'esperance-variance-transformee-affine',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Espérance et variance d\'une transformée affine aX + b',
@@ -1991,6 +2063,7 @@ Donc, [[$3X+1$ possède une variance et $V(3X+1)=9$]]`,
     },
     {
       id: 'esperance-carre-koenig-huygens',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Espérance de X² par la formule de Koenig-Huygens',
@@ -2017,6 +2090,7 @@ Donc, [[$X^2$ possède une espérance et $E(X^2)=np(1-p+np)$]]`,
     },
     {
       id: 'reconnaitre-loi-uniforme',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Reconnaître une loi uniforme',
@@ -2032,6 +2106,7 @@ Donc, [[$X\hookrightarrow\mathcal{U}(\llbracket0,n\rrbracket)$]]`,
     },
     {
       id: 'loi-indicatrice-evenement',
+      ajoute: '2026-11-12',
       domaine: 'probabilites',
       chapitre: 'Variables aléatoires',
       titre: 'Loi de l\'indicatrice d\'un événement',
