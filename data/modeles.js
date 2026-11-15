@@ -831,6 +831,26 @@ Donc, [[$\sum\limits_{k\geqslant0}1$ diverge]]`,
 
     // Analyse, p. 13 et page suivante
     {
+      id: 'combinaison-lineaire-series-convergentes',
+      domaine: 'analyse',
+      chapitre: 'Séries',
+      titre: 'Convergence d\'une combinaison linéaire de séries convergentes',
+      motsCles: ['combinaison linéaire', 'linéarité', 'somme de séries', 'série géométrique', 'télescopage', 'scinder la somme', 'Proposition 3', 'Exemple 3'],
+      source: 'Chapitre 5, Exemple 3',
+      ajoute: '2026-11-15',
+      corps: String.raw`!! **Exemple 3 :** Justifier que la série $\displaystyle\sum_{k\geqslant1}\left(\frac{3}{k(k+1)}-\frac{6}{4^k}\right)$ converge.
+
+On a :
+$$\forall k\in\N^*,\ \frac{3}{k(k+1)}-\frac{6}{4^k}=3\times\frac{1}{k(k+1)}+(-6)\times\frac{1}{4^k}$$
+Or, d'après l'ex 1 (q2 et 3) les séries $\displaystyle\sum_{k\geqslant1}\frac{1}{k(k+1)}$ et $\displaystyle\sum_{k\geqslant1}\frac{1}{4^k}$ convergent.
+Donc, les séries $\displaystyle\sum_{k\geqslant1}\frac{1}{k(k+1)}$ et $\displaystyle\sum_{k\geqslant1}\frac{1}{4^k}$ convergent.
+Donc, par théorème (__combinaison linéaire de séries convergentes__) la série $\displaystyle\sum_{k\geqslant1}\left(3.\frac{1}{k(k+1)}+(-6)\times\frac{1}{4^k}\right)$ converge
+$$\left(\text{et }\sum_{k=1}^{+\infty}\left(3.\frac{1}{k(k+1)}+(-6)\times\frac{1}{4^k}\right)=3\sum_{k=1}^{+\infty}\frac{1}{k(k+1)}+(-6)\sum_{k=1}^{+\infty}\frac{1}{4^k}\right)$$
+Donc, [[la série $\displaystyle\sum_{k\geqslant1}\left(\frac{3}{k(k+1)}-\frac{6}{4^k}\right)$ converge]]
+
+$\triangle$ « $\displaystyle\sum_{k\geqslant1}\left(\frac{3}{k(k+1)}-\frac{6}{4^k}\right)=\underbrace{3}_{\in\R}\underbrace{\sum_{k\geqslant1}\frac{1}{k(k+1)}}_{\in\text{ suite}}-\underbrace{6}_{\in\R}\underbrace{\sum_{k\geqslant1}\frac{1}{4^k}}_{\text{suite}}$ » {{FAUX}}`,
+    },
+    {
       id: 'series-geometriques-derivees',
       ajoute: '2026-11-09',
       domaine: 'analyse',
