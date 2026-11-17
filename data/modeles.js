@@ -2243,6 +2243,20 @@ Donc, $$\begin{aligned}E(X^2)&=np(1-p)+(np)^2\\&=np(1-p+np)\end{aligned}$$
 Donc, [[$X^2$ possède une espérance et $E(X^2)=np(1-p+np)$]]`,
     },
     {
+      id: 'variance-variable-finie',
+      ajoute: '2026-11-17',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Variance d\'une variable aléatoire discrète finie',
+      motsCles: ['variance', 'variable finie', 'moment d\'ordre 2', 'E(X²)', 'théorème de transfert', 'Koenig-Huygens', 'fiche de route'],
+      corps: String.raw`$X$ est une variable aléatoire discrète finie
+Donc $X$ admet une espérance
+$X$ étant une variable aléatoire discrète finie, $X$ admet un moment d'ordre 2 et le théorème de transfert (dans le cas des variables aléatoires discrètes finies) nous donne alors :
+$$E(X^2)=\sum\limits_{x\in X(\Omega)}x^2\P(X=x)$$
+$X$ admettant un moment d'ordre 2, $X$ admet une variance et d'après la formule de Koenig-Huygens :
+$$V(X)=E(X^2)-E(X)^2$$`,
+    },
+    {
       id: 'reconnaitre-loi-uniforme',
       ajoute: '2026-11-12',
       domaine: 'probabilites',
