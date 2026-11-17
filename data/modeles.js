@@ -1106,6 +1106,56 @@ Donc, $f(\lambda P+\mu Q)=\lambda f(P)+\mu f(Q)$ et ce pour $\forall(\lambda,\mu
 Donc, [[$f$ est une application linéaire de l'espace vectoriel $\R_2[X]$ dans lui-même.]]`,
     },
     {
+      id: 'non-linearite-image-du-nul',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: String.raw`Montrer qu'une application n'est pas linéaire : $f(0_E)\neq0_F$`,
+      motsCles: ['non linéaire', 'linéarité', 'vecteur nul', 'f(0)≠0', 'condition nécessaire', 'Exemples 6'],
+      source: 'Chapitre 7, Exemples 6, 1)',
+      ajoute: '2026-11-17',
+      corps: String.raw`$\odot$ $\R^2$ et $\R$ sont deux ensembles que l'on sait naturellement munir d'une structure d'espace vectoriel (espaces vectoriels de référence)
+
+$\odot$ Pour tout $(x,y)\in\R^2$, $x+y+1\in\R$.
+Donc, pour tout $(x,y)\in\R^2$, $f((x,y))$ est un réel bien défini.
+
+Donc, $f$ est une application de $\R^2$ dans $\R$ bien définie.
+
+$\odot$
+$$\begin{aligned}f(0_{\R^2})&=f((0,0))\\&=0+0+1\\&=1\end{aligned}$$
+Or, $1\neq0_\R$
+Donc, $f(0_{\R^2})\neq0_\R$
+Donc, par théorème, [[$f$ est une application de l'espace vectoriel $\R^2$ dans l'espace vectoriel $\R$ non linéaire.]]`,
+    },
+    {
+      id: 'non-linearite-contre-exemple-oppose',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: String.raw`Montrer qu'une application n'est pas linéaire : $f(-X)\neq-f(X)$`,
+      motsCles: ['non linéaire', 'linéarité', 'contre-exemple', 'opposé', 'f(−x)≠−f(x)', 'Exemples 6'],
+      source: 'Chapitre 7, Exemples 6, 2)',
+      ajoute: '2026-11-17',
+      corps: String.raw`$\odot$ $\R^2$ est un ensemble que l'on sait naturellement munir d'une structure d'espace vectoriel (espace vectoriel de référence).
+
+$\odot$ Pour tout $(x,y)\in\R^2$, $xy$ et $x+y$ sont deux réels bien définis.
+Donc, pour tout $(x,y)\in\R^2$ $(xy,x+y)$ est un élément de $\R^2$.
+Donc, pour tout $(x,y)\in\R^2$, $f((x,y))$ est un élément de $\R^2$ bien défini
+
+$\odot$ Posons $X=(1,1)$
+Alors, $X\in\R^2$ et :
+
+> $\triangleright$ d'une part,
+$$\begin{aligned}f(-X)&=f(-(1,1))\\&=f((-1).(1,1))\\&=f((-1,-1))\\&=((-1)\times(-1),(-1)+(-1))\\&=(1,-2)\end{aligned}$$
+
+> $\triangleright$ d'autre part,
+$$\begin{aligned}-f(X)&=-f((1,1))\\&=-(1\times1,1+1)\\&=-(1,2)\\&=(-1,-2)\end{aligned}$$
+
+Or, $1\neq-1$
+Donc, $(1,-2)\neq(-1,-2)$
+Donc, $f(-X)\neq-f(X)$ et $X\in\R^2$
+Donc : $\exists X\in\R^2,\ f(-X)\neq-f(X)$
+Donc, par théorème, [[$f$ est une application de l'espace vectoriel $\R^2$ dans lui-même non linéaire.]]`,
+    },
+    {
       id: 'montrer-endomorphisme',
       ajoute: '2026-11-09',
       domaine: 'algebre',
