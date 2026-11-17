@@ -1022,6 +1022,90 @@ Donc, $M\in M_3(\R)$ et $\rg(M)\neq3$. Donc, par théorème, [[$M$ n'est pas inv
 $\Rightarrow$ : On retiendra que l'égalité $f(0_E)=0_F$ est une condition nécessaire de linéarité (pour $f:E\longrightarrow F$).`,
     },
     {
+      id: 'linearite-avec-coefficients',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: 'Montrer qu\'une application est linéaire (avec coefficients)',
+      motsCles: ['linéarité', 'application linéaire', 'coordonnées', 'R² dans R', 'bien définie', 'correctement définie', 'espace vectoriel de référence'],
+      source: 'Question 3',
+      ajoute: '2026-11-17',
+      corps: String.raw`$\odot$ $\R^2$ et $\R$ sont deux ensembles que l'on sait naturellement munir d'une structure d'espace vectoriel (espace vectoriel de référence)
+
+$\odot$ Pour tout $(x,y)\in\R^2$, $x+y$ est un élément de $\R$ correctement défini.
+Donc, pour tout $(x,y)\in\R^2$, $f((x,y))$ est un élément de $\R$ correctement définie. Donc $f$ est une application de $\R^2$ dans $\R$ correctement définie.
+
+$\odot$ Soit $(\lambda,\mu)\in\R^2$
+Soit $(X,Y)\in\left(\R^2\right)^2$
+Alors, on dispose de $(x_1,x_2,y_1,y_2)\in\R^4$ tel que :
+$$\begin{cases}X=(x_1,x_2)\\Y=(y_1,y_2)\end{cases}$$
+De plus,
+$$\begin{aligned}f(\lambda X+\mu Y)&=f(\lambda.(x_1,x_2)+\mu.(y_1,y_2))\\&=f((\lambda x_1,\lambda x_2)+(\mu y_1,\mu y_2))\\&=f((\lambda x_1+\mu y_1),(\lambda x_2+\mu y_2))\\&\underset{(1)}{=}(\lambda x_1+\mu y_1)+(\lambda x_2+\mu y_2)\\&\underset{(2)}{=}\lambda x_1+\lambda x_2+\mu y_1+\mu y_2\\&=\lambda(x_1+x_2)+\mu(y_1+y_2)\\&\underset{(1)}{=}\lambda f((x_1,x_2))+\mu f((y_1,y_2))\\&=\lambda f(X)+\mu f(Y)\end{aligned}$$
+$(1)$ : par définition de $f$
+$(2)$ : par associativité et commutativité de $+$ (dans $(\R,+,.)$)
+
+Donc, $f(\lambda X+\mu Y)=\lambda f(X)+\mu f(Y)$ et ce pour $\forall(\lambda,\mu)\in\R^2$ et pour $\forall(X,Y)\in\left(\R^2\right)^2$
+Donc, [[$f$ est une application linéaire de l'espace vectoriel $\R^2$ dans l'espace vectoriel $\R$.]]`,
+    },
+    {
+      id: 'linearite-sans-coefficients',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: 'Montrer qu\'une application est linéaire (sans coefficients)',
+      motsCles: ['linéarité', 'application linéaire', 'endomorphisme', 'matrices', 'AM − MA', 'produit matriciel', 'distributivité', 'correctement définie', 'espace vectoriel de référence'],
+      source: 'Question 6',
+      ajoute: '2026-11-17',
+      corps: String.raw`$\odot$ $\mathcal{M}_2(\R)$ est un ensemble que l'on sait naturellement munir d'une structure d'espace vectoriel (espace vectoriel de référence)
+
+$\odot$ Soit $M\in\mathcal{M}_2(\R)$
+Par hypothèse, $A=\begin{pmatrix}1&2\\0&3\end{pmatrix}$
+Donc, $A\in\mathcal{M}_2(\R)$
+Ainsi, $(A,M)\in\left(\mathcal{M}_2(\R)\right)^2$
+Donc, par définition d'un produit matriciel $AM$ et $MA$ sont deux élément de $\mathcal{M}_2(\R)$ correctement définies.
+Donc, $AM-MA$ est un élément de $\mathcal{M}_2(\R)$ correctement définies.
+Donc, $f(M)$ est un élément de $\mathcal{M}_2(\R)$ correctement définie et ce pour $\forall M\in\mathcal{M}_2(\R)$
+Donc, $f$ est une application de $\mathcal{M}_2(\R)$ correctement définie.
+
+$\odot$ Soit $(\lambda,\mu)\in\R^2$
+Soit $(M,N)\in\left(\mathcal{M}_2(\R)\right)^2$
+Alors,
+$$\begin{aligned}f(\lambda M+\mu N)&\underset{(1)}{=}A(\lambda M+\mu N)-(\lambda M+\mu N)A\\&\underset{(2)}{=}A(\lambda M)+A(\mu N)-((\lambda M)A+(\mu N)A)&&\triangle\text{ au parenthèse}\\&=A(\lambda M)+A(\mu N)-(\lambda M)A-(\mu N)A\\&\underset{(3)}{=}\lambda(AM)+\mu(AN)-\lambda(MA)-\mu(NA)\\&=\lambda(AM-MA)+\mu(AN-NA)\\&\underset{(1)}{=}\lambda f(M)+\mu f(N)\end{aligned}$$
+$(1)$ : par définition de $f$
+$(2)$ : par distributivité (à droite et à gauche) du produit matricielle sur l'addition matricielle
+$(3)$ : par propriété du produit matriciel ($\triangle$ pas de linéarité, la prop n'a pas de nom)
+
+Donc, $f(\lambda M+\mu N)=\lambda f(M)+\mu f(N)$ et ce pour $\forall(\lambda,\mu)\in\R^2$ et pour $\forall(M,N)\in\left(\mathcal{M}_2(\R)\right)^2$
+Donc, [[$f$ est une application linéaire de l'espace vectoriel $\mathcal{M}_2(\R)$ dans lui-même.]]`,
+    },
+    {
+      id: 'linearite-valeurs-dans-r2x',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: String.raw`Montrer qu'une application est linéaire (à valeurs dans $\R_2[X]$)`,
+      motsCles: ['linéarité', 'application linéaire', 'endomorphisme', 'polynômes', 'R2[X]', 'XP\' − 2P', 'dérivation', 'stabilité', 'correctement définie', 'espace vectoriel de référence'],
+      source: 'Question 7',
+      ajoute: '2026-11-17',
+      corps: String.raw`$\odot$ $\R_2[X]$ est un ensemble que l'on sait naturellement munir d'un espace vectoriel (espace vectoriel de référence)
+
+$\odot$ Soit $P\in\R_2[X]$
+Alors, on dispose de $(a,b,c)\in\R^3$ tel que :
+$$P=aX^2+bX+c$$
+Alors,
+$$\begin{aligned}XP'-2P&=X(aX^2+bX+c)'-2(aX^2+bX+c)\\&=X(2aX+b)-2aX^2-2bX-2c\\&=2aX^2+bX-2aX^2-2bX-2c\\&=-bX-2c\\&=0X^2-bX-2c\end{aligned}$$
+Or, $0X^2-bX-2c\in\R_2[X]$ $\quad((0,-b,-2c)\in\R^3)$
+Ainsi, $XP'-2P\in\R_2[X]$
+Donc, $f(P)$ est un élément de $\R_2[X]$ correctement défini, et ce pour tout $P\in\R_2[X]$
+Donc, $f$ est une application de $\R_2[X]$ dans lui-même correctement définie.
+
+$\odot$ Soit $(\lambda,\mu)\in\R^2$
+Soit $(P,Q)\in\left(\R_2[X]\right)^2$
+Alors,
+$$\begin{aligned}f(\lambda P+\mu Q)&=X(\lambda P+\mu Q)'-2(\lambda P+\mu Q)\\&\underset{(1)}{=}X(\lambda P'+\mu Q')-2(\lambda P+\mu Q)\\&=X(\lambda P')+X(\mu Q')-2(\lambda P)-2(\mu Q)\\&=\lambda XP'-\lambda2P+\mu XQ'-\mu2Q\\&=\lambda(XP'-2P)+\mu(XQ'-2Q)\\&=\lambda f(P)+\mu f(Q)\end{aligned}$$
+$(1)$ : par linéarité de la dérivation dans $\R[X]$
+
+Donc, $f(\lambda P+\mu Q)=\lambda f(P)+\mu f(Q)$ et ce pour $\forall(\lambda,\mu)\in\R^2$ et pour $\forall(P,Q)\in\left(\R_2[X]\right)^2$
+Donc, [[$f$ est une application linéaire de l'espace vectoriel $\R_2[X]$ dans lui-même.]]`,
+    },
+    {
       id: 'montrer-endomorphisme',
       ajoute: '2026-11-09',
       domaine: 'algebre',
