@@ -1106,6 +1106,37 @@ Donc, $f(\lambda P+\mu Q)=\lambda f(P)+\mu f(Q)$ et ce pour $\forall(\lambda,\mu
 Donc, [[$f$ est une application linéaire de l'espace vectoriel $\R_2[X]$ dans lui-même.]]`,
     },
     {
+      id: 'linearite-ecriture-matricielle',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: String.raw`Montrer qu'une application est linéaire : $f(X)=AX$`,
+      motsCles: ['linéarité', 'application linéaire', 'endomorphisme', 'écriture matricielle', 'f(X) = AX', 'M2,1(R)', 'matrice colonne', 'distributivité du produit matriciel', 'Exemple 7'],
+      source: 'Chapitre 7, Exemple 7',
+      ajoute: '2026-11-18',
+      corps: String.raw`$\left.\begin{array}{l}\odot\\[1.2em]\odot\end{array}\right\}$ (c.f exemple 5)5))
+
+$\odot$ Posons $A=\begin{pmatrix}1&-3\\0&2\end{pmatrix}$
+
+Soit $X\in\mathcal{M}_{2,1}(\R)$.
+Alors, on dispose de $(x,y)\in\R^2$ tel que $X=\begin{pmatrix}x\\y\end{pmatrix}$
+De plus :
+$$\begin{aligned}AX&=\begin{pmatrix}1&-3\\0&2\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}\\&=\begin{pmatrix}x-3y\\2y\end{pmatrix}\\&\underset{(1)}{=}f\left(\begin{pmatrix}x\\y\end{pmatrix}\right)\\&=f(X)\end{aligned}$$
+$(1)$ : par définition de $f$.
+Ainsi :
+$$\forall X\in\mathcal{M}_{2,1}(\R),\ f(X)=AX\quad(\ast)$$
+Soit $(\lambda,\mu)\in\R^2$.
+Soit $(X,Y)\in\left(\mathcal{M}_{2,1}(\R)\right)^2$
+Alors :
+$$\begin{aligned}f(\lambda X+\mu Y)&\underset{(1)}{=}A(\lambda X+\mu Y)\\&\underset{(2)}{=}A(\lambda X)+A(\mu Y)\\&\underset{(3)}{=}\lambda(AX)+\mu(AY)\\&\underset{(1)}{=}\lambda f(X)+\mu f(Y)\end{aligned}$$
+$(1)$ : D'après $(\ast)$
+$(2)$ : Par distributivité du produit matriciel sur l'addition matricielle
+$(3)$ : Par propriété du produit matriciel
+
+Ainsi, $f(\lambda X+\mu Y)=\lambda f(X)+\mu f(Y)$, et ce pour tout $(X,Y)\in\left(\mathcal{M}_{2,1}(\R)\right)^2$ et pour tout $(\lambda,\mu)\in\R^2$.
+
+Donc, [[$f$ est une application linéaire de l'espace vectoriel $\mathcal{M}_{2,1}(\R)$ dans lui-même.]]`,
+    },
+    {
       id: 'non-linearite-image-du-nul',
       domaine: 'algebre',
       chapitre: 'Applications linéaires',
@@ -1154,6 +1185,42 @@ Donc, $(1,-2)\neq(-1,-2)$
 Donc, $f(-X)\neq-f(X)$ et $X\in\R^2$
 Donc : $\exists X\in\R^2,\ f(-X)\neq-f(X)$
 Donc, par théorème, [[$f$ est une application de l'espace vectoriel $\R^2$ dans lui-même non linéaire.]]`,
+    },
+    {
+      id: 'noyau-resolution-systeme',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: 'Déterminer le noyau d\'une application linéaire (résolution d\'un système)',
+      motsCles: ['noyau', 'Ker', 'Ker(f)', 'système', 'Vect', 'R4', 'R3', 'Question 4'],
+      source: 'Question 4',
+      ajoute: '2026-11-18',
+      corps: String.raw`4) D'après exemple 5, $f\in\mathcal{L}(\R^4,\R^3)$
+Donc, $\operatorname{Ker}(f)=\left\{(x,y,z,t)\in\R^4\ \middle|\ f(x,y,z,t)=0_{\R^3}\right\}$
+
+Soit $X=(x,y,z,t)\in\R^4$.
+$$\begin{aligned}\text{Alors, }X\in\operatorname{Ker}(f)&\Longleftrightarrow f(X)=0_{\R^3}\\&\Longleftrightarrow f(x,y,z,t)=(0,0,0)\\&\Longleftrightarrow(x+y,y+z,z+t)=(0,0,0)\\&\Longleftrightarrow\begin{cases}x+y=0\\y+z=0\\z+t=0\end{cases}\\&\Longleftrightarrow\begin{cases}x+y=0\\y+z=0\\z=-t\end{cases}\\&\Longleftrightarrow\begin{cases}x+y=0\\y+(-t)=0\\z=-t\end{cases}\\&\Longleftrightarrow\begin{cases}x+y=0\\y=t\\z=-t\end{cases}\\&\Longleftrightarrow\begin{cases}x+t=0\\y=t\\z=-t\end{cases}\\&\Longleftrightarrow\begin{cases}x=-t\\y=t\\z=-t\end{cases}\\&\Longleftrightarrow X=(-t,t,-t,t)\\&\Longleftrightarrow X=t(-1,1,-1,1)\end{aligned}$$
+
+Donc, [[$\operatorname{Ker}(f)=\Vect((-1,1,-1,1))$]]`,
+    },
+    {
+      id: 'noyau-identification-coefficients',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: 'Déterminer le noyau d\'une application linéaire (identification des coefficients)',
+      motsCles: ['noyau', 'Ker', 'Ker(f)', 'polynômes', 'R2[X]', 'identification des coefficients', 'Vect', 'Question 7'],
+      source: 'Question 7',
+      ajoute: '2026-11-18',
+      corps: String.raw`7) D'après exemple 5, $f\in\mathcal{L}(\R_2[X])$
+Donc,
+$$\operatorname{Ker}(f)=\left\{P\in\R_2[X]\ \middle|\ f(P)=0_{\R_2[X]}\right\}$$
+
+Soit $P=aX^2+bX+c\in\R_2[X]$
+Alors,
+$$\begin{aligned}P\in\operatorname{Ker}(f)&\Longleftrightarrow f(P)=0_{\R_2[X]}\\&\underset{(1)}{\Longleftrightarrow}-bX+(-2)c=0\\&\Longleftrightarrow(-b)X+(-2c)=0X+0\\&\underset{(2)}{\Longleftrightarrow}\begin{cases}-b=0\\-2c=0\end{cases}\\&\Longleftrightarrow\begin{cases}b=0&\text{car }-1\neq0\\c=0&\text{car }-2\neq0\end{cases}\\&\Longleftrightarrow P=aX^2+0X+0\\&\Longleftrightarrow P=aX^2\end{aligned}$$
+$(1)$ : d'après exemple 5
+$(2)$ : __par identification deux à deux des coefficients__
+
+Donc, [[$\operatorname{Ker}(f)=\Vect(X^2)$]]`,
     },
     {
       id: 'montrer-endomorphisme',
