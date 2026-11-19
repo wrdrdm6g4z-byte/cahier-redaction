@@ -7,6 +7,181 @@ window.CAHIER = {
   },
 
   modeles: [
+    {
+      id: 'methodes-sous-espace-vectoriel',
+      ajoute: '2026-11-19',
+      domaine: 'algebre',
+      chapitre: 'Espaces vectoriels',
+      titre: "Méthodes : montrer qu'un ensemble est un sous-espace vectoriel",
+      motsCles: ['méthodes', 'sous-espace vectoriel', 'SEV', 'caractérisation en trois points', 'Vect', 'noyau', 'ker', 'sous-espace propre', 'stable par combinaison linéaire'],
+      source: 'Cours, chapitre 3 (et chapitre 4)',
+      corps: String.raw`!! **1. Caractérisation en trois points** (chapitre 3, Prop. 14)
+
+La méthode de base, qui marche toujours. On vérifie trois choses dans un espace vectoriel de référence $E$ :
+a) $F\subset E$ (les éléments de $F$ sont bien des éléments de $E$) ;
+b) $0_E\in F$ (le vecteur nul de $E$ vérifie la condition qui définit $F$) ;
+c) $F$ est stable par combinaison linéaire : $\forall(\lambda,\mu)\in\R^2,\ \forall(x,y)\in F^2,\ \lambda.x+\mu.y\in F$.
+
+> Soit $(\lambda,\mu)\in\R^2$. Soit $(x,y)\in F^2$.
+> Alors, $\dots$ Donc, $\lambda.x+\mu.y\in F$.
+> Donc, par caractérisation, $F$ est un sous-espace vectoriel de $E$.
+
+!! **2. Écrire $F$ sous la forme d'un Vect** (chapitre 3, Prop. 15 et Prop. 34)
+
+Si $F=\Vect(e_1,\dots,e_p)$, alors $F$ est un sous-espace vectoriel de $E$. En pratique, on part de la condition qui définit $F$, on exprime certaines coordonnées en fonction des autres (qui deviennent des paramètres), puis on regroupe selon chaque paramètre.
+Avantage : on obtient en même temps une famille génératrice de $F$, utile ensuite pour une base ou la dimension.
+
+> $X\in F\Longleftrightarrow\dots\Longleftrightarrow X=y.(3,1,0)+z.(0,0,1)$
+> Donc, $F=\Vect((3,1,0),(0,0,1))$.
+> Donc, $F$ est un sous-espace vectoriel de $\R^3$.
+
+!! **3. Reconnaître un ensemble connu**
+
+• Un sous-espace propre : pour tout $\lambda\in\R$, $\left\{X\in\mathcal{M}_{n,1}(\R)\ \middle|\ AX=\lambda X\right\}=\ker(A-\lambda I_n)$ est un sous-espace vectoriel de $\mathcal{M}_{n,1}(\R)$ (chapitre 4, Prop. 26).
+• L'ensemble des solutions d'un système linéaire homogène : $\ker(A)=\left\{X\in\mathcal{M}_{p,1}(\R)\ \middle|\ AX=0\right\}$ est un sous-espace vectoriel de $\mathcal{M}_{p,1}(\R)$. C'est un exercice du cours (chapitre 3, Exercice 2), pas une proposition : le redémontrer par la méthode 1.
+
+!! **Pour aller vite**
+
+• Pour montrer qu'un ensemble peut être muni d'une structure d'espace vectoriel, il suffit de montrer que c'est un sous-espace vectoriel d'un espace vectoriel de référence (chapitre 3, Remarques 20).
+• Si $0_E\notin F$, $F$ n'est pas un sous-espace vectoriel : c'est le premier test à faire (chapitre 3, Remarques 21).`,
+    },
+    {
+      id: 'methodes-famille-libre',
+      ajoute: '2026-11-19',
+      domaine: 'algebre',
+      chapitre: 'Espaces vectoriels',
+      titre: "Méthodes : montrer qu'une famille est libre",
+      motsCles: ['méthodes', 'famille libre', 'liberté', 'colinéaires', 'degrés échelonnés', 'vecteurs propres', 'rang', 'sous-famille'],
+      source: 'Cours, chapitres 3 et 4',
+      corps: String.raw`!! **1. Par la définition** (chapitre 3, Déf. 17)
+
+La méthode universelle. On part d'une combinaison linéaire nulle, on la traduit en système (coordonnée par coordonnée, ou coefficient par coefficient pour des polynômes et des matrices) et on montre que tous les coefficients sont nuls.
+
+> Soit $(\lambda_1,\dots,\lambda_p)\in\R^p$ tel que $\lambda_1.e_1+\dots+\lambda_p.e_p=0_E$.
+> Alors, $\dots$ Donc, $\lambda_1=\dots=\lambda_p=0$.
+> Ainsi, $\forall(\lambda_1,\dots,\lambda_p)\in\R^p,\ \sum\limits_{k=1}^p\lambda_k.e_k=0_E\Rightarrow\forall k\in\ent{1}{p},\ \lambda_k=0$.
+> Donc, $(e_1,\dots,e_p)$ est libre dans $E$.
+
+!! **2. Un seul vecteur, non nul** (chapitre 3, Prop. 19)
+
+> $(x)$ est libre dans $E$ en tant que famille réduite à un vecteur non nul de $E$ : $x\neq0_E$.
+
+!! **3. Deux vecteurs non colinéaires** (chapitre 3, Prop. 20, HP)
+
+Une famille de deux vecteurs est libre si et seulement si aucun des deux n'est un multiple de l'autre. Ne vaut que pour deux vecteurs.
+
+!! **4. Polynômes de degrés échelonnés** (chapitre 3, Prop. 23, HP)
+
+Si les degrés sont tous différents et rangés dans l'ordre croissant, $0\leqslant\deg(Q_1)<\deg(Q_2)<\dots<\deg(Q_n)$, alors $(Q_1,\dots,Q_n)$ est libre. Par exemple : $\left(1,X+2,X^3+X\right)$.
+
+!! **5. Sous-famille d'une famille libre** (chapitre 3, Prop. 21 (i))
+
+Si l'on retire des vecteurs à une famille libre connue (une base par exemple), la famille obtenue reste libre.
+
+!! **6. Vecteurs propres associés à des valeurs propres distinctes** (chapitre 4, Prop. 30)
+
+On concatène des familles libres prises dans des sous-espaces propres associés à des valeurs propres deux à deux distinctes : la famille obtenue est libre, sans calcul.
+
+> Les familles $(u_1)$ et $(u_2)$ sont respectivement libres dans $E_0(A)$ et $E_1(A)$ en tant que familles réduites à un vecteur non nul de ces deux sous-espaces vectoriels.
+> Donc, par théorème (concaténation de familles libres issues de sous-espaces propres distincts), $(u_1,u_2)$ est libre dans $\mathcal{M}_{3,1}(\R)$.
+
+!! **7. Par le rang ou une matrice inversible** (chapitre 3, Prop. 51)
+
+Si la famille compte exactement $n=\dim(E)$ vecteurs, elle est une base, donc libre, si et seulement si $\rg(u_1,\dots,u_n)=n$, si et seulement si la matrice $\mathrm{Mat}_\mathcal{B}(u_1,\dots,u_n)$ est inversible.
+Plus généralement (non explicite dans le cours) : $(u_1,\dots,u_p)$ est libre si et seulement si $\rg(u_1,\dots,u_p)=p$.`,
+    },
+    {
+      id: 'methodes-famille-liee',
+      ajoute: '2026-11-19',
+      domaine: 'algebre',
+      chapitre: 'Espaces vectoriels',
+      titre: "Méthodes : montrer qu'une famille est liée",
+      motsCles: ['méthodes', 'famille liée', 'relation de liaison', 'colinéaires', 'combinaison linéaire', 'vecteur nul', 'cardinal', 'dimension', 'sur-famille'],
+      source: 'Cours, chapitre 3',
+      corps: String.raw`!! **1. Exhiber une relation de liaison** (chapitre 3, Déf. 17)
+
+Trouver des réels $\lambda_1,\dots,\lambda_p$ non tous nuls tels que $\lambda_1.e_1+\dots+\lambda_p.e_p=0_E$ : souvent « à l'œil », sinon en résolvant le système de la définition de la liberté et en trouvant une solution non nulle.
+
+> $1.(1,2)+1.(3,4)+(-1).(4,6)=(0,0)$, et $1\neq0$.
+> Donc, la famille $((1,2),(3,4),(4,6))$ est liée dans $\R^2$.
+
+!! **2. Un vecteur est combinaison linéaire des autres** (chapitre 3, Prop. 17)
+
+> $2X+5=2.(X+2)+1.1$
+> Donc, $2X+5$ s'écrit comme combinaison linéaire des autres vecteurs de la famille $(1,X+2,2X+5)$.
+> Donc, cette famille est liée dans $\R_2[X]$.
+
+!! **3. Le vecteur nul, ou deux fois le même vecteur** (chapitre 3, Prop. 18)
+
+Toute famille qui contient $0_E$, ou qui contient deux fois le même vecteur, est liée.
+
+!! **4. Deux vecteurs colinéaires** (chapitre 3, Prop. 20 et Remarques 28, HP)
+
+Deux vecteurs dont l'un est un multiple de l'autre forment une famille liée. Plus généralement, toute famille qui contient deux vecteurs colinéaires est liée.
+
+!! **5. Trop de vecteurs** (chapitre 3, Prop. 41 (ii))
+
+Toute famille qui compte strictement plus de $\dim(E)$ vecteurs est liée.
+
+> La famille comporte 3 vecteurs de $\R^2$ et $3>2=\dim(\R^2)$.
+> Donc, par théorème, elle est liée dans $\R^2$.
+
+!! **6. Sur-famille d'une famille liée** (chapitre 3, Prop. 21 (ii))
+
+Si l'on ajoute des vecteurs à une famille liée, elle reste liée.
+
+!! **7. Par le rang** (non explicite dans le cours)
+
+Si $\rg(u_1,\dots,u_p)<p$, la famille est liée. En particulier, les colonnes d'une matrice carrée non inversible forment une famille liée (chapitre 3, Prop. 48).`,
+    },
+    {
+      id: 'methodes-famille-generatrice',
+      ajoute: '2026-11-19',
+      domaine: 'algebre',
+      chapitre: 'Espaces vectoriels',
+      titre: "Méthodes : montrer qu'une famille est génératrice",
+      motsCles: ['méthodes', 'famille génératrice', 'Vect', 'base', 'dimension', 'cardinal', 'rang'],
+      source: 'Cours, chapitre 3',
+      corps: String.raw`Une famille est toujours génératrice **d'un** espace précis : « génératrice » seul n'a pas de sens (chapitre 3, Remarques 23).
+
+!! **1. Par la définition** (chapitre 3, Déf. 16)
+
+On prend un vecteur quelconque de $E$ et on montre qu'il s'écrit comme combinaison linéaire des vecteurs de la famille. Il suffit de trouver une écriture : l'unicité n'est pas demandée.
+
+> Soit $X\in\R^2$. Alors, on dispose de $(x,y)\in\R^2$ tel que $X=(x,y)$.
+> Or, $(x,y)=(x,0)+(0,y)=x.(1,0)+y.(0,1)$.
+> Ainsi, $\forall X\in\R^2,\ \exists(x,y)\in\R^2,\ X=x.(1,0)+y.(0,1)$.
+> Donc, $((1,0),(0,1))$ est une famille génératrice de $\R^2$.
+
+!! **2. Écrire l'espace sous la forme d'un Vect** (chapitre 3, Déf. 16)
+
+Dire que $(e_1,\dots,e_p)$ est génératrice de $F$, c'est dire que $F=\Vect(e_1,\dots,e_p)$. On paramètre $F$ comme pour montrer que c'est un sous-espace vectoriel, puis on conclut.
+
+> Donc, $F=\Vect(e_1,\dots,e_p)$.
+> Donc, $(e_1,\dots,e_p)$ est une famille génératrice de $F$.
+
+!! **3. Libre avec le bon nombre de vecteurs** (chapitre 3, Prop. 41 (v))
+
+Une famille libre qui compte exactement $\dim(E)$ vecteurs est une base de $E$, donc génératrice de $E$. Souvent plus simple : la liberté se montre avec un système dont le second membre est nul. Il faut connaître $\dim(E)$.
+
+!! **4. Transformer une famille génératrice connue** (chapitre 3, Prop. 16)
+
+On garde une famille génératrice de $E$ si l'on :
+• change l'ordre des vecteurs ;
+• retire le vecteur nul ;
+• ajoute à un vecteur une combinaison linéaire des autres ;
+• multiplie un vecteur par un réel non nul ;
+• retire un vecteur qui apparaît deux fois, ou qui est combinaison linéaire des autres ;
+• ajoute n'importe quel vecteur de $E$ (toute sur-famille d'une famille génératrice est génératrice).
+
+!! **5. Par une matrice inversible** (chapitre 3, Prop. 51)
+
+Si la famille compte exactement $n=\dim(E)$ vecteurs et que $\mathrm{Mat}_\mathcal{B}(u_1,\dots,u_n)$ est inversible (ou que son rang vaut $n$), c'est une base de $E$, donc une famille génératrice de $E$.
+
+!! **Attention**
+
+Une famille qui compte strictement moins de $\dim(E)$ vecteurs n'est jamais génératrice de $E$ (chapitre 3, Prop. 41 (iv)).`,
+    },
     // Cahier, p. 1
     {
       id: 'absurde-combinaison-lineaire',
@@ -207,6 +382,60 @@ $\odot$ Par théorème, $\dim(\R_2[X])=2+1=3$
 Donc, par théorème, [[$\mathcal{F}$ est une base de $\R_2[X]$]]`,
     },
 
+    {
+      id: 'methodes-matrice-inversible',
+      ajoute: '2026-11-19',
+      domaine: 'algebre',
+      chapitre: 'Matrices',
+      titre: "Méthodes : montrer qu'une matrice est inversible",
+      motsCles: ['méthodes', 'inversible', 'inverse', 'pivot de Gauss', 'système de Cramer', 'triangulaire', 'déterminant', 'rang', 'valeur propre', 'polynôme annulateur'],
+      source: 'Cours, chapitres 3 et 4',
+      corps: String.raw`!! **1. Trouver une matrice $B$ telle que $AB=I_n$** (chapitre 4, Prop. 13)
+
+Un seul des deux produits suffit : si $AB=I_n$ (ou $BA=I_n$), alors $A$ est inversible d'inverse $B$, sans calculer l'autre produit.
+
+> $AB=I_n$. Donc, par théorème, $A$ est inversible et $A^{-1}=B$.
+
+!! **2. Le système $AX=0$** (chapitre 4, Prop. 15 (v) ⇔ (i))
+
+La méthode de référence quand on ne demande pas l'inverse. On échelonne le système $AX=0_{\mathcal{M}_{n,1}(\R)}$ avec le pivot de Gauss, puis on regarde s'il est de Cramer (une seule solution, $X=0$) : si oui, $A$ est inversible. Cela revient à montrer que $\ker(A)=\left\{0_{\mathcal{M}_{n,1}(\R)}\right\}$.
+
+!! **3. Le système $AX=Y$** (chapitre 4, Prop. 15 (iv) et Prop. 16)
+
+Quand on demande aussi l'inverse. Pour tout $Y$, on résout $AX=Y$ : si l'on trouve une unique solution de la forme $X=BY$, alors $A$ est inversible et $A^{-1}=B$.
+
+!! **4. Matrice triangulaire ou diagonale** (chapitre 4, Prop. 18 et Prop. 19)
+
+Une matrice triangulaire est inversible si et seulement si tous ses coefficients diagonaux sont non nuls. Pour une matrice diagonale inversible, l'inverse s'obtient en inversant chaque coefficient diagonal : $1/a_1,\dots,1/a_n$.
+
+!! **5. Matrice d'ordre 2 : le déterminant** (chapitre 4, Prop. 20)
+
+$A=\begin{pmatrix}a&b\\c&d\end{pmatrix}$ est inversible si et seulement si $\det(A)=ad-bc\neq0$.
+La formule $A^{-1}=\dfrac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$ est HP : seulement pour vérifier ses calculs.
+
+!! **6. Le rang, ou les colonnes** (chapitre 4, Prop. 17 ; chapitre 3, Prop. 48)
+
+$A\in\mathcal{M}_n(\R)$ est inversible si et seulement si $\rg(A)=n$, si et seulement si ses $n$ colonnes (ou ses $n$ lignes) forment une base. À l'inverse, une relation visible entre les colonnes (ou les lignes) montre tout de suite que $A$ n'est pas inversible.
+
+!! **7. $0$ n'est pas valeur propre** (chapitre 4, Prop. 25)
+
+Utile quand le spectre est déjà connu.
+
+> $0\notin\Sp(A)$. Donc, par théorème, $A$ est inversible.
+
+!! **8. Un polynôme annulateur de coefficient constant non nul** (chapitre 4, Prop. 21, HP : à redémontrer à chaque fois)
+
+On isole $I_n$ dans la relation, puis on factorise par $A$ pour faire apparaître $AB=I_n$, et on conclut par la méthode 1.
+
+> $M^2-3M+2I_3=0_{\mathcal{M}_3(\R)}$
+> Donc, $M(M-3I_3)=-2I_3$.
+> Donc, $M\left(-\dfrac{1}{2}(M-3I_3)\right)=I_3$.
+> Donc, par théorème, $M$ est inversible et $M^{-1}=\dfrac{1}{2}(3I_3-M)$.
+
+!! **9. Construite à partir de matrices inversibles** (chapitre 4, Prop. 14 ; chapitre 3, Prop. 53)
+
+Si $A$ et $B$ sont inversibles, alors $AB$, $A^k$, $^t\!A$ et $A^{-1}$ le sont aussi. Une matrice de passage d'une base à une autre est toujours inversible.`,
+    },
     // Cahier, p. 9
     {
       id: 'rang-inversibilite-det',
@@ -226,6 +455,135 @@ Or, $A_3\in M_2(\R)$.
 Donc, par théorème, [[$\rg(A_3)=2$]]`,
     },
 
+    {
+      id: 'methodes-spectre',
+      ajoute: '2026-11-19',
+      domaine: 'algebre',
+      chapitre: 'Réduction',
+      titre: "Méthodes : déterminer le spectre d'une matrice",
+      motsCles: ['méthodes', 'spectre', 'valeurs propres', 'Sp(A)', 'système à paramètre', 'rang', 'déterminant', 'triangulaire', 'polynôme annulateur', 'semblables'],
+      source: 'Cours, chapitre 4',
+      corps: String.raw`Pour une matrice $A\in\mathcal{M}_n(\R)$. Le spectre peut être vide.
+
+!! **1. Le système $(A-\lambda I_n)X=0$** (chapitre 4, Prop. 22 (i) ⇔ (ii))
+
+$\lambda$ est valeur propre de $A$ si et seulement si ce système admet une solution $X$ non nulle. On échelonne le système en gardant $\lambda$ comme paramètre, puis on cherche les valeurs de $\lambda$ pour lesquelles il n'a plus une seule solution.
+À choisir quand on demande aussi les sous-espaces propres : les calculs resservent.
+
+!! **2. Le rang de $A-\lambda I_n$** (chapitre 4, Prop. 22 (i) ⇔ (vi))
+
+$\lambda\in\Sp(A)\Longleftrightarrow\rg(A-\lambda I_n)<n$. On échelonne $A-\lambda I_n$ et on cherche les $\lambda$ qui annulent un pivot.
+À choisir quand seul le spectre est demandé.
+
+!! **3. Matrice d'ordre 2 : le déterminant** (chapitre 4, Prop. 22 (i) ⇔ (v) et Prop. 20)
+
+$\lambda\in\Sp(A)\Longleftrightarrow A-\lambda I_2$ n'est pas inversible $\Longleftrightarrow\det(A-\lambda I_2)=0$. On résout cette équation du second degré en $\lambda$.
+
+!! **4. Matrice triangulaire ou diagonale** (chapitre 4, Prop. 23 et Prop. 24)
+
+Le spectre est l'ensemble des coefficients diagonaux. Chaque valeur ne s'écrit qu'une fois.
+
+> $D$ est une matrice diagonale dont les coefficients diagonaux sont $1$, $0$, $1$ et $3$.
+> Donc, par théorème, $\Sp(D)=\{1;0;1;3\}$.
+> Ainsi, $\Sp(D)=\{0;1;3\}$.
+
+!! **5. Un polynôme annulateur** (chapitre 4, Prop. 28)
+
+Si $Q(A)=0$, les valeurs propres de $A$ sont **parmi** les racines de $Q$ : on obtient seulement les valeurs propres possibles. Il faut ensuite tester chaque racine $r$, par exemple en résolvant $(A-rI_n)X=0$. Écrire que toutes les racines sont valeurs propres est une grave erreur.
+
+> Donc, $\Sp(A)\subset\{\lambda\in\R\mid Q(\lambda)=0\}$.
+
+!! **6. Lire le spectre sur une diagonalisation** (chapitre 4, Prop. 38 (iii) ; Prop. 27, HP ?)
+
+Si $A=PDP^{-1}$ avec $P$ inversible et $D$ diagonale, le spectre de $A$ est l'ensemble des coefficients diagonaux de $D$. Plus généralement, deux matrices semblables ont le même spectre (HP ?).
+
+!! **7. Trouver des vecteurs propres « à l'œil »** (chapitre 4, Déf. 9 et Prop. 31 ; non explicite dans le cours)
+
+Si $AX=\lambda X$ avec $X\neq0$, alors $\lambda\in\Sp(A)$. Pour être sûr de les avoir toutes : une matrice d'ordre $n$ a au plus $n$ valeurs propres distinctes. Donc, si l'on en trouve $n$ distinctes, le spectre est complet.
+
+!! **8. Tester $0$** (chapitre 4, Prop. 25)
+
+$0\in\Sp(A)$ si et seulement si $A$ n'est pas inversible.`,
+    },
+    {
+      id: 'methodes-matrice-diagonalisable',
+      ajoute: '2026-11-19',
+      domaine: 'algebre',
+      chapitre: 'Réduction',
+      titre: "Méthodes : montrer qu'une matrice est diagonalisable",
+      motsCles: ['méthodes', 'diagonalisable', 'diagonalisation', 'théorème spectral', 'symétrique', 'valeurs propres distinctes', 'sous-espaces propres', 'base de vecteurs propres', 'PDP⁻¹'],
+      source: 'Cours, chapitre 4',
+      corps: String.raw`Pour une matrice $A\in\mathcal{M}_n(\R)$.
+
+!! **1. Matrice symétrique** (chapitre 4, Prop. 44 : théorème spectral)
+
+Le réflexe dès que l'énoncé dit « sans calcul » : si $^t\!A=A$, $A$ est diagonalisable. Le théorème ne donne ni les valeurs propres ni les sous-espaces propres.
+
+> $^t\!A=A$, donc $A$ est symétrique.
+> Donc, par théorème spectral, $A$ est diagonalisable.
+
+!! **2. $n$ valeurs propres distinctes** (chapitre 4, Prop. 39, HP ?)
+
+Si $A$, d'ordre $n$, a $n$ valeurs propres distinctes, alors $A$ est diagonalisable et chaque sous-espace propre est de dimension 1. Cas typique : une matrice triangulaire dont les coefficients diagonaux sont tous différents.
+Résumer la preuve en une phrase : les $n$ vecteurs propres associés forment une famille libre (Prop. 30) de $n$ vecteurs, donc une base de $\mathcal{M}_{n,1}(\R)$.
+
+!! **3. Somme des dimensions des sous-espaces propres égale à $n$** (chapitre 4, Prop. 36, HP ?)
+
+Le plan de travail standard :
+• déterminer les valeurs propres de $A$ ;
+• déterminer une base de chaque sous-espace propre, et donc sa dimension ;
+• calculer $\sum\limits_{\lambda\in\Sp(A)}\dim(E_\lambda(A))$ et le comparer à $n$ ;
+• conclure.
+
+> Par théorème (toute famille résultant de la concaténation des bases des sous-espaces propres de $A$ étant libre dans l'espace vectoriel de dimension $n$ $\mathcal{M}_{n,1}(\R)$, une telle famille constitue, par théorème, une base de $\mathcal{M}_{n,1}(\R)$ constituée de vecteurs propres de $A$ si et seulement si elle comporte $n$ vecteurs), on a : $\dots$
+
+!! **4. Une base de vecteurs propres** (chapitre 4, Prop. 34 et Prop. 35)
+
+La version au programme de la méthode 3. On concatène les bases des sous-espaces propres : la famille obtenue est libre (Prop. 30). Si elle compte $n$ vecteurs, c'est une base de $\mathcal{M}_{n,1}(\R)$ (chapitre 3, Prop. 41 (v)). Donc, $A$ est diagonalisable.
+
+!! **5. Par la définition : $A=PDP^{-1}$** (chapitre 4, Déf. 12)
+
+Quand l'énoncé donne $P$ et $D$ : on montre que $P$ est inversible, puis que $A=PDP^{-1}$. Il est souvent plus rapide de vérifier $AP=PD$, ce qui revient au même puisque $P$ est inversible (non explicite dans le cours).
+
+> $P$ est inversible, $D$ est diagonale et $A=PDP^{-1}$.
+> Donc, par définition, $A$ est diagonalisable.
+
+!! **6. Cas immédiats**
+
+• Toute matrice diagonale est diagonalisable : $D=I_nDI_n^{-1}$ (chapitre 4, Exemple 18).
+• Une matrice semblable à une matrice diagonalisable est diagonalisable (chapitre 4, Prop. 33, transitivité, HP).`,
+    },
+    {
+      id: 'methodes-matrice-non-diagonalisable',
+      ajoute: '2026-11-19',
+      domaine: 'algebre',
+      chapitre: 'Réduction',
+      titre: "Méthodes : montrer qu'une matrice n'est pas diagonalisable",
+      motsCles: ['méthodes', 'non diagonalisable', 'une seule valeur propre', 'raisonnement par l\'absurde', 'nilpotente', 'sous-espaces propres', 'spectre vide'],
+      source: 'Cours, chapitre 4',
+      corps: String.raw`Pour une matrice $A\in\mathcal{M}_n(\R)$.
+
+!! **1. Une seule valeur propre, et $A$ n'est pas $\lambda I_n$** (chapitre 4, Prop. 40, HP)
+
+Si $\Sp(A)=\{\lambda\}$, alors $A$ est diagonalisable si et seulement si $A=\lambda I_n$. Donc, si $A$ n'a qu'une valeur propre et n'est pas diagonale, elle n'est pas diagonalisable. Le raisonnement-type :
+
+> On raisonne par l'absurde et on suppose que $A$ est diagonalisable.
+> Alors, par définition, on dispose de $P\in\mathcal{M}_n(\R)$ inversible et de $D\in\mathcal{M}_n(\R)$ diagonale dont tous les coefficients diagonaux sont égaux à $\lambda$ telles que $A=PDP^{-1}$.
+> On en déduit que : $A=P(\lambda I_n)P^{-1}=\lambda PP^{-1}=\lambda I_n$.
+> On fait alors apparaître une contradiction (en mettant en évidence un coefficient non diagonal non nul de $A$).
+
+!! **2. Pas assez de vecteurs propres** (chapitre 4, Prop. 35 et Remarque 28 ; Prop. 36, HP ?)
+
+On détermine une base de chaque sous-espace propre. Si, après concaténation, la famille obtenue compte moins de $n$ vecteurs, ce n'est pas une base de $\mathcal{M}_{n,1}(\R)$ : $A$ n'est pas diagonalisable. Avec la Prop. 36 (HP ?) : $\sum\limits_{\lambda\in\Sp(A)}\dim(E_\lambda(A))<n$.
+
+!! **3. Matrice nilpotente non nulle** (chapitre 4, Exercice 18)
+
+Si $A^p=0$ pour un certain $p$ et $A\neq0$ : $X^p$ est un polynôme annulateur, donc $\Sp(A)\subset\{0\}$. Si $A$ était diagonalisable, on aurait $A=P\,0\,P^{-1}=0$ : contradiction. C'est un cas particulier de la méthode 1, à rédiger par l'absurde.
+
+!! **4. Spectre vide** (non explicite dans le cours)
+
+Si $\Sp(A)=\emptyset$, $A$ n'a aucun vecteur propre, donc aucune base de vecteurs propres : $A$ n'est pas diagonalisable (chapitre 4, Prop. 34). Exemple : $\begin{pmatrix}0&-1\\1&0\end{pmatrix}$.`,
+    },
     // Cahier, p. 10
     {
       id: 'spectre-ordre-2',
