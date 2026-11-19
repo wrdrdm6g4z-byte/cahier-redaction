@@ -821,6 +821,133 @@ $$\operatorname{card}(\mathsf{T})=\operatorname{card}(\mathsf{R})+\operatorname{
 Ainsi, [[$2\dbinom{26}{5}$ amènent 5 cartes de la même couleur.]]`,
     },
 
+    {
+      id: 'methodes-limite-fonction',
+      ajoute: '2026-11-19',
+      domaine: 'analyse',
+      chapitre: 'Fonctions',
+      titre: "Méthodes : déterminer la limite d'une fonction",
+      motsCles: ['méthodes', 'limite', 'forme indéterminée', 'FI', 'composition', 'croissances comparées', 'taux d\'accroissement', 'limites usuelles', 'quantité conjuguée', 'équivalents', 'encadrement', 'gendarmes', 'comparaison', 'limite monotone', 'développement limité'],
+      source: 'Cours, chapitre 1',
+      corps: String.raw`!! **1. Opérations sur les limites** (chapitre 1, § 1.2)
+
+On applique les règles de somme, produit, inverse et quotient, en le disant sur la copie : « par somme », « par produit », « par quotient ». Quatre cas ne permettent pas de conclure, les formes indéterminées : « $0\times\infty$ », « $+\infty+(-\infty)$ », « $\frac{0}{0}$ », « $\frac{\infty}{\infty}$ ». Ne jamais les écrire sur une copie : on lève l'indétermination avec l'une des méthodes 4 à 10.
+
+!! **2. Composition** (chapitre 1, Prop. 4)
+
+Pour $g(u(x))$ : on cherche d'abord la limite de $u$ (le niveau du bas), puis celle de $g$ en ce point (le niveau du haut). Les deux étapes doivent apparaître sur la copie.
+
+> Or, $\lim\limits_{x\to x_0}u(x)=y_0$ et $\lim\limits_{y\to y_0}g(y)=c$.
+> Donc, par composition, $\lim\limits_{x\to x_0}g(u(x))=c$.
+
+!! **3. Continuité** (chapitre 1, Déf. 12)
+
+Si $x_0\in\mathcal{D}f$ et que $f$ est continue en $x_0$, alors $\lim\limits_{x\to x_0}f(x)=f(x_0)$ : on remplace simplement $x$ par $x_0$.
+
+!! **4. Factoriser par le terme prédominant, croissances comparées** (chapitre 1, Prop. 9 et Prop. 10)
+
+On met en facteur le terme qui « l'emporte », puis on conclut par croissances comparées : l'exponentielle l'emporte sur les puissances, qui l'emportent sur le logarithme. Une fonction polynomiale a, en $\pm\infty$ seulement, la même limite que son monôme de plus haut degré.
+
+!! **5. Propriétés des fonctions de référence** (chapitre 1, § 1.5.2)
+
+On transforme l'écriture avec les règles de calcul de $\ln$ et $\exp$. Par exemple : $\ln(2x+1)-\ln(x+1)=\ln\left(\dfrac{2x+1}{x+1}\right)$, puis composition.
+
+!! **6. Taux d'accroissement, limites usuelles** (chapitre 1, Prop. 11 et Déf. 15)
+
+On reconnaît $\dfrac{f(x)-f(x_0)}{x-x_0}$, qui tend vers $f'(x_0)$ si $f$ est dérivable en $x_0$. Les limites usuelles en sont des cas particuliers :
+$\lim\limits_{x\to0}\dfrac{e^x-1}{x}=1$ ; $\lim\limits_{x\to0}\dfrac{\ln(1+x)}{x}=1$ ; $\lim\limits_{x\to1}\dfrac{\ln(x)}{x-1}=1$ ; $\forall\alpha\in\R,\ \lim\limits_{x\to0}\dfrac{(1+x)^\alpha-1}{x}=\alpha$.
+
+!! **7. Quantité conjuguée** (chapitre 1, Remarques 24)
+
+Pour une différence de racines, comme $\sqrt{x+4}-2$ : on multiplie et on divise par $\sqrt{x+4}+2$ pour faire apparaître $(a-b)(a+b)=a^2-b^2$, ce qui supprime la racine.
+
+!! **8. Équivalents** (chapitre 1, Prop. 29)
+
+Deux fonctions équivalentes en $x_0$ ont la même limite. On cherche donc un équivalent simple de $f$ (voir la fiche « Méthodes : trouver un équivalent simple »), dont on calcule la limite. Très efficace pour les produits et les quotients.
+
+> $1-e^{x^2}\underset{x\to0}{\sim}-x^2$, donc $\dfrac{1-e^{x^2}}{x^3}\underset{x\to0^+}{\sim}-\dfrac{1}{x}$.
+> Or, $\lim\limits_{x\to0^+}-\dfrac{1}{x}=-\infty$.
+> Donc, par théorème, $\lim\limits_{x\to0^+}\dfrac{1-e^{x^2}}{x^3}=-\infty$.
+
+!! **9. Développement limité à l'ordre 2** (chapitre 1, § 3)
+
+En dernier recours, quand les méthodes précédentes échouent, par exemple quand les termes d'ordre 1 se compensent. Voir la méthode 7 de la fiche sur les équivalents.
+
+!! **10. Inégalités** (chapitre 1, Prop. 13 et Prop. 14)
+
+• Comparaison : si $f\leqslant g$ au voisinage de $x_0$ et $\lim\limits_{x_0}f=+\infty$, alors $\lim\limits_{x_0}g=+\infty$ ; et si $\lim\limits_{x_0}g=-\infty$, alors $\lim\limits_{x_0}f=-\infty$. Exemple : $\lfloor x\rfloor\geqslant x-1$, donc $\lfloor x\rfloor\to+\infty$ en $+\infty$.
+• Encadrement (gendarmes) : si $f\leqslant g\leqslant h$ au voisinage de $x_0$ et si $f$ et $h$ ont la même limite finie, alors $g$ a aussi cette limite. Utile avec la partie entière, $\sin$, $\cos$, ou $(-1)^n$.
+
+!! **11. Limite à gauche et à droite** (chapitre 1, Prop. 3)
+
+Quand l'expression change de part et d'autre de $x_0$ (fonction définie par morceaux, valeur absolue, $\frac{1}{x}$, etc.) : on calcule la limite à gauche et la limite à droite. La limite en $x_0$ existe si elles sont égales, et égales à $f(x_0)$ si $f$ est définie en $x_0$. Si elles diffèrent, il n'y a pas de limite en $x_0$.
+
+!! **12. Théorème de limite monotone** (chapitre 1, Prop. 15)
+
+Pour montrer qu'une limite existe sans la calculer. Une fonction croissante et majorée sur $]a,b[$ a une limite finie en $b$ ; une fonction croissante non majorée tend vers $+\infty$ en $b$. Même idée pour les autres cas (décroissante, minorée, en $a$).`,
+    },
+    {
+      id: 'methodes-equivalent-simple',
+      ajoute: '2026-11-19',
+      domaine: 'analyse',
+      chapitre: 'Fonctions',
+      titre: 'Méthodes : trouver un équivalent simple',
+      motsCles: ['méthodes', 'équivalent', 'équivalent simple', 'terme prédominant', 'croissances comparées', 'équivalents usuels', 'changement de variable', 'produit', 'quotient', 'puissance', 'développement limité', 'Taylor-Young'],
+      source: 'Cours, chapitre 1',
+      corps: String.raw`!! **1. Garder le terme prédominant d'une somme** (chapitre 1, Prop. 22, Prop. 17 et Prop. 26)
+
+Dans une somme, on repère le terme qui l'emporte sur tous les autres en $x_0$ : la somme lui est équivalente.
+• En $\pm\infty$, un polynôme est équivalent à son monôme de plus haut degré ; en $0$, c'est le monôme de plus **petit** degré qui l'emporte (chapitre 1, Exemples 17, utilisable sans preuve).
+• Croissances comparées : l'exponentielle l'emporte sur les puissances, qui l'emportent sur le logarithme.
+
+> Nous avons, par croissances comparées : $x\underset{x\to+\infty}{=}o(e^x)$.
+> Ainsi : $f(x)\underset{x\to+\infty}{=}e^x+o(e^x)$.
+> Donc, par théorème : $f(x)\underset{x\to+\infty}{\sim}e^x$.
+
+!! **2. Une limite finie et non nulle** (chapitre 1, Prop. 24)
+
+Si $\lim\limits_{x\to x_0}f(x)=\ell$ avec $\ell\neq0$, alors $f(x)\underset{x\to x_0}{\sim}\ell$. En particulier, si $f$ est continue en $x_0$ et $f(x_0)\neq0$, alors $f(x)\underset{x\to x_0}{\sim}f(x_0)$. Par exemple : $\sqrt{x}\underset{x\to3}{\sim}\sqrt{3}$.
+Si $\ell=0$, cela ne marche pas : on n'écrit jamais $f(x)\sim0$.
+
+!! **3. Équivalents usuels** (chapitre 1, Prop. 25)
+
+$e^x-1\underset{x\to0}{\sim}x$ ; $\ln(1+x)\underset{x\to0}{\sim}x$ ; $\ln(x)\underset{x\to1}{\sim}x-1$ ; $\forall\alpha\in\R,\ (1+x)^\alpha-1\underset{x\to0}{\sim}\alpha x$ ; $\sqrt{1+x}-1\underset{x\to0}{\sim}\dfrac{1}{2}x$.
+Ils ne valent qu'en $0$ (en $1$ pour $\ln(x)$).
+
+!! **4. Changement de variable** (chapitre 1, Prop. 28)
+
+Pour utiliser un équivalent usuel avec autre chose que $x$ : on remplace $x$ par une expression $u(x)$ qui tend vers le bon point.
+
+> $e^y-1\underset{y\to0}{\sim}y$. Or, $\lim\limits_{x\to0}x^2=0$.
+> Donc, par théorème (changement de variable), $e^{x^2}-1\underset{x\to0}{\sim}x^2$.
+
+Autre exemple : $\lim\limits_{x\to+\infty}\dfrac{1}{x^2}=0$, donc $\ln\left(1+\dfrac{1}{x^2}\right)\underset{x\to+\infty}{\sim}\dfrac{1}{x^2}$.
+
+!! **5. Produits, quotients, puissances** (chapitre 1, Prop. 27 ; Exercice 9)
+
+On cherche un équivalent de chaque facteur, puis on multiplie ou on divise ces équivalents. Même chose pour une puissance entière. Pour une puissance réelle (une racine par exemple), cela reste valable si les fonctions sont strictement positives : c'est l'Exercice 9, à connaître comme du cours.
+Exemple : $\dfrac{3x^3-x^2+x-2}{2x^2+x+1}\underset{x\to+\infty}{\sim}\dfrac{3x^3}{2x^2}=\dfrac{3}{2}x$.
+
+!! **6. La dérivée, quand elle ne s'annule pas** (chapitre 1, Remarques 52, non explicite au programme)
+
+Si $f$ est dérivable en $x_0$ et $f'(x_0)\neq0$, alors $f(x)-f(x_0)\underset{x\to x_0}{\sim}f'(x_0)(x-x_0)$. C'est de là que viennent tous les équivalents usuels. Exemple : $x^n-1\underset{x\to1}{\sim}n(x-1)$.
+
+!! **7. Un développement limité à l'ordre 2** (chapitre 1, Prop. 35 et Prop. 36)
+
+Quand les termes d'ordre 1 se compensent. Avec Taylor-Young, ou un développement limité usuel en $0$ : si $f''(x_0)\neq0$, alors $f(x)-f(x_0)-f'(x_0)(x-x_0)\underset{x\to x_0}{\sim}\dfrac{f''(x_0)}{2}(x-x_0)^2$.
+Exemple : $\ln(1+x)\underset{x\to0}{=}x-\dfrac{1}{2}x^2+o(x^2)$, donc $\ln(1+x)-x\underset{x\to0}{\sim}-\dfrac{1}{2}x^2$.
+
+!! **8. Vérifier un équivalent donné** (chapitre 1, Prop. 23)
+
+Pour montrer que $f(x)\underset{x\to x_0}{\sim}g(x)$, avec $g$ qui ne s'annule pas au voisinage de $x_0$ : on montre que $\lim\limits_{x\to x_0}\dfrac{f(x)}{g(x)}=1$.
+
+!! **Pièges**
+
+• On n'additionne jamais des équivalents : on cherche d'abord le terme prédominant de la somme (méthode 1).
+• On ne compose pas un équivalent par $\ln$ ou $\exp$ : seul le changement de variable est permis (méthode 4). Dans les autres cas, revenir aux définitions (chapitre 1, Exercice 10).
+• Deux fonctions qui ont la même limite ne sont pas forcément équivalentes.
+• Un équivalent est local : il ne vaut qu'au point indiqué sous le $\sim$.`,
+    },
     // Analyse, photo 1
     {
       id: 'determiner-df',
