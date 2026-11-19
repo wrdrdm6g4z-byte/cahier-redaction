@@ -637,6 +637,21 @@ Donc, [[le développement limité de $x\mapsto\ln(1-x)$ à l'ordre 2 en $0$ exis
 $$\ln(1-x)\underset{x\to0}{=}-x-\frac{x^2}{2}+o\left(x^2\right)$$]]`,
     },
 
+    {
+      id: 'asymptotes-verticale-horizontale',
+      ajoute: '2026-11-19',
+      domaine: 'analyse',
+      chapitre: 'Fonctions',
+      titre: 'Asymptotes verticale et horizontale à la courbe de $f$',
+      motsCles: ['asymptote', 'asymptote verticale', 'asymptote horizontale', 'limite', 'droite', 'x = 0', 'y = 0'],
+      source: 'Corrigé',
+      corps: String.raw`• D'après **1) (a)**, $\lim\limits_{0^+}f=+\infty$.
+Donc, [[$\mathcal{C}_f$ possède une asymptote verticale en $0$ à droite d'équation $x=0$.]]
+
+• D'après **1) (a)**, $\lim\limits_{+\infty}f=0$.
+Or, $0\in\R$.
+Donc, [[$\mathcal{C}_f$ possède une asymptote horizontale en $+\infty$ d'équation $y=0$.]]`,
+    },
     // Analyse, p. 6
     {
       id: 'asymptote-oblique',
