@@ -885,6 +885,43 @@ u { text-decoration-color: var(--marge-rouge); text-decoration-thickness: 1px; t
   .carte::before { left: 10px; top: 12px; bottom: 12px; }
   .defile { grid-auto-columns: 82%; }
   .domains a { font-size: 15px; }
+  .fin-mot { display: none; }
+}
+
+/* ---------- Code ---------- */
+
+.texte code {
+  font: 0.86em/1.4 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--encre) 7%, transparent);
+  overflow-wrap: anywhere;
+}
+
+.texte pre.code {
+  margin: .85em 0;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--encre) 6%, transparent);
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+.texte pre.code code {
+  padding: 0;
+  background: none;
+  font-size: 14px;
+  line-height: 1.55;
+  overflow-wrap: normal;
+  white-space: pre;
+}
+
+.texte pre.code:first-child { margin-top: 0; }
+.texte pre.code + p { margin-top: .85em; }
+
+@media (max-width: 520px) {
+  .texte pre.code { padding: 8px 10px; }
+  .texte pre.code code { font-size: 13px; white-space: pre-wrap; }
 }
 
 /* ---------- Accessibilité et impression ---------- */

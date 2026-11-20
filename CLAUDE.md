@@ -16,7 +16,7 @@ L'élève ne recopie plus les modèles dans un cahier. Les titres sont désormai
 
 1. Photo d'un exercice du cours : le transcrire mot pour mot, lui créer un titre, l'ajouter au site.
 2. Sujet de DS avec corrigé : y repérer les modèles routiniers absents du site, les transcrire mot pour mot depuis le corrigé, leur créer un titre, les ajouter.
-- Classement : Algèbre, Analyse ou Probabilités, puis chapitre avec le titre du cours.
+- Classement : Algèbre, Analyse, Probabilités ou Informatique, puis chapitre avec le titre du cours (pour l'informatique : le titre du TP).
 - Modèles « routiniers » uniquement, sauf demande contraire.
 - Quand l'élève fournit l'énoncé, le placer en tête du modèle dans un bloc `!!`. Le titre nomme l'idée capitale de l'exercice (ex. : l'équiprobabilité).
 - Encadrés de méthode du cours : ne garder que le squelette de rédaction (étapes et phrases attendues), sans les informations annexes.
@@ -26,7 +26,7 @@ L'élève ne recopie plus les modèles dans un cahier. Les titres sont désormai
 ```js
 {
   id: 'identifiant-unique',
-  domaine: 'algebre', // ou 'analyse', 'probabilites'
+  domaine: 'algebre', // ou 'analyse', 'probabilites', 'informatique'
   chapitre: 'Titre du chapitre',
   titre: 'Titre sobre',
   motsCles: ['terme utile à la recherche'],
@@ -49,6 +49,7 @@ Reproduire aussi la mise en forme du cahier :
 - `||x||` en tête de bloc : annotation écrite dans la marge.
 - `{{texte}}` : texte écrit en rouge. `{{?}}` signale un mot à lever avec l'élève.
 - `\rouge{...}` : écrit en rouge dans le formule. Un `\rouge{?}` signale un doute à lever avant publication.
+- `%%code%%` : code Python en ligne. Bloc de code : entre deux lignes `%%%` (les accents graves sont impossibles dans `String.raw`).
 
 Macros LaTeX : `\R \N \Z \Q \C \K \E \V \P`, `\Vect \rg \Sp`, `\ent{a}{b}`.
 

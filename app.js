@@ -5,6 +5,7 @@
     { id: 'algebre', nom: 'Algèbre' },
     { id: 'analyse', nom: 'Analyse' },
     { id: 'probabilites', nom: 'Probabilités' },
+    { id: 'informatique', nom: 'Informatique' },
   ];
 
   const { chapitres = {}, modeles = [] } = window.CAHIER || {};
@@ -60,7 +61,11 @@
 
   function enLigne(src, termes) {
     const formules = [];
-    const sansMaths = src.replace(MATH, (m) => {
+    const sansCode = src.replace(/%%([^\n]+?)%%/g, (m, c) => {
+      formules.push(`<code>${echappe(c)}</code>`);
+      return String.fromCharCode(PUA + formules.length - 1);
+    });
+    const sansMaths = sansCode.replace(MATH, (m) => {
       formules.push(m.startsWith('$$') ? maths(m.slice(2, -2), true) : maths(m.slice(1, -1), false));
       return String.fromCharCode(PUA + formules.length - 1);
     });
@@ -80,7 +85,13 @@
   const ENONCE = /^!!\s*\*\*(Exercices?|Exemples?|Proposition)\b/;
   const NOTE = /^\|\|(.+?)\|\|\s*/;
 
+  // Blocs de code entre deux lignes %%% : mis de côté avant le découpage en paragraphes.
+  const BLOC_CODE = /^\u0003(\d+)\u0003$/;
+  let codes = [];
+
   function paragraphe(bloc, i, termes, dansEnonce) {
+    const code = bloc.trim().match(BLOC_CODE);
+    if (code) return `<pre class="code" style="--c:${Math.min(i, 12)}"><code>${echappe(codes[+code[1]])}</code></pre>`;
     let net = bloc.replace(/\n?(\$\$[\s\S]+?\$\$)\n?/g, '$1');
     const rang = `style="--c:${Math.min(i, 12)}"`;
     const annotation = net.match(NOTE);
@@ -97,6 +108,8 @@
   // Sépare le corps en blocs « Énoncé » et « Rédaction », dans l'ordre du texte.
   function sections(src, termes) {
     const groupes = [];
+    codes = [];
+    src = src.replace(/^%%%\n([\s\S]*?)\n%%%$/gm, (m, c) => `\n\n\u0003${codes.push(c) - 1}\u0003\n\n`);
     src.trim().split(/\n\s*\n/).forEach((bloc) => {
       const type = ENONCE.test(bloc.replace(NOTE, '')) ? 'enonce' : 'redaction';
       const dernier = groupes[groupes.length - 1];

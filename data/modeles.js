@@ -4,6 +4,7 @@ window.CAHIER = {
     algebre: ['Espaces vectoriels', 'Matrices', 'Applications linéaires', 'Réduction'],
     analyse: ['Fonctions', 'Intégration', 'Équations différentielles', 'Suites', 'Séries'],
     probabilites: ['Espaces probabilisés', 'Dénombrement', 'Variables aléatoires'],
+    informatique: ['Simulation d’expériences aléatoires : le cas discret'],
   },
 
   modeles: [
@@ -3089,6 +3090,220 @@ Or, $X(\Omega)=\{0,1\}$
 Donc, $X\hookrightarrow\mathcal{B}(\P(A))$
 
 Donc, [[$\begin{cases}X\text{ est certaine égale à 0 si }A\text{ est impossible}\\X\text{ est certaine égale à 1 si }A\text{ est certain}\\X\hookrightarrow\mathcal{B}(\P(A))\text{ sinon}\end{cases}$]]`,
+    },
+    {
+      id: 'python-donnees-numpy',
+      ajoute: '2026-11-20',
+      domaine: 'informatique',
+      chapitre: 'Simulation d’expériences aléatoires : le cas discret',
+      titre: 'Importations et traitement des données',
+      motsCles: ['python', 'numpy', 'import', 'np.array', 'list', 'np.sum', 'np.min', 'np.max', 'np.mean', 'count', 'occurrences', 'np.unique', 'return_counts', 'np.zeros', 'booléens'],
+      source: 'TP 5',
+      corps: String.raw`!! **Importations**
+
+%%%
+import numpy as np
+import numpy.random as rd
+import matplotlib.pyplot as plt
+%%%
+
+Alias imposés par le programme : %%np%%, %%rd%%, %%plt%%.
+
+!! **Conversions**
+
+%%np.array(L)%% : convertit la liste %%L%% en vecteur numpy.
+%%np.array([1,5,-2])%% renvoie %%array([1, 5, -2])%%.
+
+%%list(v)%% : convertit le vecteur numpy %%v%% en liste.
+%%list(np.array([1,5,-2]))%% renvoie %%[1, 5, -2]%%.
+
+%%np.zeros(N)%% : vecteur numpy de %%N%% zéros, à remplir ensuite.
+
+!! **Somme, minimum, maximum, moyenne**
+
+Avec %%A = np.array([1,2,3,4])%% :
+%%np.sum(A)%% renvoie %%10%% : somme des coefficients.
+%%np.min(A)%% renvoie %%1%% : plus petit coefficient.
+%%np.max(A)%% renvoie %%4%% : plus grand coefficient.
+%%np.mean(A)%% renvoie %%2.5%% : moyenne des coefficients.
+
+!! **Compter**
+
+%%L.count(a)%% : nombre de fois que %%a%% figure dans la liste %%L%%.
+Avec %%L = [0,1,2,3,5,3,3]%% : %%L.count(3)%% renvoie %%3%%, %%L.count(4)%% renvoie %%0%%.
+
+%%np.sum(test)%% : nombre de coefficients d'un vecteur numpy qui vérifient le test (chaque %%True%% compte pour 1).
+Avec %%A = np.array([1,2,3,4])%% : %%np.sum(A >= 3)%% renvoie %%2%%, %%np.sum(A == A**2)%% renvoie %%1%%.
+%%np.sum(v == a)%% : nombre d'occurrences de %%a%% dans %%v%%.
+
+%%np.mean(test)%% : proportion des coefficients qui vérifient le test.
+%%np.mean(ech <= x)%% : fréquence des valeurs de %%ech%% inférieures ou égales à %%x%%.
+
+!! **Valeurs distinctes et effectifs** (hors programme)
+
+Avec %%v = np.array([1,1,2,2,1,2,3,1,4,0])%% :
+%%np.unique(v)%% renvoie %%array([0, 1, 2, 3, 4])%% : valeurs distinctes, dans l'ordre croissant.
+%%(M,E) = np.unique(v, return_counts=True)%% : %%M%% reçoit %%array([0, 1, 2, 3, 4])%% et %%E%% reçoit %%array([1, 4, 3, 1, 1])%%, le nombre d'occurrences de chaque valeur.
+Hors programme : savoir la reprogrammer.`,
+    },
+    {
+      id: 'python-diagramme-batons',
+      ajoute: '2026-11-20',
+      domaine: 'informatique',
+      chapitre: 'Simulation d’expériences aléatoires : le cas discret',
+      titre: 'Diagramme en bâtons',
+      motsCles: ['python', 'matplotlib', 'plt.bar', 'plt.show', 'diagramme en bâtons', 'effectifs', 'fréquences', 'np.unique'],
+      source: 'TP 5',
+      corps: String.raw`!! **Effectifs**
+
+%%%
+(M,E) = np.unique(v, return_counts=True)
+plt.bar(M,E)
+plt.show()
+%%%
+
+%%plt.bar(M,E)%% : trace un bâton de hauteur %%E[i]%% au-dessus de chaque valeur %%M[i]%%.
+%%plt.show()%% : affiche la figure.
+
+!! **Fréquences**
+
+%%%
+(M,E) = np.unique(v, return_counts=True)
+plt.bar(M,E/np.sum(E))
+plt.show()
+%%%
+
+%%E/np.sum(E)%% : effectifs divisés par l'effectif total, donc les fréquences.
+Avec %%v = np.array([1,1,2,2,1,2,3,1,4,0])%%, le bâton d'abscisse %%1%% a pour hauteur %%0.4%%.
+
+!! **Valeurs non regroupées**
+
+%%%
+plt.bar(range(len(v)),v)
+plt.show()
+%%%
+
+Un bâton par élément de %%v%%, numérotés de %%0%% à %%len(v)-1%%, de hauteur la valeur de l'élément.
+
+L'argument facultatif %%width%% de %%plt.bar%% règle la largeur des bâtons.`,
+    },
+    {
+      id: 'python-random-randint',
+      ajoute: '2026-11-20',
+      domaine: 'informatique',
+      chapitre: 'Simulation d’expériences aléatoires : le cas discret',
+      titre: 'Nombres au hasard : rd.random et rd.randint',
+      motsCles: ['python', 'rd.random', 'rd.randint', 'loi uniforme', 'hasard', 'pile ou face', 'dé', 'urne', 'échantillon'],
+      source: 'TP 5',
+      corps: String.raw`!! **rd.random**
+
+%%rd.random()%% : un réel au hasard dans $[0,1]$ (réalisation d'une variable de loi uniforme sur $[0,1]$).
+%%rd.random()%% peut renvoyer %%0.9743443424770915%%.
+
+%%rd.random() <= p%% : renvoie %%True%% avec probabilité $p$.
+
+%%rd.random(n)%% : vecteur numpy de %%n%% réels au hasard, indépendants.
+%%rd.random(3)%% peut renvoyer %%array([0.56730213, 0.30923107, 0.40699702])%%.
+
+%%rd.random([n,m])%% : matrice numpy à %%n%% lignes et %%m%% colonnes de réels au hasard, indépendants.
+
+Ne pas confondre %%rd.random%% (le nom de la fonction) et %%rd.random()%% (l'appel).
+
+!! **rd.randint**
+
+%%rd.randint(a,b+1)%% : un entier au hasard entre %%a%% et %%b%% inclus (loi uniforme sur $\ent{a}{b}$).
+Attention au %%+1%% : %%rd.randint(a,b)%% s'arrête à %%b-1%%.
+%%rd.randint(1,7)%% simule le lancer d'un dé à 6 faces.
+
+%%rd.randint(a,b+1,n)%% : vecteur numpy de %%n%% entiers au hasard entre %%a%% et %%b%%, indépendants.
+%%rd.randint(1,5,10)%% peut renvoyer %%array([3, 1, 4, 2, 4, 2, 2, 3, 3, 1])%%.
+
+%%rd.randint(a,b+1,[n,m])%% : matrice numpy à %%n%% lignes et %%m%% colonnes d'entiers au hasard entre %%a%% et %%b%%.`,
+    },
+    {
+      id: 'python-lois-usuelles-discretes',
+      ajoute: '2026-11-20',
+      domaine: 'informatique',
+      chapitre: 'Simulation d’expériences aléatoires : le cas discret',
+      titre: 'Simulation des lois usuelles discrètes',
+      motsCles: ['python', 'rd.binomial', 'rd.randint', 'rd.geometric', 'rd.poisson', 'Bernoulli', 'binomiale', 'uniforme', 'géométrique', 'Poisson', 'échantillon'],
+      source: 'TP 5',
+      corps: String.raw`!! **Une réalisation, $N$ réalisations, une matrice**
+
+Pour chaque loi : sans argument de taille, un nombre ; avec %%N%%, un vecteur numpy de %%N%% réalisations indépendantes ; avec %%[N,M]%%, une matrice numpy à %%N%% lignes et %%M%% colonnes.
+
+!! **Bernoulli $\mathcal{B}(p)$**
+
+%%rd.binomial(1,p)%%, %%rd.binomial(1,p,N)%%, %%rd.binomial(1,p,[N,M])%%
+%%rd.binomial(1,0.5,10)%% peut renvoyer %%array([1, 1, 1, 0, 0, 1, 0, 0, 1, 0])%%.
+
+!! **Binomiale $\mathcal{B}(n,p)$**
+
+%%rd.binomial(n,p)%%, %%rd.binomial(n,p,N)%%, %%rd.binomial(n,p,[N,M])%%
+%%rd.binomial(5,0.5,10)%% peut renvoyer %%array([1, 3, 3, 4, 2, 0, 2, 4, 1, 3])%%.
+
+!! **Uniforme sur $\ent{a}{b}$**
+
+%%rd.randint(a,b+1)%%, %%rd.randint(a,b+1,N)%%, %%rd.randint(a,b+1,[N,M])%%
+%%rd.randint(1,5,10)%% donne des entiers entre %%1%% et %%4%%.
+
+!! **Géométrique $\mathcal{G}(p)$**
+
+%%rd.geometric(p)%%, %%rd.geometric(p,N)%%, %%rd.geometric(p,[N,M])%%
+Valeurs entières à partir de %%1%% ; $p$ strictement entre $0$ et $1$.
+
+!! **Poisson $\mathcal{P}(\alpha)$**
+
+%%rd.poisson(alpha)%%, %%rd.poisson(alpha,N)%%, %%rd.poisson(alpha,[N,M])%%
+Valeurs entières à partir de %%0%% ; %%alpha%% strictement positif.`,
+    },
+    {
+      id: 'python-echantillon-monte-carlo',
+      ajoute: '2026-11-20',
+      domaine: 'informatique',
+      chapitre: 'Simulation d’expériences aléatoires : le cas discret',
+      titre: 'Échantillon et méthode de Monte-Carlo',
+      motsCles: ['python', 'échantillon', 'Monte-Carlo', 'loi faible des grands nombres', 'moyenne empirique', 'estimer', 'espérance', 'probabilité', 'fréquence', 'np.mean', 'transfert'],
+      source: 'TP 5',
+      corps: String.raw`!! **$N$ réalisations indépendantes de $X$ (loi non usuelle)**
+
+À partir d'une fonction %%simulX()%% qui simule une réalisation de $X$ :
+
+%%%
+def simulechX(N):
+    return [simulX() for _ in range(N)]
+%%%
+
+Renvoie une liste de %%N%% réalisations indépendantes.
+
+%%%
+def simulechX(N):
+    ech = np.zeros(N)
+    for k in range(N):
+        ech[k] = simulX()
+    return ech
+%%%
+
+Renvoie un vecteur numpy de %%N%% réalisations indépendantes.
+
+%%N*[simulX()]%% ne convient pas : une seule réalisation, recopiée %%N%% fois.
+
+!! **Estimer une espérance**
+
+%%np.mean(ech)%%, avec %%ech%% un échantillon de grande taille de $X$ : estimation de $E(X)$ (loi faible des grands nombres).
+%%np.mean(rd.binomial(n,p,N))%% : estimation de $E(X)$ pour $X\hookrightarrow\mathcal{B}(n,p)$, proche de $np$.
+%%np.mean(rd.random(1000))%% : proche de $\frac{1}{2}$.
+
+!! **Estimer l'espérance d'une transformée**
+
+%%np.mean(g(ech))%% : estimation de $E(g(X))$.
+%%np.mean(rd.poisson(alpha,N)**k)%% : estimation du moment d'ordre $k$ de $X\hookrightarrow\mathcal{P}(\alpha)$.
+
+!! **Estimer une probabilité**
+
+%%np.mean(test)%% : fréquence de réalisation de l'événement, estimation de sa probabilité.
+%%np.mean(rd.geometric(p,N) == k)%% : estimation de $P(X=k)$ pour $X\hookrightarrow\mathcal{G}(p)$.
+%%L.count("blanche")/N%% : fréquence de %%"blanche"%% dans une liste %%L%% de %%N%% résultats.`,
     },
   ],
 };
