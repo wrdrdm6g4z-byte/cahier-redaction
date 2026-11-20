@@ -730,6 +730,25 @@ __et__ $D$ est une matrice diagonale dont les coefficients diagonaux sont rangé
 __et__ $J=PDP^{-1}$]]`,
     },
 
+    // Cahier, 2 photos : racine d'un polynôme annulateur, valeur propre 1 de M
+    {
+      id: 'racine-annulateur-valeur-propre',
+      ajoute: '2026-11-20',
+      domaine: 'algebre',
+      chapitre: 'Réduction',
+      titre: "Racine d'un polynôme annulateur : valeur propre et sous-espace propre",
+      motsCles: ['polynôme annulateur', 'racine', 'valeur propre', 'sous-espace propre', 'système homogène', 'solution non nulle', 'Vect', 'E_1(M)'],
+      corps: String.raw`Soit $X=\begin{pmatrix}x\\y\\z\end{pmatrix}\in M_{3,1}(\R)$.
+
+Alors :
+$$\begin{aligned}MX=1X&\Longleftrightarrow\begin{cases}2x-y-z=x\\-x+2y+z=y\\x-y=z\end{cases}\\&\Longleftrightarrow\begin{cases}x-y-z=0\\-x+y+z=0\\x-y-z=0\end{cases}\\&\Longleftrightarrow\begin{cases}x-y-z=0&\\0=0&L_2\leftarrow L_2+L_1\\0=0&L_3\leftarrow L_3-L_1\end{cases}\\&\Longleftrightarrow x-y-z=0\\&\Longleftrightarrow x=y+z\\&\Longleftrightarrow X=\begin{pmatrix}y+z\\y\\z\end{pmatrix}\\&\Longleftrightarrow X=y\begin{pmatrix}1\\1\\0\end{pmatrix}+z\begin{pmatrix}1\\0\\1\end{pmatrix}\end{aligned}$$
+
+Donc, ==le système linéaire homogène $MX=1X$ d'inconnue $X\in M_{3,1}(\R)$ possède au moins une solution non nulle==
+Donc, ==$1$ est valeur propre de $M$==
+De plus, les calculs précédents donnent :
+$$E_1(M)=\Vect\left(\begin{pmatrix}1\\1\\0\end{pmatrix},\begin{pmatrix}1\\0\\1\end{pmatrix}\right)$$`,
+    },
+
     {
       id: 'methode-construction-espace-probabilise',
       ajoute: '2026-11-12',
