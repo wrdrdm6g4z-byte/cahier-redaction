@@ -662,6 +662,27 @@ $$\begin{aligned}X\in E_0(J)&\Longleftrightarrow JX=0X\\&\underset{(1)}{\Longlef
 Donc, $E_0(J)=\Vect\left(\begin{pmatrix}-1\\1\\0\end{pmatrix},\begin{pmatrix}-1\\0\\1\end{pmatrix}\right)$`,
     },
 
+    // Cahier, 1 photo : 0 valeur propre de J
+    {
+      id: 'reel-valeur-propre',
+      ajoute: '2026-11-20',
+      domaine: 'algebre',
+      chapitre: 'Réduction',
+      titre: "Montrer qu'un réel est valeur propre d'une matrice donnée",
+      motsCles: ['valeur propre', 'vecteur propre', 'définition', 'JX=λX', 'il existe X non nul'],
+      source: 'Question 1',
+      corps: String.raw`1) Posons $X=\begin{pmatrix}1\\-1\\0\end{pmatrix}$
+
+Alors :
+$$\begin{aligned}JX&=\begin{pmatrix}1&1&1\\1&1&1\\1&1&1\end{pmatrix}\begin{pmatrix}1\\-1\\0\end{pmatrix}\\&=\begin{pmatrix}0\\0\\0\end{pmatrix}\\&=0\cdot\begin{pmatrix}1\\-1\\0\end{pmatrix}\\&=0\cdot X\end{aligned}$$
+De plus :
+$$\begin{cases}J\in M_3(\R)\\X\in M_{3,1}(\R)\setminus\left\{0_{M_{3,1}(\R)}\right\}\text{ car }1\neq0\\0\in\R\end{cases}$$
+
+On a montré :
+$$\exists X\in M_{3,1}(\R)\setminus\left\{0_{M_{3,1}(\R)}\right\},\ JX=0X$$
+Donc, par définition, [[$0$ est valeur propre de $J$.]]`,
+    },
+
     // Cahier, 2 photos : diagonalisation effective de J (suite de l'ex 16)
     {
       id: 'diagonalisation-effective',
