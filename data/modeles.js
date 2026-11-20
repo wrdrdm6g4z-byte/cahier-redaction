@@ -662,6 +662,53 @@ $$\begin{aligned}X\in E_0(J)&\Longleftrightarrow JX=0X\\&\underset{(1)}{\Longlef
 Donc, $E_0(J)=\Vect\left(\begin{pmatrix}-1\\1\\0\end{pmatrix},\begin{pmatrix}-1\\0\\1\end{pmatrix}\right)$`,
     },
 
+    // Cahier, 2 photos : diagonalisation effective de J (suite de l'ex 16)
+    {
+      id: 'diagonalisation-effective',
+      ajoute: '2026-11-20',
+      domaine: 'algebre',
+      chapitre: 'Réduction',
+      titre: "Diagonalisation effective d'une matrice diagonalisable",
+      motsCles: ['diagonaliser', 'diagonalisable', 'PDP⁻¹', 'base de vecteurs propres', 'concaténation', 'famille libre', 'matrice de passage', 'sous-espaces propres', 'Prop 34'],
+      source: 'Question 2',
+      corps: String.raw`2) Par hypothèse, $J=\begin{pmatrix}1&1&1\\1&1&1\\1&1&1\end{pmatrix}$
+
+D'après ex 16, $\Sp(J)=\{0;3\}$, $E_0(J)=\Vect\left(\begin{pmatrix}-1\\1\\0\end{pmatrix},\begin{pmatrix}-1\\0\\1\end{pmatrix}\right)$
+$E_3(J)=\Vect\left(\begin{pmatrix}1\\1\\1\end{pmatrix}\right)$
+
+Or, $\begin{cases}-2\neq0\\2\neq0\end{cases}$
+Donc, par théorème,
+$$\begin{cases}E_0(J)=\Vect\left((-2)\begin{pmatrix}-1\\1\\0\end{pmatrix},(-2)\begin{pmatrix}-1\\0\\1\end{pmatrix}\right)\\E_3(J)=\Vect\left(2\begin{pmatrix}1\\1\\1\end{pmatrix}\right)\end{cases}$$
+
+Donc :
+$$\begin{cases}E_0(J)=\Vect\left(\begin{pmatrix}2\\-2\\0\end{pmatrix},\begin{pmatrix}2\\0\\-2\end{pmatrix}\right)\\E_3(J)=\Vect\left(\begin{pmatrix}2\\2\\2\end{pmatrix}\right)\end{cases}$$
+
+Soit $(a,b)\in\R^2$.
+On suppose :
+$$a\begin{pmatrix}2\\-2\\0\end{pmatrix}+b\begin{pmatrix}2\\0\\-2\end{pmatrix}=0_{E_0(J)}$$
+Donc,
+$$\begin{pmatrix}2a+2b\\-2a\\-2b\end{pmatrix}=\begin{pmatrix}0\\0\\0\end{pmatrix}$$
+Donc, $\begin{cases}a=0\\b=0\end{cases}$
+Donc :
+$$a\begin{pmatrix}2\\-2\\0\end{pmatrix}+b\begin{pmatrix}2\\0\\-2\end{pmatrix}=0_{E_0(J)}\Longrightarrow\begin{cases}a=0\\b=0\end{cases}$$
+et ce pour tout $(a,b)\in\R^2$.
+Donc, $\left(\begin{pmatrix}2\\-2\\0\end{pmatrix},\begin{pmatrix}2\\0\\-2\end{pmatrix}\right)$ est libre dans $E_0(J)$.
+
+De plus, $\left(\begin{pmatrix}2\\2\\2\end{pmatrix}\right)$ est libre dans $E_3(J)$ en tant que famille réduite à un unique vecteur non nul de $E_3(J)$.
+Par ailleurs, $0\neq3$ et $J\in M_3(\R)$.
+Donc, par théorème, (concaténation de familles libres issues de sous-espaces propres associés à des valeurs propres distinctes),
+$$\left(\begin{pmatrix}2\\-2\\0\end{pmatrix},\begin{pmatrix}2\\0\\-2\end{pmatrix},\begin{pmatrix}2\\2\\2\end{pmatrix}\right)\text{ est libre}$$
+dans $M_{3,1}(\R)$.
+Or $\operatorname{card}\left(\left(\begin{pmatrix}2\\-2\\0\end{pmatrix},\begin{pmatrix}2\\0\\-2\end{pmatrix},\begin{pmatrix}2\\2\\2\end{pmatrix}\right)\right)=3$ et $\dim(M_{3,1}(\R))=3$
+
+Donc, par théorème, $\left(\begin{pmatrix}2\\-2\\0\end{pmatrix},\begin{pmatrix}2\\0\\-2\end{pmatrix},\begin{pmatrix}2\\2\\2\end{pmatrix}\right)$ est une base de $M_{3,1}(\R)$, et cette base est constituée de vecteurs propres de la matrice $J$ associés aux valeurs propres $0$, $0$, $3$, dans cet ordre-là.
+Donc, par théorème, $J$ est diagonalisable (Prop 34)
+De plus, par théorème, [[si on pose $\begin{cases}P=\begin{pmatrix}2&2&2\\-2&0&2\\0&-2&2\end{pmatrix}\\D=\begin{pmatrix}0&0&0\\0&0&0\\0&0&3\end{pmatrix}\end{cases}$
+__alors__ $P$ est inversible (en tant que matrice de passage de la base canonique de $M_{3,1}(\R)$ à la base propre susmentionnée et a pour première ligne $(2\ 2\ 2)$)
+__et__ $D$ est une matrice diagonale dont les coefficients diagonaux sont rangés dans l'ordre croissant
+__et__ $J=PDP^{-1}$]]`,
+    },
+
     {
       id: 'methode-construction-espace-probabilise',
       ajoute: '2026-11-12',
