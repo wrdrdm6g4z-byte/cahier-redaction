@@ -51,3 +51,7 @@ Reproduire aussi la mise en forme du cahier :
 - `\rouge{...}` : écrit en rouge dans le formule. Un `\rouge{?}` signale un doute à lever avant publication.
 
 Macros LaTeX : `\R \N \Z \Q \C \K \E \V \P`, `\Vect \rg \Sp`, `\ent{a}{b}`.
+
+## Annotations personnelles
+
+`perso.js` : titres renommés et surlignages faits par l'élève sur le site (bouton « Annoter »). Ils sont gardés dans le navigateur et synchronisés dans `perso.json` sur la branche `perso` (jeton GitHub saisi par l'élève sur chaque appareil). Ne jamais les reporter dans `data/modeles.js`.

@@ -520,7 +520,7 @@ mark {
 
 .titre-modele .katex { font-size: .92em; }
 
-.btn-lecture, .quitter-lecture {
+.btn-lecture, .btn-annoter, .quitter-lecture {
   flex: none;
   display: inline-flex;
   align-items: center;
@@ -688,6 +688,88 @@ u { text-decoration-color: var(--marge-rouge); text-decoration-thickness: 1px; t
 .suite a .label { color: var(--doux); }
 .suite .suiv { text-align: right; grid-column: 2; }
 
+/* ---------- Annotations ---------- */
+.actions-modele { display: flex; flex: none; gap: var(--e-2); }
+.btn-annoter[aria-pressed="true"] { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 55%, var(--trait)); background: color-mix(in srgb, var(--accent) 8%, transparent); }
+
+.fluo-perso { background: var(--fluo); border-radius: 2px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.annotation .contenu .fluo-perso { cursor: pointer; }
+.annotation .contenu { -webkit-user-select: text; user-select: text; }
+
+.btn-renommer {
+  display: none;
+  vertical-align: .12em;
+  margin-left: .35em;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--doux);
+  transition: color var(--d-2), background-color var(--d-2);
+}
+.btn-renommer svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; }
+.annotation .btn-renommer { display: inline-grid; }
+
+.champ-titre {
+  width: 100%;
+  min-width: min(28rem, 80vw);
+  padding: 2px 8px;
+  margin-left: -9px;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  background: var(--feuille);
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--trait));
+  border-radius: var(--r-1);
+  outline: none;
+}
+
+.etat-perso { display: none; margin: calc(-1 * var(--e-4)) 0 var(--e-5); font-size: var(--t-mini); color: var(--doux); gap: var(--e-3); align-items: baseline; flex-wrap: wrap; }
+.annotation .etat-perso { display: flex; }
+.etat-perso .etat-erreur, .etat-perso .etat-jeton { color: var(--marge-rouge); }
+.lien-perso { color: var(--accent); font-size: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+.btn-surligner {
+  position: absolute;
+  z-index: 12;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--encre);
+  color: var(--fond);
+  font-size: var(--t-petit);
+  box-shadow: var(--ombre-2);
+}
+.btn-surligner[hidden] { display: none; }
+
+.dlg-perso {
+  width: min(26rem, calc(100vw - 32px));
+  margin: auto;
+  padding: var(--e-5);
+  border: 1px solid var(--trait);
+  border-radius: var(--r-3);
+  background: var(--feuille);
+  color: var(--encre);
+  box-shadow: var(--ombre-2);
+}
+.dlg-perso::backdrop { background: rgba(20, 18, 14, .35); }
+.dlg-perso h2 { font: 400 22px/1.2 var(--f-titre); margin-bottom: var(--e-4); }
+.dlg-perso p { font-size: var(--t-petit); margin-bottom: var(--e-3); }
+.dlg-perso label { display: grid; gap: var(--e-2); font-size: var(--t-petit); color: var(--doux); margin-bottom: var(--e-3); }
+.dlg-perso input { padding: 8px 10px; font: inherit; font-size: 16px; color: var(--encre); background: var(--fond); border: 1px solid var(--trait); border-radius: var(--r-1); }
+.dlg-perso input:focus { outline: none; border-color: var(--accent); }
+.dlg-aide { color: var(--doux); }
+.dlg-aide a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.dlg-erreur { color: var(--marge-rouge); }
+.dlg-actions { display: flex; justify-content: flex-end; gap: var(--e-2); margin-top: var(--e-4); }
+.btn-sec, .btn-prim { padding: 7px 14px; border-radius: 999px; font-size: var(--t-petit); border: 1px solid var(--trait); color: var(--doux); }
+.btn-prim { background: var(--encre); border-color: var(--encre); color: var(--fond); }
+.btn-prim:disabled { opacity: .5; }
+
+@media (hover: hover) {
+  .btn-renommer:hover { color: var(--accent); background: var(--champ); }
+  .annotation .contenu .fluo-perso:hover { background: color-mix(in srgb, var(--fluo) 55%, transparent); }
+}
+
 /* ---------- Mode lecture ---------- */
 .quitter-lecture {
   position: fixed;
@@ -718,7 +800,7 @@ u { text-decoration-color: var(--marge-rouge); text-decoration-thickness: 1px; t
   .carte:hover::before { opacity: .8; }
   .d-tete:hover h2 { color: var(--accent); }
   .d-tete:hover .fleche { transform: translateX(4px); color: var(--accent); }
-  .btn-lecture:hover, .quitter-lecture:hover { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--trait)); }
+  .btn-lecture:hover, .btn-annoter:hover, .quitter-lecture:hover { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--trait)); }
   .suite a:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--trait)); background: var(--survol); }
 }
 

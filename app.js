@@ -249,9 +249,9 @@
 
   function lienSuite(m, sens) {
     if (!m) return '';
-    return `<a class="${sens === 'prec' ? 'prec' : 'suiv'}" href="#/m/${encodeURIComponent(m.id)}" rel="${sens === 'prec' ? 'prev' : 'next'}">
+    return `<a class="${sens === 'prec' ? 'prec' : 'suiv'}" href="#/m/${encodeURIComponent(m.id)}" data-id="${echappe(m.id)}" rel="${sens === 'prec' ? 'prev' : 'next'}">
       <span class="label">${sens === 'prec' ? '← Précédent' : 'Suivant →'}</span>
-      <span>${enLigne(m.titre)}</span>
+      <span class="titre-voisin">${enLigne(m.titre)}</span>
     </a>`;
   }
 
@@ -272,9 +272,13 @@
         <a href="#/${d.id}">${d.nom}</a><span class="sep" aria-hidden="true">/</span><a href="#/${d.id}/${slug(m.chapitre)}">${echappe(m.chapitre)}</a>
       </nav>
       <header class="tete-modele">
-        <h1 class="titre-modele">${enLigne(m.titre, termes)}</h1>
-        <button class="btn-lecture aux" type="button" aria-pressed="false">Mode lecture <kbd>L</kbd></button>
+        <h1 class="titre-modele">${titreHTML(m, termes)}</h1>
+        <div class="actions-modele aux">
+          <button class="btn-annoter" type="button" aria-pressed="${enAnnotation()}">Annoter</button>
+          <button class="btn-lecture" type="button" aria-pressed="false">Mode lecture <kbd>L</kbd></button>
+        </div>
       </header>
+      <p class="etat-perso aux" aria-live="polite"></p>
       <div class="contenu">${contenu(m, termes)}</div>
       <details class="details aux">
         <summary>${FLECHE}Détails</summary>
@@ -287,7 +291,6 @@
   // Recherche
   const index = modeles.map((m) => ({
     m,
-    titre: norm(m.titre),
     mots: norm((m.motsCles || []).join(' ')),
     chap: norm(`${nomDomaine(m.domaine)} ${m.chapitre}`),
     corps: norm(m.corps.replace(/\\[a-zA-Z]+/g, ' ').replace(/[$*_{}>!=&\\[\]]/g, ' ')),
@@ -299,7 +302,7 @@
     for (const e of index) {
       let score = 0;
       const tous = termes.every((t) => {
-        const s = (e.titre.includes(t) ? 8 : 0) + (e.mots.includes(t) ? 4 : 0) + (e.chap.includes(t) ? 2 : 0) + (e.corps.includes(t) ? 1 : 0);
+        const s = (norm(`${e.m.titre} ${e.m.titreOrigine || ''}`).includes(t) ? 8 : 0) + (e.mots.includes(t) ? 4 : 0) + (e.chap.includes(t) ? 2 : 0) + (e.corps.includes(t) ? 1 : 0);
         score += s;
         return s > 0;
       });
@@ -442,6 +445,8 @@
         afficher(vueModele(m, termes), `m:${m.id}`, () => {
           window.scrollTo({ top: 0, behavior: 'instant' });
           corpsPage.classList.remove('entete-cachee');
+          annoterPage(m);
+          afficherEtat();
           const premiere = view.querySelector('mark');
           if (premiere) premiere.scrollIntoView({ block: 'center', behavior: 'instant' });
         });
@@ -483,6 +488,290 @@
     corpsPage.classList.toggle('lecture', actif);
     view.querySelector('.btn-lecture')?.setAttribute('aria-pressed', actif);
     try { sessionStorage.setItem('lecture', actif ? '1' : ''); } catch (e) { /* stockage indisponible */ }
+  }
+
+  // Annotations : renommer un modèle, surligner soi-même.
+  const P = window.PERSO;
+  const CRAYON = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M13.5 3.5l3 3L7 16H4v-3z"/><path d="M11.5 5.5l3 3"/></svg>';
+  const titreHTML = (m, termes) => `<span class="titre-texte">${enLigne(m.titre, termes)}</span><button type="button" class="btn-renommer aux" aria-label="Renommer" title="Renommer">${CRAYON}</button>`;
+  const modeleCourant = () => modeleParId.get(view.querySelector('.page-modele')?.dataset.id);
+  const enAnnotation = () => corpsPage.classList.contains('annotation');
+
+  const ETATS = {
+    local: ['Enregistré sur cet appareil', 'Synchroniser les appareils'],
+    sync: ['Synchronisation…', ''],
+    ok: ['Synchronisé', 'Réglages'],
+    erreur: ['Échec de la synchronisation', 'Réessayer'],
+    jeton: ['Jeton refusé', 'Changer de jeton'],
+  };
+
+  function afficherEtat() {
+    const el = view.querySelector('.etat-perso');
+    if (!el || !P) return;
+    const e = P.etat();
+    const [texte, action] = ETATS[e];
+    el.innerHTML = `<span class="etat-${e}">${texte}</span>${action ? `<button type="button" class="lien-perso" data-action="${e}">${action}</button>` : ''}`;
+  }
+
+  // Texte visible du modèle, formules comprises (sans leur double MathML).
+  function noeudsTexte(cont) {
+    const w = document.createTreeWalker(cont, NodeFilter.SHOW_TEXT, {
+      acceptNode: (n) => (n.parentElement.closest('.katex-mathml, .etiquette') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+    });
+    const liste = [];
+    const katex = new Map();
+    let pos = 0;
+    let n;
+    while ((n = w.nextNode())) {
+      const k = n.parentElement.closest('.katex');
+      liste.push({ n, debut: pos, k });
+      if (k) {
+        const b = katex.get(k) || [pos, pos];
+        katex.set(k, [Math.min(b[0], pos), pos + n.data.length]);
+      }
+      pos += n.data.length;
+    }
+    return { liste, katex, texte: liste.map((x) => x.n.data).join('') };
+  }
+
+  // Position d'un surlignage, retrouvée par son texte si le modèle a changé.
+  function retrouver(h, texte) {
+    if (!h.t) return { s: null };
+    if (texte.slice(h.s, h.e) === h.t) return { s: h.s, e: h.e };
+    let meilleur = -1;
+    for (let k = texte.indexOf(h.t); k !== -1; k = texte.indexOf(h.t, k + 1)) {
+      if (meilleur < 0 || Math.abs(k - h.s) < Math.abs(meilleur - h.s)) meilleur = k;
+    }
+    return meilleur < 0 ? { s: null } : { s: meilleur, e: meilleur + h.t.length };
+  }
+
+  // Une formule se surligne en entier.
+  function bornes(plage, cont) {
+    const { liste, katex, texte } = noeudsTexte(cont);
+    let s = null;
+    let e = null;
+    for (const x of liste) {
+      if (!plage.intersectsNode(x.n)) continue;
+      let a = x.debut;
+      let b = x.debut + x.n.data.length;
+      if (x.k) [a, b] = katex.get(x.k);
+      else {
+        if (x.n === plage.startContainer) a += plage.startOffset;
+        if (x.n === plage.endContainer) b = x.debut + plage.endOffset;
+      }
+      if (b <= a) continue;
+      s = s === null ? a : Math.min(s, a);
+      e = e === null ? b : Math.max(e, b);
+    }
+    if (s === null) return null;
+    while (s < e && /\s/.test(texte[s])) s++;
+    while (e > s && /\s/.test(texte[e - 1])) e--;
+    return e > s ? [s, e] : null;
+  }
+
+  function appliquerSurl(cont, surl) {
+    const { liste, texte } = noeudsTexte(cont);
+    const hs = surl.map((h, i) => ({ ...retrouver(h, texte), i })).filter((h) => h.s !== null);
+    if (!hs.length) return;
+    const faites = new Set();
+    for (let j = liste.length - 1; j >= 0; j--) {
+      const x = liste[j];
+      const a0 = x.debut;
+      const b0 = a0 + x.n.data.length;
+      const touches = hs.filter((h) => h.s < b0 && h.e > a0);
+      if (!touches.length) continue;
+      if (x.k) {
+        if (!faites.has(x.k)) {
+          faites.add(x.k);
+          x.k.querySelectorAll('.base').forEach((b) => { b.classList.add('fluo-perso'); b.dataset.h = touches[0].i; });
+        }
+        continue;
+      }
+      if (!x.n.data.trim()) continue;
+      touches.sort((p, q) => q.s - p.s);
+      for (const h of touches) {
+        const a = Math.max(h.s, a0) - a0;
+        const b = Math.min(h.e, b0) - a0;
+        const milieu = x.n.splitText(a);
+        milieu.splitText(b - a);
+        const sp = document.createElement('span');
+        sp.className = 'fluo-perso';
+        sp.dataset.h = h.i;
+        milieu.replaceWith(sp);
+        sp.append(milieu);
+      }
+    }
+  }
+
+  function annoterPage(m) {
+    const cont = view.querySelector('.page-modele .contenu');
+    if (!cont || !P) return;
+    const surl = P.surlignages(m.id);
+    const cle = JSON.stringify(surl);
+    if (cont.dataset.surl === cle) return;
+    if (cont.dataset.surl !== undefined) {
+      view.classList.remove('anim');
+      cont.innerHTML = contenu(m);
+    }
+    cont.dataset.surl = cle;
+    appliquerSurl(cont, surl);
+  }
+
+  function ajouterSurl(m, cont, [s, e]) {
+    const { texte } = noeudsTexte(cont);
+    const liste = P.surlignages(m.id).map((h) => retrouver(h, texte)).filter((h) => h.s !== null);
+    liste.push({ s, e });
+    liste.sort((p, q) => p.s - q.s);
+    const fusion = [];
+    for (const h of liste) {
+      const der = fusion[fusion.length - 1];
+      if (der && h.s <= der.e) der.e = Math.max(der.e, h.e);
+      else fusion.push({ ...h });
+    }
+    P.modifier(m.id, { surl: fusion.map((h) => ({ s: h.s, e: h.e, t: texte.slice(h.s, h.e) })) });
+  }
+
+  function retirerSurl(m, i) {
+    P.modifier(m.id, { surl: P.surlignages(m.id).filter((_, k) => k !== i) });
+  }
+
+  function rafraichirTitres() {
+    view.querySelectorAll('.carte[data-id] .carte-titre').forEach((t) => {
+      const m = modeleParId.get(t.parentElement.dataset.id);
+      if (m) t.innerHTML = enLigne(m.titre, termesActifs);
+    });
+    view.querySelectorAll('.suite a[data-id] .titre-voisin').forEach((t) => {
+      const m = modeleParId.get(t.parentElement.dataset.id);
+      if (m) t.innerHTML = enLigne(m.titre);
+    });
+    const h1 = view.querySelector('.titre-modele');
+    const m = modeleCourant();
+    if (h1 && m && !h1.querySelector('input')) h1.innerHTML = titreHTML(m);
+  }
+
+  function renommer() {
+    const m = modeleCourant();
+    const h1 = view.querySelector('.titre-modele');
+    if (!m || !h1 || h1.querySelector('input')) return;
+    const champ = document.createElement('input');
+    champ.className = 'champ-titre';
+    champ.value = m.titre;
+    champ.placeholder = m.titreOrigine;
+    champ.setAttribute('aria-label', 'Titre du modèle');
+    champ.spellcheck = false;
+    h1.replaceChildren(champ);
+    champ.focus();
+    champ.select();
+    let fini = false;
+    const finir = (garder) => {
+      if (fini) return;
+      fini = true;
+      if (garder) {
+        const v = champ.value.trim();
+        const nouveau = v && v !== m.titreOrigine ? v : null;
+        const actuel = P.renomme(m.id) ? m.titre : null;
+        if (nouveau !== actuel) P.modifier(m.id, { titre: nouveau });
+      }
+      h1.innerHTML = titreHTML(m);
+    };
+    champ.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); finir(true); } else if (e.key === 'Escape') { e.preventDefault(); finir(false); }
+    });
+    champ.addEventListener('blur', () => finir(true));
+  }
+
+  function annotation(etat) {
+    const actif = etat ?? !enAnnotation();
+    corpsPage.classList.toggle('annotation', actif);
+    view.querySelector('.btn-annoter')?.setAttribute('aria-pressed', actif);
+    if (!actif) cacherBouton();
+    try { sessionStorage.setItem('annotation', actif ? '1' : ''); } catch (e) { /* stockage indisponible */ }
+  }
+
+  // Bouton « Surligner » sous la sélection.
+  const btnSurl = document.createElement('button');
+  btnSurl.type = 'button';
+  btnSurl.className = 'btn-surligner';
+  btnSurl.textContent = 'Surligner';
+  btnSurl.hidden = true;
+  document.body.append(btnSurl);
+  let plageRetenue = null;
+  let minuteurSel = null;
+
+  function cacherBouton() { btnSurl.hidden = true; plageRetenue = null; }
+
+  document.addEventListener('selectionchange', () => {
+    clearTimeout(minuteurSel);
+    minuteurSel = setTimeout(() => {
+      const sel = getSelection();
+      const cont = view.querySelector('.page-modele .contenu');
+      if (!enAnnotation() || !cont || !sel.rangeCount || sel.isCollapsed) { cacherBouton(); return; }
+      const r = sel.getRangeAt(0);
+      if (!cont.contains(r.commonAncestorContainer)) { cacherBouton(); return; }
+      plageRetenue = r.cloneRange();
+      const rects = r.getClientRects();
+      const der = rects[rects.length - 1] || r.getBoundingClientRect();
+      btnSurl.hidden = false;
+      const w = btnSurl.offsetWidth;
+      btnSurl.style.left = `${Math.max(8, Math.min(innerWidth - w - 8, der.right - w / 2)) + scrollX}px`;
+      btnSurl.style.top = `${r.getBoundingClientRect().bottom + scrollY + 14}px`;
+    }, 120);
+  });
+
+  btnSurl.addEventListener('pointerdown', (e) => e.preventDefault());
+  btnSurl.addEventListener('click', () => {
+    const m = modeleCourant();
+    const cont = view.querySelector('.page-modele .contenu');
+    const plage = plageRetenue;
+    getSelection().removeAllRanges();
+    cacherBouton();
+    if (!m || !cont || !plage) return;
+    const b = bornes(plage, cont);
+    if (b) ajouterSurl(m, cont, b);
+  });
+
+  // Réglages de la synchronisation.
+  function ouvrirReglages() {
+    let dlg = document.querySelector('.dlg-perso');
+    if (!dlg) {
+      dlg = document.createElement('dialog');
+      dlg.className = 'dlg-perso';
+      document.body.append(dlg);
+      dlg.addEventListener('close', afficherEtat);
+    }
+    dlg.innerHTML = P.aJeton()
+      ? `<form method="dialog"><h2>Synchronisation</h2>
+          <p>Un jeton GitHub est enregistré sur cet appareil.</p>
+          <div class="dlg-actions"><button value="oublier" class="btn-sec">Oublier le jeton</button><button value="fermer" class="btn-prim">Fermer</button></div></form>`
+      : `<form method="dialog"><h2>Synchronisation</h2>
+          <label>Jeton GitHub<input name="jeton" type="password" autocomplete="off" spellcheck="false" required></label>
+          <p class="dlg-aide"><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Créer un jeton</a> · dépôt cahier-redaction · Contents : lecture et écriture</p>
+          <p class="dlg-erreur" hidden></p>
+          <div class="dlg-actions"><button value="annuler" formnovalidate class="btn-sec">Annuler</button><button value="ok" class="btn-prim">Enregistrer</button></div></form>`;
+    const form = dlg.querySelector('form');
+    form.addEventListener('submit', async (e) => {
+      const valeur = e.submitter?.value;
+      if (valeur === 'oublier') { P.oublierJeton(); return; }
+      if (valeur !== 'ok') return;
+      e.preventDefault();
+      const erreur = form.querySelector('.dlg-erreur');
+      e.submitter.disabled = true;
+      let message = null;
+      try { message = await P.poserJeton(form.jeton.value.trim()); } catch (err) { message = 'GitHub injoignable.'; }
+      e.submitter.disabled = false;
+      if (message) { erreur.textContent = message; erreur.hidden = false; return; }
+      dlg.close();
+    });
+    dlg.showModal();
+  }
+
+  if (P) {
+    P.surEtat(afficherEtat);
+    P.surChangement(() => {
+      rafraichirTitres();
+      const m = modeleCourant();
+      if (m) annoterPage(m);
+    });
   }
 
   // Thème : automatique, clair, sombre.
@@ -536,6 +825,20 @@
     if (resume) { e.preventDefault(); basculerDetails(resume.parentElement); return; }
 
     if (e.target.closest('.btn-lecture')) { lecture(); return; }
+    if (e.target.closest('.btn-annoter')) { annotation(); return; }
+    if (e.target.closest('.btn-renommer')) { renommer(); return; }
+    const lienPerso = e.target.closest('.lien-perso');
+    if (lienPerso) {
+      if (lienPerso.dataset.action === 'erreur') P.synchroniser();
+      else ouvrirReglages();
+      return;
+    }
+    const surl = enAnnotation() && e.target.closest('.contenu .fluo-perso');
+    if (surl && getSelection().isCollapsed) {
+      const m = modeleCourant();
+      if (m) retirerSurl(m, Number(surl.dataset.h));
+      return;
+    }
 
     const fleche = e.target.closest('.defile-btn');
     if (fleche) {
@@ -595,7 +898,7 @@
       if (e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); lecture(false); input.focus(); input.select(); }
       return;
     }
-    const saisie = document.activeElement === input;
+    const saisie = document.activeElement?.matches('input, textarea');
     if (saisie) return;
     if (e.key === '/') { e.preventDefault(); lecture(false); input.focus(); input.select(); return; }
     if (!view.querySelector('.page-modele')) return;
@@ -632,6 +935,7 @@
   document.fonts?.ready.then(recaler);
   route();
   try { if (sessionStorage.getItem('lecture') === '1') lecture(true); } catch (e) { /* stockage indisponible */ }
+  try { if (sessionStorage.getItem('annotation') === '1') annotation(true); } catch (e) { /* stockage indisponible */ }
 
   // Prépare les formules en arrière-plan : l'ouverture d'un modèle est alors immédiate.
   const inactif = window.requestIdleCallback || ((f) => setTimeout(f, 60));
