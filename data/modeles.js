@@ -1035,6 +1035,128 @@ Pour montrer que $f(x)\underset{x\to x_0}{\sim}g(x)$, avec $g$ qui ne s'annule p
 • Deux fonctions qui ont la même limite ne sont pas forcément équivalentes.
 • Un équivalent est local : il ne vaut qu'au point indiqué sous le $\sim$.`,
     },
+    {
+      id: 'memo-developpements-limites-usuels',
+      ajoute: '2026-11-20',
+      domaine: 'analyse',
+      chapitre: 'Fonctions',
+      titre: 'Mémo : développements limités usuels',
+      motsCles: ['mémo', 'développement limité', 'DL', 'ordre 2', 'Taylor-Young', 'petit o'],
+      source: 'Cours, chapitre 1',
+      corps: String.raw`!! **À l'ordre 2 en 0** (chapitre 1, Prop. 36)
+
+$$e^x\underset{x\to0}{=}1+x+\frac{1}{2}x^2+o\left(x^2\right)$$
+$$\ln(1+x)\underset{x\to0}{=}x-\frac{1}{2}x^2+o\left(x^2\right)$$
+$$\forall\alpha\in\R,$$
+$$\begin{aligned}(1+x)^\alpha\underset{x\to0}{=}\ &1+\alpha x\\&+\frac{\alpha(\alpha-1)}{2}x^2+o\left(x^2\right)\end{aligned}$$
+$$\frac{1}{1+x}\underset{x\to0}{=}1-x+x^2+o\left(x^2\right)$$
+$$\sqrt{1+x}\underset{x\to0}{=}1+\frac{1}{2}x-\frac{1}{8}x^2+o\left(x^2\right)$$
+
+!! **Taylor-Young à l'ordre 2 en $x_0$** (chapitre 1, Prop. 35)
+
+Si $x_0\in\R$ et si $f$ est de classe $C^2$ sur un intervalle contenant $x_0$ :
+$$\begin{aligned}f(x)\underset{x\to x_0}{=}\ &f(x_0)+f'(x_0)(x-x_0)\\&+\frac{f''(x_0)}{2}(x-x_0)^2\\&+o\left((x-x_0)^2\right)\end{aligned}$$
+
+!! **Attention**
+
+• Valables seulement en $0$.
+• $o\left(x^2\right)$ peut s'écrire $x^2\varepsilon(x)$ avec $\lim\limits_{x\to0}\varepsilon(x)=0$.`,
+    },
+    {
+      id: 'memo-equivalents-usuels',
+      ajoute: '2026-11-20',
+      domaine: 'analyse',
+      chapitre: 'Fonctions',
+      titre: 'Mémo : équivalents usuels',
+      motsCles: ['mémo', 'équivalent', 'équivalents usuels', 'polynôme', 'limite usuelle'],
+      source: 'Cours, chapitre 1',
+      corps: String.raw`!! **En 0** (chapitre 1, Prop. 25)
+
+$$e^x-1\underset{x\to0}{\sim}x\qquad\ln(1+x)\underset{x\to0}{\sim}x$$
+$$\forall\alpha\in\R,\ (1+x)^\alpha-1\underset{x\to0}{\sim}\alpha x$$
+$$\sqrt{1+x}-1\underset{x\to0}{\sim}\frac{1}{2}x$$
+
+!! **En 1**
+
+$$\ln(x)\underset{x\to1}{\sim}x-1$$
+
+!! **Polynôme** (chapitre 1, Prop. 26)
+
+Si $a_n\neq0$ : $\displaystyle\sum_{k=0}^n a_kx^k\underset{x\to\pm\infty}{\sim}a_nx^n$.
+
+En $0$ : équivalent au monôme non nul de plus petit degré.
+
+!! **Limite finie non nulle** (chapitre 1, Prop. 24)
+
+Si $\lim\limits_{x\to x_0}f(x)=\ell$ et $\ell\neq0$ : $f(x)\underset{x\to x_0}{\sim}\ell$.
+
+!! **Attention**
+
+• Valables seulement au point indiqué : en $0$, et en $1$ pour $\ln(x)$.
+• Avec $u(x)\to0$ à la place de $x$ : changement de variable, par exemple $e^{u(x)}-1\underset{x\to x_0}{\sim}u(x)$.
+• Jamais $f(x)\sim0$. Pas de somme d'équivalents.`,
+    },
+    {
+      id: 'memo-croissances-comparees',
+      ajoute: '2026-11-20',
+      domaine: 'analyse',
+      chapitre: 'Fonctions',
+      titre: 'Mémo : croissances comparées',
+      motsCles: ['mémo', 'croissances comparées', 'limite', 'négligeabilité', 'petit o', 'exponentielle', 'logarithme', 'puissance'],
+      source: 'Cours, chapitre 1',
+      corps: String.raw`!! **Limites** (chapitre 1, Prop. 10)
+
+$$\lim_{x\to+\infty}\frac{\ln(x)}{x}=0\qquad\lim_{x\to+\infty}\frac{x}{e^x}=0$$
+$$\lim_{x\to0^+}x\ln(x)=0\qquad\lim_{x\to-\infty}xe^x=0$$
+
+Pour tous $a>0$ et $b>0$ :
+$$\lim_{x\to+\infty}\frac{\ln(x)^b}{x^a}=0\qquad\lim_{x\to+\infty}\frac{x^a}{e^{bx}}=0$$
+$$\lim_{x\to0^+}x^a|\ln(x)|^b=0$$
+$$\lim_{x\to-\infty}|x|^ae^{bx}=0$$
+
+!! **Avec les petits o** (chapitre 1, Prop. 17)
+
+Pour tous $a>0$ et $b>0$ :
+$$x^a\underset{x\to+\infty}{=}o\left(e^{bx}\right)\qquad\ln(x)^b\underset{x\to+\infty}{=}o(x^a)$$
+$$|\ln(x)|^b\underset{x\to0^+}{=}o\left(\frac{1}{x^a}\right)$$
+$$\forall n\in\N^*,\ e^{bx}\underset{x\to-\infty}{=}o\left(\frac{1}{x^n}\right)$$
+
+!! **À retenir**
+
+En $+\infty$ : $\ln(x)^b\ \ll\ x^a\ \ll\ e^{bx}$.
+
+Sur la copie : « par croissances comparées ».`,
+    },
+    {
+      id: 'memo-formes-indeterminees',
+      ajoute: '2026-11-20',
+      domaine: 'analyse',
+      chapitre: 'Fonctions',
+      titre: 'Mémo : formes indéterminées',
+      motsCles: ['mémo', 'forme indéterminée', 'FI', 'limite', 'somme', 'produit', 'quotient', 'puissance'],
+      source: 'Cours, chapitre 1',
+      corps: String.raw`!! **Les quatre formes indéterminées** (chapitre 1, Remarques 10)
+
+$$\text{« } 0\times\infty \text{ »}\qquad\text{« } {+\infty}+(-\infty) \text{ »}$$
+$$\text{« } \frac{0}{0} \text{ »}\qquad\text{« } \frac{\infty}{\infty} \text{ »}$$
+
+Ne jamais les écrire sur une copie.
+
+!! **Ce qui n'est pas une forme indéterminée**
+
+• $\ell+(\pm\infty)=\pm\infty$ ; $(+\infty)+(+\infty)=+\infty$.
+• $\ell\times(\pm\infty)=\pm\infty$ si $\ell\neq0$, avec la règle des signes.
+• $\dfrac{\ell}{\pm\infty}=0$ ; $\dfrac{\ell}{0^+}=\pm\infty$ si $\ell\neq0$, avec la règle des signes (le signe du dénominateur au voisinage de $x_0$ compte).
+
+!! **Lever l'indétermination**
+
+• « $+\infty-\infty$ », « $\frac{\infty}{\infty}$ » : factoriser par le terme prédominant, croissances comparées.
+• « $0\times\infty$ » : croissances comparées, ou passer par $\ln$ et $\exp$.
+• « $\frac{0}{0}$ » : taux d'accroissement, limites usuelles, équivalents.
+• Différence de racines : quantité conjuguée.
+• Puissance $u(x)^{v(x)}$ : écrire $e^{v(x)\ln(u(x))}$, puis chercher la limite de $v(x)\ln(u(x))$.
+• En dernier recours : développement limité.`,
+    },
     // Analyse, photo 1
     {
       id: 'determiner-df',
