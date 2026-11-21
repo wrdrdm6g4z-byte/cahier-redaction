@@ -2411,6 +2411,50 @@ On calcule pour tout $k$ $\P(X\leqslant k)$ ou $\P(X>k)$, puis on en déduit $\P
 Pour le min ou le max d'une famille finie de variables aléatoires indépendantes de même loi connue.`,
     },
     {
+      id: 'memo-lois-usuelles-discretes',
+      ajoute: '2026-11-21',
+      domaine: 'probabilites',
+      chapitre: 'Variables aléatoires',
+      titre: 'Mémo : lois usuelles discrètes',
+      motsCles: ['mémo', 'lois usuelles', 'uniforme', 'Bernoulli', 'binomiale', 'géométrique', 'Poisson', 'espérance', 'variance', 'ensemble image', 'support'],
+      corps: String.raw`!! **Uniforme $\mathcal{U}(\ent{a}{b})$**
+
+$X(\Omega)=\ent{a}{b}$
+$\forall k\in\ent{a}{b},\ \P(X=k)=\dfrac{1}{b-a+1}$
+$E(X)=\dfrac{a+b}{2}$
+$V(X)=\dfrac{(b-a+1)^2-1}{12}$
+
+Cas $\mathcal{U}(\ent{1}{n})$ : $E(X)=\dfrac{n+1}{2}$ et $V(X)=\dfrac{n^2-1}{12}$.
+
+!! **Bernoulli $\mathcal{B}(p)$**
+
+$X(\Omega)=\{0,1\}$
+$\P(X=1)=p$ et $\P(X=0)=1-p$
+$E(X)=p$
+$V(X)=p(1-p)$
+
+!! **Binomiale $\mathcal{B}(n,p)$**
+
+$X(\Omega)=\ent{0}{n}$
+$\forall k\in\ent{0}{n},\ \P(X=k)=\dbinom{n}{k}p^k(1-p)^{n-k}$
+$E(X)=np$
+$V(X)=np(1-p)$
+
+!! **Géométrique $\mathcal{G}(p)$**, $p\in\,]0,1[$
+
+$X(\Omega)=\N^*$
+$\forall k\in\N^*,\ \P(X=k)=p(1-p)^{k-1}$
+$E(X)=\dfrac{1}{p}$
+$V(X)=\dfrac{1-p}{p^2}$
+
+!! **Poisson $\mathcal{P}(\lambda)$**, $\lambda>0$
+
+$X(\Omega)=\N$
+$\forall k\in\N,\ \P(X=k)=e^{-\lambda}\dfrac{\lambda^k}{k!}$
+$E(X)=\lambda$
+$V(X)=\lambda$`,
+    },
+    {
       id: 'suite-loi-probabilite-discrete',
       ajoute: '2026-11-12',
       domaine: 'probabilites',
