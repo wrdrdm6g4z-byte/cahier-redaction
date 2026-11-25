@@ -1988,6 +1988,75 @@ Ainsi, $A$ est la matrice de l'endomorphisme $f$ de $\R^4$, dans la base canoniq
 Donc, [[$f$ est l'endomorphisme de $\R^4$ canoniquement associé à la matrice $A$.]]`,
     },
     {
+      id: 'matrice-base-canonique',
+      ajoute: '2026-11-25',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: 'Déterminer la matrice d\'une application linéaire dans la base canonique',
+      motsCles: ['matrice', 'base canonique', 'endomorphisme', 'Mat', 'coordonnées', 'AM-MA', 'M_2(R)'],
+      source: 'Exemples 18, 1) (a)',
+      corps: String.raw`!! **Exemples 18 :** 1) On considère l'endomorphisme de $M_2(\R)$ $\begin{aligned}f:M_2(\R)&\longrightarrow M_2(\R)\\M&\longmapsto AM-MA\end{aligned}$ où $A=\begin{pmatrix}1&2\\0&3\end{pmatrix}$.
+(a) Déterminer la matrice de $f$ dans la base canonique $\mathcal{B}_c$ de $M_2(\R)$.
+
+1a) On note $\mathcal{B}_c$ la base canonique de $M_2(\R)$.
+Alors :
+$$\begin{aligned}\mathcal{B}_c=\Biggl(&\begin{pmatrix}1&0\\0&0\end{pmatrix},\begin{pmatrix}0&1\\0&0\end{pmatrix},\\&\begin{pmatrix}0&0\\1&0\end{pmatrix},\begin{pmatrix}0&0\\0&1\end{pmatrix}\Biggr)\end{aligned}$$
+D'après exemple 5, $\begin{aligned}f:M_2(\R)&\longrightarrow M_2(\R)\\M&\longmapsto AM-MA\end{aligned}$ est un endomorphisme de $M_2(\R)$.
+Explicitons $\operatorname{Mat}_{\mathcal{B}_c}(f)$.
+
+On a :
+
+• $f\left(\begin{pmatrix}1&0\\0&0\end{pmatrix}\right)=A\begin{pmatrix}1&0\\0&0\end{pmatrix}-\begin{pmatrix}1&0\\0&0\end{pmatrix}A$
+$$\begin{aligned}&=(\dots)\\&=\begin{pmatrix}0&-2\\0&0\end{pmatrix}\\&=\underline{0}\begin{pmatrix}1&0\\0&0\end{pmatrix}\underline{-2}\begin{pmatrix}0&1\\0&0\end{pmatrix}\\&\quad+\underline{0}\begin{pmatrix}0&0\\1&0\end{pmatrix}+\underline{0}\begin{pmatrix}0&0\\0&1\end{pmatrix}\end{aligned}$$
+
+• $f\left(\begin{pmatrix}0&1\\0&0\end{pmatrix}\right)=(\dots)$
+$$\begin{aligned}&=0\begin{pmatrix}1&0\\0&0\end{pmatrix}-2\begin{pmatrix}0&1\\0&0\end{pmatrix}\\&\quad+0\begin{pmatrix}0&0\\1&0\end{pmatrix}+0\begin{pmatrix}0&0\\0&1\end{pmatrix}\end{aligned}$$
+
+• $f\left(\begin{pmatrix}0&0\\1&0\end{pmatrix}\right)=(\dots)$
+$$\begin{aligned}&=2\begin{pmatrix}1&0\\0&0\end{pmatrix}+0\begin{pmatrix}0&1\\0&0\end{pmatrix}\\&\quad+2\begin{pmatrix}0&0\\1&0\end{pmatrix}-2\begin{pmatrix}0&0\\0&1\end{pmatrix}\end{aligned}$$
+
+• $f\left(\begin{pmatrix}0&0\\0&1\end{pmatrix}\right)=(\dots)$
+$$\begin{aligned}&=0\begin{pmatrix}1&0\\0&0\end{pmatrix}+2\begin{pmatrix}0&1\\0&0\end{pmatrix}\\&\quad+0\begin{pmatrix}0&0\\1&0\end{pmatrix}+0\begin{pmatrix}0&0\\0&1\end{pmatrix}\end{aligned}$$
+
+Donc, [[$\operatorname{Mat}_{\mathcal{B}_c}(f)=\begin{pmatrix}\underline{0}&0&2&0\\\underline{-2}&-2&0&2\\\underline{0}&0&2&0\\\underline{0}&0&-2&0\end{pmatrix}$]]`,
+    },
+    {
+      id: 'matrice-base-quelconque',
+      ajoute: '2026-11-25',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: 'Déterminer la matrice d\'une application linéaire dans une base quelconque',
+      motsCles: ['matrice', 'base', 'endomorphisme', 'Mat', 'coordonnées', 'R_2[X]', 'polynômes', 'XP\'-2P'],
+      source: 'Exemples 18, 2) (c)',
+      corps: String.raw`!! **Exemples 18 :** 2) On considère l'endomorphisme de $\R_2[X]$ $\begin{aligned}f:\R_2[X]&\longrightarrow\R_2[X]\\P&\longmapsto XP'-2P\end{aligned}$.
+(c) Après avoir montré que la famille $\mathcal{B}=\left(X^2,X(X-1),(X-1)^2\right)$ est une base de $\R_2[X]$, déterminer la matrice de $f$ dans la base $\mathcal{B}$.
+
+c) Posons $\mathcal{B}=\left(X^2,X(X-1),(X-1)^2\right)$ $\rightarrow$ montrer que c'est une base de $\R_2[X]$.
+De plus, $f\in\mathcal{L}(\R_2[X])$.
+Explicitons $\operatorname{Mat}_{\mathcal{B}}(f)$
+On a :
+
+• $f(X^2)=X\times(X^2)'-2X^2$
+$$\begin{aligned}&=0_{\R_2[X]}\\&=\underline{0}(X^2)+\underline{0}((X(X-1)))\\&\quad+\underline{0}(X-1)^2\end{aligned}$$
+
+• $f(X(X-1))=f(X^2-X)$
+$$\begin{aligned}&\underset{(1)}{=}f(X^2)-f(X)\\&\underset{(2)}{=}0_{\R_2[X]}-(-X)\\&=X\\&=X^2-X(X-1)\\&=1X^2+(-1)X(X-1)\\&\quad+0(X-1)^2\end{aligned}$$
+$(1)$ : linéarité de $f$
+$(2)$ : D'après des calculs effectués en 2)a).
+
+• $f((X-1)^2)$
+$$\begin{aligned}&\underset{(1)}{=}f(X^2-2X+X^0)\\&\underset{(2)}{=}f(X^2)-2f(X)+f(X^0)\\&\underset{(3)}{=}0_{\R_2[X]}-2(-X)-2X^0\\&=2X-2X^0\end{aligned}$$
+$(1)$ : D'après une identité remarquable (valable dans $\R[X]$)
+$(2)$ : Par linéarité de $f$
+$(3)$ : D'après des calculs effectués en 2)a).
+
+Pour déterminer les coordonnées de $2X-2X^0$ dans la base $\mathcal{B}$ de $\R_2[X]$, il suffit de résoudre l'équation $2X-2X^0=aX^2+bX(X-1)+c(X-1)^2$ d'inconnue $(a,b,c)\in\R^3$.
+
+On en déduit :
+$$\begin{aligned}f((X-1)^2)=\ &0X^2+2X(X-1)\\&+(-2)(X-1)^2\end{aligned}$$
+Ainsi, [[$\operatorname{Mat}_{\mathcal{B}}(f)=\begin{pmatrix}0&1&0\\0&-1&2\\0&0&-2\end{pmatrix}$ où $\mathcal{B}=\left(X^2,X(X-1),(X-1)^2\right)$]]`,
+    },
+    {
       id: 'bijectivite-noyau-image-endomorphisme',
       ajoute: '2026-11-09',
       domaine: 'algebre',
