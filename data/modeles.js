@@ -2010,6 +2010,53 @@ Donc, $f$ est un endomorphisme à la fois injectif et surjectif de $\R^4$.
 Donc, par théorème, [[$\ker(f)=\{0_{\R^4}\}$ et $\operatorname{Im}(f)=\R^4$.]]`,
     },
     {
+      id: 'montrer-automorphisme',
+      ajoute: '2026-11-25',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: 'Montrer qu\'une application est un automorphisme',
+      motsCles: ['automorphisme', 'endomorphisme', 'injective', 'bijective', 'noyau', 'dimension finie', 'théorème du rang', 'caractérisation des automorphismes'],
+      source: 'Exercice 6, question 1)',
+      corps: String.raw`!! **Exercice 6 :** Soit $f$ l'application définie par :
+$$\begin{aligned}f:M_{2,1}(\R)&\longrightarrow M_{2,1}(\R)\\\begin{pmatrix}x\\y\end{pmatrix}&\longmapsto\begin{pmatrix}x-3y\\2y\end{pmatrix}\end{aligned}$$
+1) Montrer que $f$ est un automorphisme de $M_{2,1}(\R)$.
+
+1) Montrons que $f$ est un automorphisme de $M_{2,1}(\R)$
+D'après exemple 5, $f$ est un endomorphisme de $M_{2,1}(\R)$
+De plus, $\operatorname{Ker}(f)=\{0_{M_{2,1}(\R)}\}$
+Donc, par théorème, $f$ est injective
+Or, $M_{2,1}(\R)$ est de dimension finie.
+Donc, par théorème __(caractérisation des automorphismes en dimension finie (conséquence du théorème du rang))__,
+$f$ est bijective
+Donc, $f$ est un endomorphisme bijectif de $M_{2,1}(\R)$.
+Donc, [[$f$ est un automorphisme de $M_{2,1}(\R)$.]]`,
+    },
+    {
+      id: 'automorphisme-reciproque',
+      ajoute: '2026-11-25',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: 'Déterminer l\'automorphisme réciproque',
+      motsCles: ['automorphisme', 'réciproque', 'bijection réciproque', 'inverse', 'système'],
+      source: 'Exercice 6, question 2)',
+      corps: String.raw`!! **Exercice 6 :** Soit $f$ l'application définie par :
+$$\begin{aligned}f:M_{2,1}(\R)&\longrightarrow M_{2,1}(\R)\\\begin{pmatrix}x\\y\end{pmatrix}&\longmapsto\begin{pmatrix}x-3y\\2y\end{pmatrix}\end{aligned}$$
+2) Déterminer l'automorphisme réciproque de $f$.
+
+2) D'après 1), $f$ est un automorphisme de $M_{2,1}(\R)$.
+Donc, $f$ est bijective de $M_{2,1}(\R)$ dans lui-même.
+Donc, $f$ admet une bijection réciproque et, par théorème, $f^{-1}$ est une application linéaire de $M_{2,1}(\R)$ dans lui-même.
+Donc, $f^{-1}$ est un automorphisme de $M_{2,1}(\R)$.
+Explicitons $f^{-1}(Y)$, et ce pour tout $Y\in M_{2,1}(\R)$.
+Soit $Y=\begin{pmatrix}y_1\\y_2\end{pmatrix}\in M_{2,1}(\R)$.
+Soit $X=\begin{pmatrix}x_1\\x_2\end{pmatrix}\in M_{2,1}(\R)$.
+Alors :
+$$\begin{aligned}f(X)=Y&\Longleftrightarrow f\left(\begin{pmatrix}x_1\\x_2\end{pmatrix}\right)=\begin{pmatrix}y_1\\y_2\end{pmatrix}\\&\Longleftrightarrow\begin{pmatrix}x_1-3x_2\\2x_2\end{pmatrix}=\begin{pmatrix}y_1\\y_2\end{pmatrix}\\&\Longleftrightarrow\begin{cases}x_1-3x_2=y_1\\2x_2=y_2\end{cases}\\&\underset{(1)}{\Longleftrightarrow}\begin{cases}x_1-3x_2=y_1\\x_2=\frac{1}{2}y_2\end{cases}\\&\Longleftrightarrow\begin{cases}x_1=y_1+3x_2\\x_2=\frac{1}{2}y_2\end{cases}\\&\Longleftrightarrow\begin{cases}x_1=y_1+\frac{3}{2}y_2\\x_2=\frac{1}{2}y_2\end{cases}\end{aligned}$$
+$(1)$ : Car $2\neq0$.
+$$\begin{aligned}&\Longleftrightarrow\begin{pmatrix}x_1\\x_2\end{pmatrix}=\begin{pmatrix}y_1+\frac{3}{2}y_2\\\frac{1}{2}y_2\end{pmatrix}\\&\Longleftrightarrow\begin{pmatrix}x_1\\x_2\end{pmatrix}=\begin{pmatrix}1&3/2\\0&1/2\end{pmatrix}\begin{pmatrix}y_1\\y_2\end{pmatrix}\\&\Longleftrightarrow X=\begin{pmatrix}1&3/2\\0&1/2\end{pmatrix}Y\end{aligned}$$
+Donc, [[$\begin{aligned}f^{-1}:M_{2,1}(\R)&\longrightarrow M_{2,1}(\R)\\Y&\longmapsto\begin{pmatrix}1&3/2\\0&1/2\end{pmatrix}Y\end{aligned}$]]`,
+    },
+    {
       id: 'spectre-matrice-triangulaire',
       ajoute: '2026-11-09',
       domaine: 'algebre',
