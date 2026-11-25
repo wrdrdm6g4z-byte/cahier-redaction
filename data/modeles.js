@@ -2057,6 +2057,107 @@ $$\begin{aligned}f((X-1)^2)=\ &0X^2+2X(X-1)\\&+(-2)(X-1)^2\end{aligned}$$
 Ainsi, [[$\operatorname{Mat}_{\mathcal{B}}(f)=\begin{pmatrix}0&1&0\\0&-1&2\\0&0&-2\end{pmatrix}$ où $\mathcal{B}=\left(X^2,X(X-1),(X-1)^2\right)$]]`,
     },
     {
+      id: 'endomorphisme-defini-par-matrice',
+      ajoute: '2026-11-25',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: 'Montrer qu\'un endomorphisme défini par sa matrice dans la base canonique est bien défini',
+      motsCles: ['bien défini', 'correctement défini', 'non ambiguë', 'isomorphisme de représentation', 'matrice', 'base canonique', 'antécédent', 'Mat'],
+      source: 'Exercice 7, question 1) (a)',
+      corps: String.raw`!! **Exercice 7 :** On considère la matrice $A=\begin{pmatrix}-1&4&2\\-1&2&1\\0&2&1\end{pmatrix}$.
+1) On considère $f$ l'endomorphisme de $\R^3$ dont $A$ est la matrice dans la base canonique $\mathcal{B}_r$ de $\R^3$.
+(a) Justifier $f$ est correctement défini, de manière non ambigüe.
+
+1)a) Par théorème, __$\R^3$__ est de dimension 3
+De plus, $\mathcal{B}_c$ est la base canonique de $\R^3$.
+Donc, $\mathcal{B}_c$ est une base de __$\R^3$__.
+Donc, par théorème (« deuxième isomorphisme de représentation »),
+$$\begin{aligned}\Phi:\mathcal{L}(\R^3)&\longrightarrow M_3(\R)\\h&\longmapsto\operatorname{Mat}_{\mathcal{B}_c}(h)\end{aligned}$$
+est un isomorphisme $\mathcal{L}(\R^3)\longrightarrow M_3(\R)$
+Donc, en particulier, $\Phi:h\longmapsto\operatorname{Mat}_{\mathcal{B}_c}(h)$ est bijective.
+Donc, pour tout $M\in M_3(\R)$, $M$ possède un unique antécédent par $\Phi$ dans $\mathcal{L}(\R^3)$
+Or, d'après l'énoncé, $A\in M_3(\R)$.
+Donc, en particulier, $A$ possède un unique antécédent par $\Phi$ dans $\mathcal{L}(\R^3)$
+Donc, il existe un unique endomorphisme de $\R^3$ dont la matrice dans la base canonique $\mathcal{B}_c$ de $\R^3$ est $A$.
+
+Or, d'après l'énoncé, « $f$ est l'endomorphisme de $\R^3$ dont $A$ est la matrice dans la base canonique $\mathcal{B}_c$ de $\R^3$ ».
+Donc, [[$f$ est correctement défini de manière non ambigüe]]`,
+    },
+    {
+      id: 'image-vecteur-par-matrice',
+      ajoute: '2026-11-25',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: 'Calculer l\'image d\'un vecteur à l\'aide de la matrice dans la base canonique',
+      motsCles: ['image d\'un vecteur', 'Mat', 'matrice', 'base canonique', 'produit matriciel', 'injectivité de Mat', 'coordonnées'],
+      source: 'Exercice 7, question 1) (b)',
+      corps: String.raw`!! **Exercice 7 :** On considère la matrice $A=\begin{pmatrix}-1&4&2\\-1&2&1\\0&2&1\end{pmatrix}$.
+1) On considère $f$ l'endomorphisme de $\R^3$ dont $A$ est la matrice dans la base canonique $\mathcal{B}_r$ de $\R^3$.
+(b) Calculer $f((1,2,3))$.
+
+b) Calculons $f(1,2,3)$
+On a : $\begin{cases}f\in\mathcal{L}(\R^3)\\(1,2,3)\in\R^3\\\mathcal{B}_c\text{ est une base de }\R^3\end{cases}$
+Donc, $\operatorname{Mat}_{\mathcal{B}_c}(f(1,2,3))$ existe et :
+$$\begin{aligned}&\operatorname{Mat}_{\mathcal{B}_c}(f(1,2,3))\\&\underset{(1)}{=}\operatorname{Mat}_{\mathcal{B}_c}(f)\operatorname{Mat}_{\mathcal{B}_c}(1,2,3)\\&\underset{(2)}{=}A\operatorname{Mat}_{\mathcal{B}_c}(1,2,3)\\&\underset{(3)}{=}A\begin{pmatrix}1\\2\\3\end{pmatrix}\\&\underset{(4)}{=}\begin{pmatrix}-1&4&2\\-1&2&1\\0&2&1\end{pmatrix}\begin{pmatrix}1\\2\\3\end{pmatrix}\\&=\begin{pmatrix}13\\6\\7\end{pmatrix}\\&\underset{(3)}{=}\operatorname{Mat}_{\mathcal{B}_c}((13,6,7))\end{aligned}$$
+$(1)$ : Par propriété de $\operatorname{Mat}_{\mathcal{B}_c}$
+$(2)$ : Par définition de $f$, $\operatorname{Mat}_{\mathcal{B}_c}(f)=A$
+$(3)$ : Car $\mathcal{B}_c$ est la base canonique de $\R^3$
+$(4)$ : Par définition de $A$
+
+Ainsi, $\operatorname{Mat}_{\mathcal{B}_c}(f(1,2,3))=\operatorname{Mat}_{\mathcal{B}_c}(13,6,7)$
+Donc, par injectivité de $\operatorname{Mat}_{\mathcal{B}_c}$, [[$f(1,2,3)=(13,6,7)$]]`,
+    },
+    {
+      id: 'base-image-endomorphisme-matrice',
+      ajoute: '2026-11-25',
+      domaine: 'algebre',
+      chapitre: 'Applications linéaires',
+      titre: 'Déterminer une base de l\'image d\'un endomorphisme défini par sa matrice (deux méthodes)',
+      motsCles: ['image', 'Im(f)', 'base', 'Vect', 'famille génératrice', 'famille libre', 'rang', 'dimension', 'colonnes de la matrice', 'Mat'],
+      source: 'Exercice 7, question 1) (e)',
+      corps: String.raw`!! **Exercice 7 :** On considère la matrice $A=\begin{pmatrix}-1&4&2\\-1&2&1\\0&2&1\end{pmatrix}$.
+1) On considère $f$ l'endomorphisme de $\R^3$ dont $A$ est la matrice dans la base canonique $\mathcal{B}_r$ de $\R^3$.
+(d) En déduire le rang de $f$.
+(e) Déterminer une base de $\operatorname{Im}(f)$.
+
+!! e) • __Méthode 1 :__
+
+On a : $f\in\mathcal{L}(\R^3)$
+Donc, $f\in\mathcal{L}(\R^3,\R^3)$
+De plus, $\mathcal{B}_c$ est une base de $\R^3$ (base canonique de $\R^3$) et :
+$$\mathcal{B}_c=((1,0,0),(0,1,0),(0,0,1))$$
+Donc, par théorème,
+$$\begin{aligned}\operatorname{Im}(f)=\Vect(&f(1,0,0),f(0,1,0),\\&f(0,0,1))\end{aligned}$$
+De plus, par définition de $f$, $\operatorname{Mat}_{\mathcal{B}_c}(f)=A$
+De plus, $\mathcal{B}_c$ est la base canonique de $\R^3$
+Ainsi, par définition de $\operatorname{Mat}_{\mathcal{B}_c}(f)$, la 1ère colonne de $A$ est la matrice colonne$^{(*)}$ de $f(1,0,0)$ dans la base $\mathcal{B}_c$.
+$(*)$ : des coordonnées
+Donc, par définition de $A$, $\operatorname{Mat}_{\mathcal{B}_c}(f(1,0,0))=\begin{pmatrix}-1\\-1\\0\end{pmatrix}$
+et donc, $\mathcal{B}_c$ étant la base canonique de $\R^3$,
+$$f(1,0,0)=(-1,-1,0)$$
+De même, $\begin{cases}f(0,1,0)=(4,2,2)\\f(0,0,1)=(2,1,1)\end{cases}$
+Donc,
+$$\begin{aligned}&\operatorname{Im}(f)\\&=\Vect((-1,-1,0),(4,2,2),(2,1,1))\\&=\Vect((-1,-1,0),2(2,1,1),(2,1,1))\\&\underset{(1)}{=}\Vect((-1,-1,0),(2,1,1))\end{aligned}$$
+$(1)$ : Par propriété de « $\Vect$ »
+Donc, $((-1,-1,0),(2,1,1))$ est génératrice de $\operatorname{Im}(f)$
+De plus, $\operatorname{Card}(((-1,-1,0),(2,1,1)))=\underline{2}$
+Or, d'après 1)d), $\rg(f)=\underline{2}$
+De plus, $\rg(f)=\dim(\operatorname{Im}(f))$
+Donc, $\dim(\operatorname{Im}(f))=2$
+Donc, par théorème, [[$((-1,-1,0),(2,1,1))$ est une base de $\operatorname{Im}(f)$]]
+
+!! • __Méthode 2 :__
+
+On montre (rédigé en 1)) que : $\begin{cases}f(1,0,0)=(-1,-1,0)\\f(0,1,0)=(4,2,2)\end{cases}$
+De plus, $\begin{cases}f\in\mathcal{L}(\R^3)\\(1,0,0)\in\R^3\\(0,1,0)\in\R^3\end{cases}$
+Donc, $\begin{cases}f(1,0,0)\in\operatorname{Im}(f)\\f(0,1,0)\in\operatorname{Im}(f)\end{cases}$
+Donc, $((-1,-1,0),(4,2,2))$ est une famille de vecteurs de $\operatorname{Im}(f)$
+$\hookrightarrow$ On montre (non détaillé) qu'elle est libre dans $\operatorname{Im}(f)$.
+De plus, $\operatorname{Card}(((-1,-1,0),(4,2,2)))=2$
+Or, d'après 1)d), $\dim(\operatorname{Im}(f))=2$
+Donc, par théorème, [[$((-1,-1,0),(4,2,2))$ est une base de $\operatorname{Im}(f)$]]`,
+    },
+    {
       id: 'bijectivite-noyau-image-endomorphisme',
       ajoute: '2026-11-09',
       domaine: 'algebre',
