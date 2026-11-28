@@ -386,20 +386,22 @@ Donc, par théorème, [[$\mathcal{F}$ est une base de $\R_2[X]$]]`,
     {
       id: 'methodes-matrice-inversible',
       ajoute: '2026-11-19',
+      modifie: '2026-11-28',
       domaine: 'algebre',
       chapitre: 'Matrices',
       titre: "Méthodes : montrer qu'une matrice est inversible",
-      motsCles: ['méthodes', 'inversible', 'inverse', 'pivot de Gauss', 'système de Cramer', 'triangulaire', 'déterminant', 'rang', 'valeur propre', 'polynôme annulateur'],
-      source: 'Cours, chapitres 3 et 4',
+      motsCles: ['méthodes', 'inversible', 'inverse', 'pivot de Gauss', 'système de Cramer', 'triangulaire', 'déterminant', 'rang', 'valeur propre', 'polynôme annulateur', 'noyau', 'endomorphisme', 'bijective', 'automorphisme', 'Mat'],
+      source: 'Cours, chapitres 3, 4 et 7',
       corps: String.raw`!! **1. Trouver une matrice $B$ telle que $AB=I_n$** (chapitre 4, Prop. 13)
 
 Un seul des deux produits suffit : si $AB=I_n$ (ou $BA=I_n$), alors $A$ est inversible d'inverse $B$, sans calculer l'autre produit.
 
 > $AB=I_n$. Donc, par théorème, $A$ est inversible et $A^{-1}=B$.
 
-!! **2. Le système $AX=0$** (chapitre 4, Prop. 15 (v) ⇔ (i))
+!! **2. Le système $AX=0$** (chapitre 4, Prop. 15 (v) ⇔ (i) ; chapitre 7, Remarques 18)
 
-La méthode de référence quand on ne demande pas l'inverse. On échelonne le système $AX=0_{\mathcal{M}_{n,1}(\R)}$ avec le pivot de Gauss, puis on regarde s'il est de Cramer (une seule solution, $X=0$) : si oui, $A$ est inversible. Cela revient à montrer que $\ker(A)=\left\{0_{\mathcal{M}_{n,1}(\R)}\right\}$.
+La méthode de référence quand on ne demande pas l'inverse. On échelonne le système $AX=0_{\mathcal{M}_{n,1}(\R)}$ avec le pivot de Gauss, puis on regarde s'il est de Cramer (une seule solution, $X=0$) : si oui, $A$ est inversible. Cela revient à montrer que $\ker(A)=\left\{0_{\mathcal{M}_{n,1}(\R)}\right\}$ :
+$$A\text{ est inversible}\Leftrightarrow\ker(A)=\left\{0_{\mathcal{M}_{n,1}(\R)}\right\}$$
 
 !! **3. Le système $AX=Y$** (chapitre 4, Prop. 15 (iv) et Prop. 16)
 
@@ -417,6 +419,7 @@ La formule $A^{-1}=\dfrac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$ est H
 !! **6. Le rang, ou les colonnes** (chapitre 4, Prop. 17 ; chapitre 3, Prop. 48)
 
 $A\in\mathcal{M}_n(\R)$ est inversible si et seulement si $\rg(A)=n$, si et seulement si ses $n$ colonnes (ou ses $n$ lignes) forment une base. À l'inverse, une relation visible entre les colonnes (ou les lignes) montre tout de suite que $A$ n'est pas inversible.
+Si $A=\operatorname{Mat}_\mathcal{B}(f)$, alors $\rg(A)=\rg(f)$ (chapitre 7, Prop. 39) : $A$ est inversible si et seulement si $\rg(f)=n$.
 
 !! **7. $0$ n'est pas valeur propre** (chapitre 4, Prop. 25)
 
@@ -433,9 +436,18 @@ On isole $I_n$ dans la relation, puis on factorise par $A$ pour faire apparaîtr
 > Donc, $M\left(-\dfrac{1}{2}(M-3I_3)\right)=I_3$.
 > Donc, par théorème, $M$ est inversible et $M^{-1}=\dfrac{1}{2}(3I_3-M)$.
 
-!! **9. Construite à partir de matrices inversibles** (chapitre 4, Prop. 14 ; chapitre 3, Prop. 53)
+!! **9. Construite à partir de matrices inversibles** (chapitre 4, Prop. 14 ; chapitre 3, Prop. 53 ; chapitre 7, Prop. 41)
 
-Si $A$ et $B$ sont inversibles, alors $AB$, $A^k$, $^t\!A$ et $A^{-1}$ le sont aussi. Une matrice de passage d'une base à une autre est toujours inversible.`,
+Si $A$ et $B$ sont inversibles, alors $AB$, $A^k$, $^t\!A$ et $A^{-1}$ le sont aussi. Une matrice de passage d'une base à une autre est toujours inversible : $(P_{\mathcal{B},\mathcal{B}'})^{-1}=P_{\mathcal{B}',\mathcal{B}}$.
+
+!! **10. L'endomorphisme associé est bijectif** (chapitre 7, Prop. 38 et Prop. 28)
+
+Si $f$ est un endomorphisme de $E$ et $\mathcal{B}$ une base de $E$ :
+$$\begin{aligned}&f\text{ est bijective}\\\Leftrightarrow\ &\operatorname{Mat}_\mathcal{B}(f)\text{ est inversible}\end{aligned}$$
+De plus, si $f$ est bijective, $\operatorname{Mat}_\mathcal{B}(f^{-1})=\operatorname{Mat}_\mathcal{B}(f)^{-1}$.
+Pour $f$ endomorphisme en dimension finie, $f$ bijective $\Leftrightarrow$ $f$ injective $\Leftrightarrow$ $f$ surjective : il suffit de montrer que $\ker(f)=\{0_E\}$.
+
+> $\operatorname{Mat}_\mathcal{B}(f)=A$ et $f$ est bijective. Donc, par théorème, $A$ est inversible.`,
     },
     // Cahier, p. 9
     {
